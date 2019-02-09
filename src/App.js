@@ -3,6 +3,7 @@ import React, { Component } from "react";
 // import "./App.css";
 import Button from "./components/Button";
 import Modal from "./components/Modal";
+import NotebookList from "./components/notebooks/NotebookList";
 import * as ApiConnector from "./api/Api";
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
 
     this.toggleModal = this.toggleModal.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
+    this.displayNotebookList = this.displayNotebookList.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +38,18 @@ class App extends Component {
     });
   }
 
+  displayNotebookList() {
+    let notebooks = this.state.notebooks.map(item => {
+      return (
+        <li key={item.id}>
+          {item.title} {item.id}
+        </li>
+      );
+    });
+
+    return notebooks;
+  }
+
   render() {
     return (
       <div className="App">
@@ -47,13 +61,7 @@ class App extends Component {
         >
           hello modal
         </Modal>
-        <ul>
-          {this.state.notebooks.map(item => (
-            <li key={item.id}>
-              {item.title} {item.id}
-            </li>
-          ))}
-        </ul>
+        <NotebookList displayNotebooks={this.displayNotebookList()} />
       </div>
     );
   }
