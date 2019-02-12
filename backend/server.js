@@ -111,11 +111,29 @@ app.get("/api/notes", (req, res) => {
   res.send(notes);
 });
 
-app.patch("/api/notes/:id", (req, res) => {
+app.get("/api/notes/:id", (req, res) => {
   let targetNoteId = req.params.id;
-  notes.forEach(note => {
+  let targetNote = notes.filter(note => {
+    return note.id === targetNoteId;
+  })[0];
+
+  if (!targetNote) {
+    res.status = 400;
+    res.send("note not found");
+  } else {
+    res.send(targetNote);
+  }
+});
+
+app.patch("/api/notes/:id", (req, res) => {
+  if (!req.session.username) {
+    res.status = 401;
+    res.send("not authorised");
+  }
+  let targetNoteId = req.params.id;
+  notes.forEach((note, index) => {
     if (note.id === targetNoteId) {
-      notes[targetNoteId] = { ...notes[targetNoteId], ...req.body };
+      notes[index] = { ...notes[index], ...req.body };
     }
   });
   console.log("notes after foreach", notes);
@@ -130,10 +148,10 @@ app.patch("/api/notes/:id", (req, res) => {
 
 app.patch("/api/notebooks/:id", (req, res) => {
   let targetNotebookId = req.params.id;
-  notebooks.forEach(notebook => {
+  notebooks.forEach((notebook, index) => {
     if (notebook.id === targetNotebookId) {
-      notebooks[targetNotebookId] = {
-        ...notebooks[targetNotebookId],
+      notebooks[index] = {
+        ...notebooks[index],
         ...req.body
       };
     }
@@ -146,4 +164,31 @@ app.patch("/api/notebooks/:id", (req, res) => {
     notebooks["notes"] = notes;
     res.send(notebooks[targetNotebookId]);
   }
+});
+
+app.delete("/api/notebooks/:id", (req, res) => {
+  let targetNotebookId = req.params.id;
+  console.log("targetNotebookId", targetNotebookId);
+  for (let i = notebooks.length - 1; i >= 0; i--) {
+    if (notebooks[i].id === targetNotebookId) {
+      notebooks.splice(i, 1);
+      break;
+    }
+  }
+  console.log("notebooks", notebooks);
+  res.send(notebooks);
+});
+
+// notebooks.splice(targetIndex, 1);
+
+app.delete("/api/notes/:id", (req, res) => {
+  let targetNoteId = req.params.id;
+  for (let i = notes.length - 1; i >= 0; i--) {
+    if (notes[i].id === targetNoteId) {
+      notes.splice(i, 1);
+      break;
+    }
+  }
+  console.log("notes", notes);
+  res.send(notes);
 });
