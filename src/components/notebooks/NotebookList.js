@@ -5,6 +5,10 @@ export default class NotebookList extends Component {
     super();
   }
   render() {
-    return <ul>{this.props.displayNotebooks}</ul>;
+    return (
+      <div className="menu">
+        <ul>{this.props.displayNotebooks}</ul>
+      </div>
+    );
   }
 }
