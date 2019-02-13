@@ -87,7 +87,7 @@ app.get("/api/notebooks/:id", (req, res) => {
   })[0];
   console.log(targetNotebook);
   if (!targetNotebook) {
-    res.status = 400;
+    res.status(404);
     res.send("notebook not found");
   } else {
     let noteList = notes.filter(note => note.notebookId === targetNotebookId);
@@ -118,7 +118,7 @@ app.get("/api/notes/:id", (req, res) => {
   })[0];
 
   if (!targetNote) {
-    res.status = 400;
+    res.status = 404;
     res.send("note not found");
   } else {
     res.send(targetNote);
@@ -126,10 +126,6 @@ app.get("/api/notes/:id", (req, res) => {
 });
 
 app.patch("/api/notes/:id", (req, res) => {
-  if (!req.session.username) {
-    res.status = 401;
-    res.send("not authorised");
-  }
   let targetNoteId = req.params.id;
   notes.forEach((note, index) => {
     if (note.id === targetNoteId) {

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import Button from "./components/Button";
-import Modal from "./components/Modal";
-import NotebookList from "./components/notebooks/NotebookList";
-import * as ApiConnector from "./api/Api";
-import { Link } from "react-router-dom";
+import Button from "components/Common/Button/Button";
+import Modal from "components/Common/Modal/Modal";
+import NotebookList from "components/Common/NotebookList/NotebookList";
+import * as ApiConnector from "Api/Api";
 
 export default class HomeContainer extends Component {
   constructor(props) {
@@ -16,7 +15,6 @@ export default class HomeContainer extends Component {
 
     this.toggleModal = this.toggleModal.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
-    this.displayNotebookList = this.displayNotebookList.bind(this);
   }
 
   componentDidMount() {
@@ -37,19 +35,6 @@ export default class HomeContainer extends Component {
     });
   }
 
-  displayNotebookList() {
-    let notebooks = this.state.notebooks.map(item => {
-      return (
-        <li key={item.id}>
-          <Link to="/notebooks">
-            {item.title} {item.id}
-          </Link>
-        </li>
-      );
-    });
-
-    return notebooks;
-  }
   render() {
     return (
       <div>
@@ -61,7 +46,7 @@ export default class HomeContainer extends Component {
         >
           hello modal
         </Modal>
-        <NotebookList displayNotebooks={this.displayNotebookList()} />
+        <NotebookList notebooks={this.state.notebooks} />
       </div>
     );
   }
