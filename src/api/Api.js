@@ -13,3 +13,7 @@ export function fetchNotebooks() {
 export function fetchNotebook(notebookId) {
   return axios.get(`${API_URL}/notebooks/${notebookId}`);
 }
+
+export function addNote(noteData) {
+  return axios.post(`${API_URL}/notes`, noteData);
+}

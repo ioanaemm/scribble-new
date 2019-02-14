@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Button from "components/Common/Button/Button";
-import Modal from "components/Common/Modal/Modal";
+import NotebookModal from "components/Common/NotebookModal/NotebookModal";
 import NotebookList from "components/Common/NotebookList/NotebookList";
 import * as ApiConnector from "Api/Api";
 
@@ -39,13 +39,13 @@ export default class HomeContainer extends Component {
     return (
       <div>
         <Button onClick={this.toggleModal} label="New Notebooks" />
-        <Modal
+        <NotebookModal
           show={this.state.isOpen}
           onClose={this.toggleModal}
           onSubmit={this.onModalSubmit}
         >
           hello modal
-        </Modal>
+        </NotebookModal>
         <NotebookList notebooks={this.state.notebooks} />
       </div>
     );

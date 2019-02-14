@@ -1,25 +1,22 @@
 import React, { Component } from "react";
 
-export default class Modal extends Component {
+export default class NoteModal extends Component {
   constructor() {
     super();
     this.state = {
-      title: "",
-      tags: ""
+      title: ""
     };
-
     this.submit = this.submit.bind(this);
   }
 
   submit() {
-    this.props.onSubmit({ title: this.state.title, tags: this.state.tags });
+    this.props.onSubmit({ title: this.state.title });
   }
 
   render() {
     if (!this.props.show) {
       return null;
     }
-
     return (
       <div className="backdrop">
         <div className="modal">
@@ -30,12 +27,6 @@ export default class Modal extends Component {
               type="text"
               value={this.state.title}
               onChange={e => this.setState({ title: e.target.value })}
-            />
-            <label>Tags</label>
-            <input
-              type="text"
-              value={this.state.tags}
-              onChange={e => this.setState({ tags: e.target.value })}
             />
           </div>
           <div className="footer">
