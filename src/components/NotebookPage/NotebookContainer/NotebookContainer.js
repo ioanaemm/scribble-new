@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as Api from "Api/Api";
 import * as ApiConnector from "Api/Api";
 
@@ -39,6 +40,7 @@ export class Notebook extends Component {
   }
 
   onModalSubmit(noteData) {
+    noteData.notebookId = this.state.notebook._id;
     ApiConnector.addNote(noteData).then(response => {
       console.log("response.data", response.data);
       console.log("this.state.notebook.notes", this.state.notebook.notes);
@@ -49,13 +51,31 @@ export class Notebook extends Component {
         }
       });
     });
+    this.toggleModal();
   }
 
   displayNotes() {
-    let notes = this.state.notebook.notes.map((note, index) => {
-      return <li key={index}>{note.title}</li>;
+    if (!this.state.notebook || !this.state.notebook.notes) {
+      return null;
+    }
+    let notes = this.state.notebook.notes.map(note => {
+      return (
+        <li key={note._id}>
+          <Link to={`/notes/${note._id}`}>{note.title} </Link>
+        </li>
+      );
     });
-    return notes;
+    return <ul>{notes}</ul>;
+  }
+
+  renderModal() {
+    let modal = null;
+    if (this.state.isOpen) {
+      modal = (
+        <NoteModal onClose={this.toggleModal} onSubmit={this.onModalSubmit} />
+      );
+    }
+    return modal;
   }
 
   render() {
@@ -70,13 +90,9 @@ export class Notebook extends Component {
       <div>
         <h3>{this.state.notebook.title}</h3>
         <p>{this.state.notebook.tags}</p>
-        <NoteModal
-          show={this.state.isOpen}
-          onClose={this.toggleModal}
-          onSubmit={this.onModalSubmit}
-        />
         <Button onClick={this.toggleModal} label="New Note" />
-        <ul>{this.displayNotes()}</ul>
+        {this.renderModal()}
+        {this.displayNotes()}
       </div>
     );
   }

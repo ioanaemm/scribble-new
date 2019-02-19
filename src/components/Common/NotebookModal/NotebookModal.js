@@ -13,13 +13,13 @@ export default class NotebookModal extends Component {
 
   submit() {
     this.props.onSubmit({ title: this.state.title, tags: this.state.tags });
+    this.setState({
+      title: "",
+      tags: ""
+    });
   }
 
   render() {
-    if (!this.props.show) {
-      return null;
-    }
-
     return (
       <div className="backdrop">
         <div className="modal">

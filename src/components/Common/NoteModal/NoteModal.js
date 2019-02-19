@@ -11,12 +11,12 @@ export default class NoteModal extends Component {
 
   submit() {
     this.props.onSubmit({ title: this.state.title });
+    this.setState({
+      title: ""
+    });
   }
 
   render() {
-    if (!this.props.show) {
-      return null;
-    }
     return (
       <div className="backdrop">
         <div className="modal">

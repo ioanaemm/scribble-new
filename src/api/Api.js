@@ -17,3 +17,12 @@ export function fetchNotebook(notebookId) {
 export function addNote(noteData) {
   return axios.post(`${API_URL}/notes`, noteData);
 }
+
+export function fetchNote(noteId) {
+  return axios.get(`${API_URL}/notes/${noteId}`);
+}
+
+export function patchNoteContent(noteId, noteData) {
+  console.log("patchNoteContent");
+  return axios.patch(`${API_URL}/notes/${noteId}`, noteData);
+}

@@ -9,12 +9,13 @@ export default class NotebookList extends Component {
   }
 
   displayNotebookList() {
+    if (!this.props.notebooks) {
+      return null;
+    }
     let notebooks = this.props.notebooks.map(item => {
       return (
-        <li key={item.id}>
-          <Link to={`/notebooks/${item.id}`}>
-            {item.title} {item.id}
-          </Link>
+        <li key={item._id}>
+          <Link to={`/notebooks/${item._id}`}>{item.title}</Link>
         </li>
       );
     });

@@ -2,6 +2,10 @@ const express = require("express");
 const app = express();
 const port = 5000;
 const bodyParser = require("body-parser");
+const mongoose = require("./db");
+
+const Note = require("./models/note");
+const Notebook = require("./models/notebook");
 
 // const notebooks = [
 //   {
@@ -62,88 +66,95 @@ Note
 app.use(bodyParser.json({ extended: true }));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-console.log("hellooo");
 app.get("/", (req, res) => res.send("Hello World!"));
 
 /*
   Define how the app responds to a POST requests for the url '/api/notebooks'
 */
-app.post("/api/notebooks", (req, res) => {
-  let newNotebook = { ...req.body, id: getRandomId() };
-  notebooks.push(newNotebook);
-  res.status = 201;
+app.post("/api/notebooks", async (req, res) => {
+  // let newNotebook = { ...req.body, id: getRandomId() };
+  const newNotebook = new Notebook();
+  newNotebook.title = req.body.title;
+  newNotebook.tags = req.body.tags;
+  await newNotebook.save();
+
+  // notebooks.push(newNotebook);
+  res.status(201);
   res.send(newNotebook);
 });
 
-app.get("/api/notebooks", (req, res) => {
+app.get("/api/notebooks", async (req, res) => {
   console.log(notebooks);
-  res.send(notebooks);
+  let notebookList = await Notebook.find({});
+  res.send(notebookList);
 });
 
-app.get("/api/notebooks/:id", (req, res) => {
+app.get("/api/notebooks/:id", async (req, res) => {
   let targetNotebookId = req.params.id;
-  let targetNotebook = notebooks.filter(notebook => {
-    return notebook.id === targetNotebookId;
-  })[0];
+  let targetNotebook = await Notebook.findById(targetNotebookId);
   console.log(targetNotebook);
   if (!targetNotebook) {
     res.status(404);
     res.send("notebook not found");
   } else {
-    let noteList = notes.filter(note => note.notebookId === targetNotebookId);
-    console.log("notes before loop", notes);
-
-    console.log("notes after loop", noteList);
+    console.log("we are here");
+    let noteList = await Note.find({ notebookId: targetNotebookId });
+    console.log("noteList: ", noteList);
     targetNotebook["notes"] = noteList;
-    console.log("targetNotebook", targetNotebook);
+
     res.send(targetNotebook);
   }
 });
 
-app.post("/api/notes", (req, res) => {
-  let newNote = { ...req.body, id: getRandomId() };
-  notes.push(newNote);
-  res.status = 200;
+app.post("/api/notes", async (req, res) => {
+  const newNote = new Note();
+  newNote.title = req.body.title;
+  newNote.body = req.body.body;
+  newNote.notebookId = req.body.notebookId;
+  console.log("req.body = ", req.body);
+
+  await newNote.save();
   res.send(newNote);
 });
 
-app.get("/api/notes", (req, res) => {
-  res.send(notes);
+app.get("/api/notes", async (req, res) => {
+  let noteList = await Note.find({});
+  res.send(noteList);
 });
 
-app.get("/api/notes/:id", (req, res) => {
+app.get("/api/notes/:id", async (req, res) => {
   let targetNoteId = req.params.id;
-  let targetNote = notes.filter(note => {
-    return note.id === targetNoteId;
-  })[0];
+  let targetNote = await Note.findById(targetNoteId);
 
   if (!targetNote) {
-    res.status = 404;
+    res.status(404);
     res.send("note not found");
   } else {
     res.send(targetNote);
   }
 });
 
-app.patch("/api/notes/:id", (req, res) => {
+app.patch("/api/notes/:id", async (req, res) => {
   let targetNoteId = req.params.id;
-  notes.forEach((note, index) => {
-    if (note.id === targetNoteId) {
-      notes[index] = { ...notes[index], ...req.body };
-    }
-  });
+
+  const targetNote = await Note.findById(targetNoteId);
   console.log("notes after foreach", notes);
 
   if (!targetNoteId) {
-    res.status = 404;
+    res.status(404);
     res.send("note update not found");
   } else {
-    res.send(notes[targetNoteId]);
+    for (let key in req.body) {
+      targetNote[key] = req.body[key];
+    }
+    await targetNote.save();
+    res.send(targetNote);
   }
 });
 
-app.patch("/api/notebooks/:id", (req, res) => {
+app.patch("/api/notebooks/:id", async (req, res) => {
   let targetNotebookId = req.params.id;
+
   notebooks.forEach((notebook, index) => {
     if (notebook.id === targetNotebookId) {
       notebooks[index] = {
@@ -154,7 +165,7 @@ app.patch("/api/notebooks/:id", (req, res) => {
   });
   console.log("notebooks updated", notebooks);
   if (!targetNotebookId) {
-    res.status = 404;
+    res.status(404);
     res.send("notebook update not found");
   } else {
     notebooks["notes"] = notes;
@@ -162,20 +173,25 @@ app.patch("/api/notebooks/:id", (req, res) => {
   }
 });
 
-app.delete("/api/notebooks/:id", (req, res) => {
+app.delete("/api/notebooks/:id", async (req, res) => {
   let targetNotebookId = req.params.id;
-  console.log("targetNotebookId", targetNotebookId);
-  for (let i = notebooks.length - 1; i >= 0; i--) {
-    if (notebooks[i].id === targetNotebookId) {
-      notebooks.splice(i, 1);
-      break;
+  // console.log("targetNotebookId", targetNotebookId);
+  // for (let i = notebooks.length - 1; i >= 0; i--) {
+  //   if (notebooks[i].id === targetNotebookId) {
+  //     notebooks.splice(i, 1);
+  //     break;
+  //   }
+  // }
+  const targetNotebook = await Notebook.findByIdAndRemove(
+    targetNotebookId,
+    (err, notebook) => {
+      if (err) return res.status(404).send(err);
     }
-  }
-  console.log("notebooks", notebooks);
-  res.send(notebooks);
-});
+  );
 
-// notebooks.splice(targetIndex, 1);
+  console.log("notebooks", targetNotebook);
+  res.send(targetNotebook);
+});
 
 app.delete("/api/notes/:id", (req, res) => {
   let targetNoteId = req.params.id;

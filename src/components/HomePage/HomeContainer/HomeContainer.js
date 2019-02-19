@@ -33,19 +33,27 @@ export default class HomeContainer extends Component {
         notebooks: [...this.state.notebooks, response.data]
       });
     });
+    this.toggleModal();
+  }
+
+  renderModal() {
+    let modal = null;
+    if (this.state.isOpen) {
+      modal = (
+        <NotebookModal
+          onClose={this.toggleModal}
+          onSubmit={this.onModalSubmit}
+        />
+      );
+    }
+    return modal;
   }
 
   render() {
     return (
       <div>
         <Button onClick={this.toggleModal} label="New Notebooks" />
-        <NotebookModal
-          show={this.state.isOpen}
-          onClose={this.toggleModal}
-          onSubmit={this.onModalSubmit}
-        >
-          hello modal
-        </NotebookModal>
+        {this.renderModal()}
         <NotebookList notebooks={this.state.notebooks} />
       </div>
     );
