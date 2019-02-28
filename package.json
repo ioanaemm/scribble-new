@@ -10,10 +10,13 @@
     "draft-js": "^0.10.5",
     "express": "^4.16.4",
     "less": "^3.9.0",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.23",
     "mongoose": "^5.4.13",
     "node-sass": "^4.11.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
+    "react-masonry-component": "^6.2.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.3"
   },

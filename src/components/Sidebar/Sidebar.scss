@@ -1,4 +1,4 @@
-$font-stack: Helvetica, sans-serif;
+$font-stack: "Roboto", sans-serif;
 $primary-color: #7371fc;
 
 .sidebar {
@@ -13,6 +13,11 @@ $primary-color: #7371fc;
     text-align: center;
     margin-top: 15px;
     margin-bottom: 15px;
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
   }
 
   .iconContainer {

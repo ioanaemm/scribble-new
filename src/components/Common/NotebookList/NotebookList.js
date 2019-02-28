@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Masonry from "react-masonry-component";
+
 import Button from "components/Common/Button/Button";
 import Title from "components/Common/Title/Title.js";
 import "components/Common/NotebookList/NotebookList.scss";
@@ -33,7 +35,12 @@ export default class NotebookList extends Component {
 
     return <>{notebooks}</>;
   }
+
   render() {
-    return <div className="notebook-list">{this.displayNotebookList()}</div>;
+    return (
+      <Masonry className={"my-gallery-class notebook-list"}>
+        {this.displayNotebookList()}
+      </Masonry>
+    );
   }
 }

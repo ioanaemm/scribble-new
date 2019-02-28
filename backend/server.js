@@ -7,22 +7,8 @@ const mongoose = require("./db");
 const Note = require("./models/note");
 const Notebook = require("./models/notebook");
 
-// const notebooks = [
-//   {
-//     id: "12345",
-//     title: "blaba",
-//     tags: ""
-//   }
-// ];
-// const notes = [
-
-// ];
 const notebooks = [];
 const notes = [];
-
-function getRandomId() {
-  return String(Math.floor(Math.random() * 100000));
-}
 
 /*
 Notebook
@@ -72,23 +58,20 @@ app.get("/", (req, res) => res.send("Hello World!"));
   Define how the app responds to a POST requests for the url '/api/notebooks'
 */
 app.post("/api/notebooks", async (req, res) => {
-  // let newNotebook = { ...req.body, id: getRandomId() };
   const newNotebook = new Notebook();
   newNotebook.title = req.body.title;
   newNotebook.tags = req.body.tags;
   await newNotebook.save();
 
-  // notebooks.push(newNotebook);
   res.status(201);
   res.send(newNotebook);
 });
 
 app.get("/api/notebooks", async (req, res) => {
-  console.log(notebooks);
   let notebookList = await Notebook.find()
     .sort({ _id: -1 })
     .skip(1)
-    .limit(6);
+    .limit(8);
 
   res.send(notebookList);
 });
@@ -96,14 +79,12 @@ app.get("/api/notebooks", async (req, res) => {
 app.get("/api/notebooks/:id", async (req, res) => {
   let targetNotebookId = req.params.id;
   let targetNotebook = await Notebook.findById(targetNotebookId);
-  console.log(targetNotebook);
+
   if (!targetNotebook) {
     res.status(404);
     res.send("notebook not found");
   } else {
-    console.log("we are here");
     let noteList = await Note.find({ notebookId: targetNotebookId });
-    console.log("noteList: ", noteList);
     targetNotebook["notes"] = noteList;
 
     res.send(targetNotebook);
@@ -115,7 +96,6 @@ app.post("/api/notes", async (req, res) => {
   newNote.title = req.body.title;
   newNote.body = req.body.body;
   newNote.notebookId = req.body.notebookId;
-  console.log("req.body = ", req.body);
 
   await newNote.save();
   res.send(newNote);
@@ -125,7 +105,7 @@ app.get("/api/notes", async (req, res) => {
   let noteList = await Note.find({})
     .sort({ _id: -1 })
     .skip(1)
-    .limit(3);
+    .limit(6);
   res.send(noteList);
 });
 
@@ -145,7 +125,6 @@ app.patch("/api/notes/:id", async (req, res) => {
   let targetNoteId = req.params.id;
 
   const targetNote = await Note.findById(targetNoteId);
-  console.log("notes after foreach", notes);
 
   if (!targetNoteId) {
     res.status(404);
@@ -170,7 +149,7 @@ app.patch("/api/notebooks/:id", async (req, res) => {
       };
     }
   });
-  console.log("notebooks updated", notebooks);
+
   if (!targetNotebookId) {
     res.status(404);
     res.send("notebook update not found");
@@ -182,13 +161,6 @@ app.patch("/api/notebooks/:id", async (req, res) => {
 
 app.delete("/api/notebooks/:id", async (req, res) => {
   let targetNotebookId = req.params.id;
-  // console.log("targetNotebookId", targetNotebookId);
-  // for (let i = notebooks.length - 1; i >= 0; i--) {
-  //   if (notebooks[i].id === targetNotebookId) {
-  //     notebooks.splice(i, 1);
-  //     break;
-  //   }
-  // }
   const targetNotebook = await Notebook.findByIdAndRemove(
     targetNotebookId,
     (err, notebook) => {
@@ -196,7 +168,6 @@ app.delete("/api/notebooks/:id", async (req, res) => {
     }
   );
 
-  console.log("notebooks", targetNotebook);
   res.send(targetNotebook);
 });
 
@@ -208,6 +179,6 @@ app.delete("/api/notes/:id", (req, res) => {
       break;
     }
   }
-  console.log("notes", notes);
+
   res.send(notes);
 });
