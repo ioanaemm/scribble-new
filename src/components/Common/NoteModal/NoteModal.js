@@ -4,15 +4,17 @@ export default class NoteModal extends Component {
   constructor() {
     super();
     this.state = {
-      title: ""
+      title: "",
+      body: ""
     };
     this.submit = this.submit.bind(this);
   }
 
   submit() {
-    this.props.onSubmit({ title: this.state.title });
+    this.props.onSubmit({ title: this.state.title, body: this.state.body });
     this.setState({
-      title: ""
+      title: "",
+      body: ""
     });
   }
 
@@ -27,6 +29,10 @@ export default class NoteModal extends Component {
               type="text"
               value={this.state.title}
               onChange={e => this.setState({ title: e.target.value })}
+            />
+            <textarea
+              value={this.state.body}
+              onChange={e => this.setState({ body: e.target.value })}
             />
           </div>
           <div className="footer">

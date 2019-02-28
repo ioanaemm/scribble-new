@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Button from "components/Common/Button/Button";
+import Title from "components/Common/Title/Title.js";
+import "components/Common/NotebookList/NotebookList.scss";
 
 export default class NotebookList extends Component {
   constructor() {
@@ -14,14 +17,23 @@ export default class NotebookList extends Component {
     }
     let notebooks = this.props.notebooks.map(item => {
       return (
-        <li key={item._id}>
-          <Link to={`/notebooks/${item._id}`}>{item.title}</Link>
-        </li>
+        <div className="notebook-item" key={item._id}>
+          <p className="notebook-total">
+            Posts in Notebook:
+            <span> 17</span>
+          </p>
+          <span className="notebook-title">
+            <Link to={`/notebooks/${item._id}`}>{item.title}</Link>
+          </span>
+          <Title content="Tags" />
+          <Button type="secondary" label={item.tags} />
+        </div>
       );
     });
-    return <ul>{notebooks}</ul>;
+
+    return <>{notebooks}</>;
   }
   render() {
-    return <div className="menu">{this.displayNotebookList()}</div>;
+    return <div className="notebook-list">{this.displayNotebookList()}</div>;
   }
 }

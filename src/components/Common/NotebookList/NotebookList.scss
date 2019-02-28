@@ -1,0 +1,37 @@
+.notebook-list,
+.note-list {
+  .notebook-item,
+  .note-item {
+    border: 2px solid #f3f5f9;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 20px;
+    padding: 10px;
+    width: 20%;
+
+    .notebook-total {
+      color: #8895b3;
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .notebook-title {
+      display: inline-block;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      a {
+        color: #000;
+        font-size: 20px;
+        opacity: 1;
+        text-decoration: none;
+      }
+    }
+
+    .title {
+      display: block;
+      font-size: 13px;
+      font-weight: 300;
+      margin-left: 0;
+    }
+  }
+}

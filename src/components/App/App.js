@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
+import "./App.scss";
+
+import Sidebar from "components/Sidebar/Sidebar";
 import HomeContainer from "components/HomePage/HomeContainer/HomeContainer";
 import NotebooksContainer from "components/NotebooksPage/NotebooksContainer/NotebooksContainer";
 import NotebookContainer from "components/NotebookPage/NotebookContainer/NotebookContainer";
@@ -10,8 +13,9 @@ import NoteContainer from "components/NotePage/NoteContainer/NoteContainer";
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <React.Fragment>
+      <div className="app">
+        <Sidebar />
+        <div className="page-content">
           <Switch>
             <Route exact path="/">
               <HomeContainer />
@@ -29,7 +33,7 @@ class App extends Component {
               <NoteContainer />
             </Route>
           </Switch>
-        </React.Fragment>
+        </div>
       </div>
     );
   }

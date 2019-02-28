@@ -18,6 +18,10 @@ export function addNote(noteData) {
   return axios.post(`${API_URL}/notes`, noteData);
 }
 
+export function fetchNotes() {
+  return axios.get(`${API_URL}/notes`);
+}
+
 export function fetchNote(noteId) {
   return axios.get(`${API_URL}/notes/${noteId}`);
 }

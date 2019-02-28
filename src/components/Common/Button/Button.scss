@@ -1,0 +1,24 @@
+$primary-color-btn: #44b24a;
+$white-bg-btn: #fff;
+$black-text: #000;
+$default-border-radius-btn: 15px;
+
+.primary {
+  background-color: $primary-color-btn;
+  border-radius: $default-border-radius-btn;
+  border-color: $primary-color-btn;
+  color: white;
+  margin: 20px;
+  padding: 3px 30px;
+}
+
+.secondary {
+  background-color: #fff;
+  border: 1px solid #8895b3;
+  border-radius: $default-border-radius-btn;
+  color: #8895b3;
+  font-size: 15px;
+  margin: 10px 0;
+  padding: 2px 25px;
+  text-transform: capitalize;
+}

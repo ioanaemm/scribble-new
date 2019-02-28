@@ -85,7 +85,11 @@ app.post("/api/notebooks", async (req, res) => {
 
 app.get("/api/notebooks", async (req, res) => {
   console.log(notebooks);
-  let notebookList = await Notebook.find({});
+  let notebookList = await Notebook.find()
+    .sort({ _id: -1 })
+    .skip(1)
+    .limit(6);
+
   res.send(notebookList);
 });
 
@@ -118,7 +122,10 @@ app.post("/api/notes", async (req, res) => {
 });
 
 app.get("/api/notes", async (req, res) => {
-  let noteList = await Note.find({});
+  let noteList = await Note.find({})
+    .sort({ _id: -1 })
+    .skip(1)
+    .limit(3);
   res.send(noteList);
 });
 
