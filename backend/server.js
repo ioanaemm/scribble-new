@@ -76,6 +76,23 @@ app.get("/api/notebooks", async (req, res) => {
   res.send(notebookList);
 });
 
+app.get("/api/search/:searchTerm", async (req, res) => {
+  let notebooks = await Notebook.find({ title: req.params.searchTerm });
+  let notes = await Note.find({ title: req.params.searchTerm });
+  let dictionary = {
+    notebooks,
+    notes
+  };
+
+  console.log("dictionary", dictionary);
+  if (!notebooks && !notes) {
+    res.status(404);
+    res.send("sorry, we couldn't found what you are looking for");
+  } else {
+    res.send(dictionary);
+  }
+});
+
 app.get("/api/notebooks/:id", async (req, res) => {
   let targetNotebookId = req.params.id;
   let targetNotebook = await Notebook.findById(targetNotebookId);

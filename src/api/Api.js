@@ -30,3 +30,7 @@ export function patchNoteContent(noteId, noteData) {
   console.log("patchNoteContent");
   return axios.patch(`${API_URL}/notes/${noteId}`, noteData);
 }
+
+export function fetchSearchList(searchTerm) {
+  return axios.get(`${API_URL}/search/${searchTerm}`);
+}

@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import "./App.scss";
 
+import SearchResultsPage from "components/SearchResultsPage/SearchResultsPage";
 import Sidebar from "components/Sidebar/Sidebar";
 import HomeContainer from "components/HomePage/HomeContainer/HomeContainer";
 import NotebooksContainer from "components/NotebooksPage/NotebooksContainer/NotebooksContainer";
@@ -31,6 +32,9 @@ class App extends Component {
             </Route>
             <Route exact path="/notes/:id">
               <NoteContainer />
+            </Route>
+            <Route exact path="/search/:query">
+              <SearchResultsPage />
             </Route>
           </Switch>
         </div>

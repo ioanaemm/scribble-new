@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import SearchBar from "components/SearchBar/SearchBar";
 import Title from "components/Common/Title/Title";
 import Button from "components/Common/Button/Button";
 import NotebookModal from "components/Common/NotebookModal/NotebookModal";
-import NoteModal from "components/Common/NoteModal/NoteModal.js";
+import NoteModal from "components/Common/NoteModal/NoteModal";
 import NotebookList from "components/Common/NotebookList/NotebookList";
 import NoteList from "components/Common/NoteList/NoteList";
 import * as ApiConnector from "Api/Api";
@@ -92,6 +93,7 @@ export default class HomeContainer extends Component {
     return (
       <>
         <div className="add-item-container">
+          <SearchBar />
           <Title content="Notebooks" />
           <Button
             type="primary"
@@ -100,6 +102,7 @@ export default class HomeContainer extends Component {
           />
           {this.renderNotebookModal()}
         </div>
+
         <NotebookList notebooks={this.state.notebooks} />
         <div className="add-item-container">
           <Title content="Notes" />
