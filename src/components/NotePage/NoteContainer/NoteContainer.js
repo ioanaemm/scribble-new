@@ -18,6 +18,8 @@ export class NoteContainer extends Component {
     };
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.editContent = this.editContent.bind(this);
+    this.retrieveNotebook = this.retrieveNotebook.bind(this);
+    this.displayNotebookTitle = this.displayNotebookTitle.bind(this);
   }
 
   componentDidMount() {
@@ -25,12 +27,13 @@ export class NoteContainer extends Component {
     Api.fetchNote(this.props.match.params.id).then(
       // debugger();
       response => {
-        console.log("response.data.notebookId", response.data);
+        console.log("response.data.notebookId", response.data.notebookId);
         this.setState({
           pending: false,
           title: response.data.title,
           body: response.data.body || "",
-          notebookId: response.data.notebookId
+          notebookId: response.data.notebookId,
+          notebook: null
         });
       },
       error => {
@@ -38,11 +41,28 @@ export class NoteContainer extends Component {
         this.setState({ error: error.response.data, pending: false });
       }
     );
-    console.log("this.state", this.state);
+    this.retrieveNotebook();
+    console.log("this.state.notebookId", this.state.notebookId);
+  }
 
-    // Api.fetchNotebook(this.props.match.params.id).then(response => {
-    //   console.log(response.data);
-    // });
+  retrieveNotebook() {
+    Api.fetchNotebook(this.state.notebookId).then(response => {
+      console.log("response.data", response.data);
+      this.setState({
+        notebook: response.data
+      });
+    });
+  }
+
+  displayNotebookTitle() {
+    if (!this.state.notebook) {
+      return null;
+    }
+    let notebookTitle = this.state.notebook.map(notebook => {
+      return <span key={notebook._id}>{notebook.title}</span>;
+    });
+
+    return notebookTitle;
   }
 
   handleEditorChange(body) {
@@ -77,6 +97,7 @@ export class NoteContainer extends Component {
       <div className="note-container">
         <div className="note-list">Welcome Notebook</div>
         <div className="note-content">
+          <p class="notebook-title">Notebook: {this.displayNotebookTitle()}</p>
           <div className="note-header">
             <h3 className="title">{this.state.title}</h3>
             <div className="btn-container">

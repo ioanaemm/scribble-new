@@ -5,9 +5,24 @@
     padding-left: 40px;
     padding-right: 30px;
 
+    .notebook-title {
+      color: #8895b3;
+      font-size: 16px;
+      padding-left: 20px;
+      margin-bottom: 0;
+
+      span {
+        font-weight: 600;
+      }
+    }
+
     .note-header {
       display: flex;
       justify-content: space-between;
+
+      .title {
+        margin-top: 10px;
+      }
 
       .btn-container {
         margin-top: 20px;
@@ -37,6 +52,8 @@
       .tox.tox-tinymce {
         border: none;
         .tox-editor-container {
+          margin-left: 15px;
+          margin-right: 15px;
           .tox-menubar {
             display: none;
           }
