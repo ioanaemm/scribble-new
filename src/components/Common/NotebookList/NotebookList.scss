@@ -5,23 +5,29 @@
     border: 2px solid #f3f5f9;
     border-radius: 5px;
     display: inline-block;
-    margin: 20px;
-    padding: 10px;
-    width: 20%;
+    margin: 10px;
+    padding: 10px 15px 10px;
+
+    .note-timestamp {
+      font-size: 16px;
+      color: #8695b6;
+      margin: 5px 0;
+    }
 
     .notebook-total {
       color: #8895b3;
-      font-size: 12px;
+      font-size: 16px;
       margin: 0;
     }
 
-    .notebook-title {
+    .notebook-title,
+    .note-title {
       display: inline-block;
       margin-top: 5px;
       margin-bottom: 5px;
       a {
         color: #000;
-        font-size: 20px;
+        font-size: 30px;
         opacity: 1;
         text-decoration: none;
       }
@@ -29,9 +35,23 @@
 
     .title {
       display: block;
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 300;
       margin-left: 0;
+    }
+  }
+  .notebook-item {
+    width: 20%;
+  }
+
+  .note-item {
+    width: 25%;
+
+    .note-content {
+      color: #69758f;
+      // color: #000;
+      font-size: 18px;
+      letter-spacing: 1px;
     }
   }
 }

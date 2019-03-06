@@ -23,16 +23,14 @@ export default class NoteList extends Component {
 
       return (
         <div className="note-item" key={item._id}>
-          <p>
-            Created on{" "}
-            <span>
-              <b>{timestamp}</b>
-            </span>
-          </p>
-          <span className="notebook-title">
+          <p className="note-timestamp">Created on: {timestamp}</p>
+          <span className="note-title">
             <Link to={`/notes/${item._id}`}>{item.title}</Link>
           </span>
-          <div dangerouslySetInnerHTML={{ __html: item.body }} />
+          <div
+            className="note-content"
+            dangerouslySetInnerHTML={{ __html: item.body }}
+          />
         </div>
       );
     });

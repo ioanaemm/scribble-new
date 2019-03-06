@@ -1,11 +1,12 @@
 .app {
   height: 100vh;
   display: flex;
-  font-family: "Roboto", sans-serif;
+  font-family: "Helvetica", sans-serif;
 
   .page-content {
     width: 100%;
     overflow-y: auto;
     height: 100vh;
+    margin-left: 10px;
   }
 }

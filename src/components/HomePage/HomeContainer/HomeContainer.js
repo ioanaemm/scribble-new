@@ -92,8 +92,8 @@ export default class HomeContainer extends Component {
   render() {
     return (
       <>
+        <SearchBar />
         <div className="add-item-container">
-          <SearchBar />
           <Title content="Notebooks" />
           <Button
             type="primary"

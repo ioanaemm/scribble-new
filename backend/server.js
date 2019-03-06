@@ -124,6 +124,7 @@ app.get("/api/notes", async (req, res) => {
     .skip(1)
     .limit(6);
   res.send(noteList);
+  console.log("noteList", noteList);
 });
 
 app.get("/api/notes/:id", async (req, res) => {
@@ -136,6 +137,7 @@ app.get("/api/notes/:id", async (req, res) => {
   } else {
     res.send(targetNote);
   }
+  console.log("response", targetNote);
 });
 
 app.patch("/api/notes/:id", async (req, res) => {

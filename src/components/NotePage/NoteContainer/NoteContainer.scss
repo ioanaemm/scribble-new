@@ -1,0 +1,74 @@
+.note-container {
+  display: flex;
+  .note-content {
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 30px;
+
+    .note-header {
+      display: flex;
+      justify-content: space-between;
+
+      .btn-container {
+        margin-top: 20px;
+        .primary,
+        .secondary {
+          border-radius: 5px;
+        }
+
+        .primary {
+          padding-top: 5px;
+          padding-bottom: 5px;
+          margin-right: 0;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+
+        .secondary {
+          padding: 6px 30px;
+        }
+      }
+    }
+
+    .note-editor {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      .tox.tox-tinymce {
+        border: none;
+        .tox-editor-container {
+          .tox-menubar {
+            display: none;
+          }
+        }
+
+        .tox-toolbar {
+          border-top: 0;
+          border-bottom: 1px solid #8895b3;
+
+          .tox-toolbar__group {
+            border: 0;
+          }
+        }
+
+        .tox-sidebar-wrap {
+          .tox-edit-area {
+            border: 0;
+          }
+        }
+
+        .tox-statusbar {
+          display: none;
+        }
+      }
+    }
+  }
+  .note-list {
+    background-color: #7371fc;
+    height: 100vh;
+    order: 2;
+    overflow: hidden;
+    width: 240px;
+    max-width: 100%;
+  }
+}

@@ -5,6 +5,7 @@ import * as Api from "Api/Api";
 import * as ApiConnector from "Api/Api";
 
 import Button from "components/Common/Button/Button";
+import "components/NotePage/NoteContainer/NoteContainer.scss";
 export class NoteContainer extends Component {
   constructor() {
     super();
@@ -12,7 +13,8 @@ export class NoteContainer extends Component {
       pending: true,
       error: null,
       title: "",
-      body: ""
+      body: "",
+      notebookId: ""
     };
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.editContent = this.editContent.bind(this);
@@ -21,11 +23,14 @@ export class NoteContainer extends Component {
   componentDidMount() {
     console.log("this.state", this.state);
     Api.fetchNote(this.props.match.params.id).then(
+      // debugger();
       response => {
+        console.log("response.data.notebookId", response.data);
         this.setState({
           pending: false,
           title: response.data.title,
-          body: response.data.body || ""
+          body: response.data.body || "",
+          notebookId: response.data.notebookId
         });
       },
       error => {
@@ -33,6 +38,11 @@ export class NoteContainer extends Component {
         this.setState({ error: error.response.data, pending: false });
       }
     );
+    console.log("this.state", this.state);
+
+    // Api.fetchNotebook(this.props.match.params.id).then(response => {
+    //   console.log(response.data);
+    // });
   }
 
   handleEditorChange(body) {
@@ -64,13 +74,27 @@ export class NoteContainer extends Component {
     }
 
     return (
-      <div className="noteContainer">
-        <h3>{this.state.title}</h3>
-        <Button label="Save" onClick={this.editContent} />
-        <Editor
-          value={this.state.body}
-          onEditorChange={this.handleEditorChange}
-        />
+      <div className="note-container">
+        <div className="note-list">Welcome Notebook</div>
+        <div className="note-content">
+          <div className="note-header">
+            <h3 className="title">{this.state.title}</h3>
+            <div className="btn-container">
+              <Button
+                type="secondary"
+                label="Share"
+                onClick={this.editContent}
+              />
+              <Button type="primary" label="Save" onClick={this.editContent} />
+            </div>
+          </div>
+          <div className="note-editor">
+            <Editor
+              value={this.state.body}
+              onEditorChange={this.handleEditorChange}
+            />
+          </div>
+        </div>
       </div>
     );
   }

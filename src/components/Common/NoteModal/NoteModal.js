@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import "components/Common/NoteModal/NoteModal.scss";
+import Button from "components/Common/Button/Button";
+import Title from "components/Common/Title/Title";
+import closebutton from "icons/close.png";
 
 export default class NoteModal extends Component {
   constructor() {
@@ -22,24 +26,25 @@ export default class NoteModal extends Component {
     return (
       <div className="backdrop">
         <div className="modal">
-          <div className="header">Header</div>
+          <Title content="Add new note" />
           <div className="body">
+            <button className="close-btn" onClick={this.props.onClose}>
+              <img className="icon" src={closebutton} alt="close" />
+            </button>
             <label>Title</label>
             <input
               type="text"
               value={this.state.title}
               onChange={e => this.setState({ title: e.target.value })}
             />
-            <textarea
-              value={this.state.body}
-              onChange={e => this.setState({ body: e.target.value })}
-            />
           </div>
           <div className="footer">
-            <button onClick={this.props.onClose}>Close</button>
-            <button onClick={this.submit}>Submit</button>
+            <Button type="primary" onClick={this.submit} label="Submit">
+              Submit
+            </Button>
           </div>
         </div>
+        <div className="modal-overlay" />
       </div>
     );
   }
