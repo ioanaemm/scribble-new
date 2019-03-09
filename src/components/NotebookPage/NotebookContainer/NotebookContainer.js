@@ -14,18 +14,24 @@ export class Notebook extends Component {
       isOpen: false,
       notebook: null,
       pending: true,
-      error: false
+      error: false,
+      isInput: false,
+      title: ""
     };
 
     this.toggleModal = this.toggleModal.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
     this.displayNotes = this.displayNotes.bind(this);
+    this.onTitleSubmit = this.onTitleSubmit.bind(this);
+    this.saveInputValue = this.saveInputValue.bind(this);
+    this.displayUpdatedTitle = this.displayUpdatedTitle.bind(this);
   }
   componentDidMount() {
     Api.fetchNotebook(this.props.match.params.id).then(
       response => {
         this.setState({
           pending: false,
+          title: response.data.title,
           notebook: response.data
         });
       },
@@ -42,8 +48,8 @@ export class Notebook extends Component {
   onModalSubmit(noteData) {
     noteData.notebookId = this.state.notebook._id;
     ApiConnector.addNote(noteData).then(response => {
-      console.log("response.data", response.data);
-      console.log("this.state.notebook.notes", this.state.notebook.notes);
+      // console.log("response.data", response.data);
+      // console.log("this.state.notebook.notes", this.state.notebook.notes);
       this.setState({
         notebook: {
           ...this.state.notebook,
@@ -78,6 +84,54 @@ export class Notebook extends Component {
     return modal;
   }
 
+  onTitleSubmit() {
+    // console.log("this.state.title", this.state.title);
+    ApiConnector.patchNotebookContent(this.props.match.params.id, {
+      title: this.state.title
+    }).then(
+      response => {
+        console.log("response.data", response.data);
+        this.setState({
+          title: response.data.title,
+          isInput: false
+        });
+      },
+      error => {
+        this.setState({
+          error: error.response.data
+        });
+      }
+    );
+  }
+
+  saveInputValue(e) {
+    e.preventDefault();
+    this.setState({
+      title: e.target.value
+    });
+  }
+
+  displayUpdatedTitle() {
+    if (this.state.isInput) {
+      return (
+        <>
+          <input
+            type="text"
+            value={this.state.title}
+            onChange={this.saveInputValue}
+          />
+          <Button type="primary" label="Save" onClick={this.onTitleSubmit} />
+        </>
+      );
+    } else {
+      return (
+        <h3 onClick={() => this.setState({ isInput: true })}>
+          {this.state.title}
+        </h3>
+      );
+    }
+  }
+
   render() {
     if (this.state.pending) {
       return <p>Loading...</p>;
@@ -88,9 +142,9 @@ export class Notebook extends Component {
 
     return (
       <div>
-        <h3>{this.state.notebook.title}</h3>
+        {this.displayUpdatedTitle()}
         <p>{this.state.notebook.tags}</p>
-        <Button onClick={this.toggleModal} label="New Note" />
+        <Button type="primary" onClick={this.toggleModal} label="New Note" />
         {this.renderModal()}
         {this.displayNotes()}
       </div>

@@ -72,8 +72,14 @@ app.get("/api/notebooks", async (req, res) => {
     .sort({ _id: -1 })
     .skip(1)
     .limit(8);
+  await notebookList.forEach(async (notebook, index) => {
+    let noteList = await Note.find({ notebookId: notebook._id });
+    notebook.noteCount = noteList.length;
 
-  res.send(notebookList);
+    if (index === notebookList.length - 1) {
+      res.send(notebookList);
+    }
+  });
 });
 
 app.get("/api/search/:searchTerm", async (req, res) => {
@@ -142,9 +148,9 @@ app.get("/api/notes/:id", async (req, res) => {
 
 app.patch("/api/notes/:id", async (req, res) => {
   let targetNoteId = req.params.id;
-
+  // console.log("targetNoteId", targetNoteId);
   const targetNote = await Note.findById(targetNoteId);
-
+  // console.log("targetNote", targetNote);
   if (!targetNoteId) {
     res.status(404);
     res.send("note update not found");
@@ -160,21 +166,17 @@ app.patch("/api/notes/:id", async (req, res) => {
 app.patch("/api/notebooks/:id", async (req, res) => {
   let targetNotebookId = req.params.id;
 
-  notebooks.forEach((notebook, index) => {
-    if (notebook.id === targetNotebookId) {
-      notebooks[index] = {
-        ...notebooks[index],
-        ...req.body
-      };
-    }
-  });
+  let targetNotebook = await Notebook.findById(targetNotebookId);
 
   if (!targetNotebookId) {
     res.status(404);
-    res.send("notebook update not found");
+    res.send("note update not found");
   } else {
-    notebooks["notes"] = notes;
-    res.send(notebooks[targetNotebookId]);
+    for (let key in req.body) {
+      targetNotebook[key] = req.body[key];
+    }
+    await targetNotebook.save();
+    res.send(targetNotebook);
   }
 });
 

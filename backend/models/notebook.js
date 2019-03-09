@@ -5,7 +5,8 @@ let NotebookSchema = new Schema({
   // generic
   title: String,
   tags: String,
-  notes: Array
+  notes: Array,
+  noteCount: Number
 });
 
 module.exports = mongoose.model("Notebook", NotebookSchema);

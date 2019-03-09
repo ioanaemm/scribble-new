@@ -27,8 +27,13 @@ export function fetchNote(noteId) {
 }
 
 export function patchNoteContent(noteId, noteData) {
-  console.log("patchNoteContent");
+  // console.log("patchNoteContent");
   return axios.patch(`${API_URL}/notes/${noteId}`, noteData);
+}
+
+export function patchNotebookContent(notebookId, notebookData) {
+  // console.log("patchNotebookContent");
+  return axios.patch(`${API_URL}/notebooks/${notebookId}`, notebookData);
 }
 
 export function fetchSearchList(searchTerm) {

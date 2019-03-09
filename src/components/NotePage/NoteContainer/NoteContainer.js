@@ -14,26 +14,24 @@ export class NoteContainer extends Component {
       error: null,
       title: "",
       body: "",
-      notebookId: ""
+      notebook: null
     };
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.editContent = this.editContent.bind(this);
     this.retrieveNotebook = this.retrieveNotebook.bind(this);
     this.displayNotebookTitle = this.displayNotebookTitle.bind(this);
+    this.displayNotesInNotebook = this.displayNotesInNotebook.bind(this);
   }
 
   componentDidMount() {
-    console.log("this.state", this.state);
     Api.fetchNote(this.props.match.params.id).then(
-      // debugger();
       response => {
-        console.log("response.data.notebookId", response.data.notebookId);
+        console.log("response.data.notebookId", response.data);
+        this.retrieveNotebook(response.data.notebookId);
         this.setState({
           pending: false,
           title: response.data.title,
-          body: response.data.body || "",
-          notebookId: response.data.notebookId,
-          notebook: null
+          body: response.data.body || ""
         });
       },
       error => {
@@ -41,12 +39,12 @@ export class NoteContainer extends Component {
         this.setState({ error: error.response.data, pending: false });
       }
     );
-    this.retrieveNotebook();
-    console.log("this.state.notebookId", this.state.notebookId);
+
+    // console.log("this.state.notebookId", this.state.notebookId);
   }
 
-  retrieveNotebook() {
-    Api.fetchNotebook(this.state.notebookId).then(response => {
+  retrieveNotebook(notebookId) {
+    Api.fetchNotebook(notebookId).then(response => {
       console.log("response.data", response.data);
       this.setState({
         notebook: response.data
@@ -58,11 +56,33 @@ export class NoteContainer extends Component {
     if (!this.state.notebook) {
       return null;
     }
-    let notebookTitle = this.state.notebook.map(notebook => {
-      return <span key={notebook._id}>{notebook.title}</span>;
-    });
 
-    return notebookTitle;
+    return <span>{this.state.notebook.title}</span>;
+  }
+
+  displayNotesInNotebook() {
+    if (!this.state.notebook || !this.state.notebook.notes) {
+      return null;
+    }
+
+    let crtNoteId = this.props.match.params.id;
+
+    let notes = this.state.notebook.notes.map(note => {
+      if (crtNoteId === note._id) {
+        return null;
+      }
+
+      return (
+        <div className="note-list-content" key={note._id}>
+          <h5 className="note-list-title">{note.title}</h5>
+          <p
+            className="note-list-body"
+            dangerouslySetInnerHTML={{ __html: note.body }}
+          />
+        </div>
+      );
+    });
+    return notes;
   }
 
   handleEditorChange(body) {
@@ -95,9 +115,17 @@ export class NoteContainer extends Component {
 
     return (
       <div className="note-container">
-        <div className="note-list">Welcome Notebook</div>
+        <div className="note-list-container">
+          <h3 className="note-list-container-title">
+            {this.displayNotebookTitle()} Notebook
+          </h3>
+          <div className="notelist-divider" />
+          {this.displayNotesInNotebook()}
+        </div>
         <div className="note-content">
-          <p class="notebook-title">Notebook: {this.displayNotebookTitle()}</p>
+          <p className="notebook-title">
+            Notebook: {this.displayNotebookTitle()}
+          </p>
           <div className="note-header">
             <h3 className="title">{this.state.title}</h3>
             <div className="btn-container">

@@ -13,22 +13,33 @@ export default class NotebookList extends Component {
     this.displayNotebookList = this.displayNotebookList.bind(this);
   }
 
+  displayTags(notebook) {
+    if (!notebook.tags) {
+      return null;
+    }
+    return (
+      <>
+        <Title content="Tags" />
+        <Button type="secondary" label={notebook.tags} />
+      </>
+    );
+  }
+
   displayNotebookList() {
     if (!this.props.notebooks) {
       return null;
     }
-    let notebooks = this.props.notebooks.map(item => {
+    let notebooks = this.props.notebooks.map(notebook => {
       return (
-        <div className="notebook-item" key={item._id}>
+        <div className="notebook-item" key={notebook._id}>
           <p className="notebook-total">
-            Posts in Notebook:
-            <span> 17</span>
+            Notes in Notebook:
+            <span> {notebook.noteCount}</span>
           </p>
           <span className="notebook-title">
-            <Link to={`/notebooks/${item._id}`}>{item.title}</Link>
+            <Link to={`/notebooks/${notebook._id}`}>{notebook.title}</Link>
           </span>
-          <Title content="Tags" />
-          <Button type="secondary" label={item.tags} />
+          {this.displayTags(notebook)}
         </div>
       );
     });
