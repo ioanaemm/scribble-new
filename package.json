@@ -6,6 +6,7 @@
     "@tinymce/tinymce-react": "^3.0.1",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
+    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "draft-js": "^0.10.5",
     "express": "^4.16.4",

@@ -6,7 +6,7 @@ import NotebookModal from "components/Common/NotebookModal/NotebookModal";
 import NoteModal from "components/Common/NoteModal/NoteModal";
 import NotebookList from "components/Common/NotebookList/NotebookList";
 import NoteList from "components/Common/NoteList/NoteList";
-import * as ApiConnector from "Api/Api";
+import * as ApiConnector from "api/Api";
 import "components/HomePage/HomeContainer/HomeContainer.scss";
 
 export default class HomeContainer extends Component {
