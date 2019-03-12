@@ -39,3 +39,7 @@ export function patchNotebookContent(notebookId, notebookData) {
 export function fetchSearchList(searchTerm) {
   return axios.get(`${API_URL}/search/${searchTerm}`);
 }
+
+export function fetchUserDetails() {
+  return axios.get(`${API_URL}/users/me`);
+}

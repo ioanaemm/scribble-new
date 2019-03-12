@@ -19,7 +19,6 @@ router.get("/", async (req, res) => {
     .skip(1)
     .limit(6);
   res.send(noteList);
-  console.log("noteList", noteList);
 });
 
 router.get("/:id", async (req, res) => {

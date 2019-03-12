@@ -7,6 +7,28 @@ const notebooksRouter = require("./routes/notebooks");
 const notesRouter = require("./routes/notes");
 const searchRouter = require("./routes/search");
 const userRouter = require("./routes/users");
+const session = require("express-session");
+
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  })
+);
+
+app.use((req, res, next) => {
+  if (req.url === "/api/users/signin" || req.url === "/api/users") {
+    next();
+  } else {
+    if (!req.session || !req.session.user) {
+      res.status(401).send();
+    } else {
+      next();
+    }
+  }
+});
 
 app.use(bodyParser.json({ extended: true }));
 
