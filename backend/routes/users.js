@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const User = require("../models/user");
 
 router.get("/me", async (req, res) => {
+  console.log("req.session.user", req.session.user);
   if (!req.session.user) {
     res.status(404);
     res.send("Sorry, user not found");

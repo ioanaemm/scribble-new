@@ -7,40 +7,39 @@ export default class User extends Component {
     super(props);
     this.state = {
       username: "",
-      password: "",
-      userData: null,
-      pending: true
+      password: ""
     };
-    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
   }
 
-  componentDidMount() {
-    Api.fetchUserDetails().then(
+  // componentDidMount() {
+  //   Api.fetchUserDetails().then(
+  //     response => {
+  //       this.setState({ userData: response.data, pending: false });
+  //     },
+  //     error => {
+  //       this.setState({ pending: false });
+  //     }
+  //   );
+  // }
+
+  onKeyDown(e) {
+    console.log("onFormSubmit()");
+    if (e.key !== "Enter") {
+      return;
+    }
+
+    Api.signInUser({
+      username: this.state.username,
+      password: this.state.password
+    }).then(
       response => {
-        this.setState({ userData: response.data, pending: false });
+        this.props.onLogin(response.data);
       },
       error => {
-        this.setState({ pending: false });
+        console.log("status: ", error.response.status);
       }
     );
-  }
-
-  onFormSubmit(e) {
-    console.log("onFormSubmit()");
-
-    if (e.keyCode === "Enter") {
-      e.preventDefault();
-      Api.signInUser(this.state).then(
-        response => {
-          this.setState({
-            userData: response.data
-          });
-        },
-        error => {
-          console.log("status: ", error.response.status);
-        }
-      );
-    }
   }
 
   render() {
@@ -49,7 +48,7 @@ export default class User extends Component {
     }
     if (!this.state.userData) {
       return (
-        <form onKeyDown={this.onFormSubmit}>
+        <form onKeyDown={this.onKeyDown}>
           <input
             password="username"
             value={this.state.username}

@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 
 import "./App.scss";
 
-// import * as Api from "Api/Api";
+import * as Api from "Api/Api";
 import User from "components/User/User";
 import SearchResultsPage from "components/SearchResultsPage/SearchResultsPage";
 import Sidebar from "components/Sidebar/Sidebar";
@@ -15,66 +15,36 @@ import NotesContainer from "components/NotesPage/NotesContainer/NotesContainer";
 import NoteContainer from "components/NotePage/NoteContainer/NoteContainer";
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //
-  //   this.state = {
-  //     username: "",
-  //     password: "",
-  //     userData: null,
-  //     pending: true
-  //   };
-  //
-  //   this.onFormSubmit = this.onFormSubmit.bind(this);
-  //   this.displayPageContent = this.displayPageContent.bind(this);
-  //   this.displayLoginForm = this.displayLoginForm.bind(this);
-  // }
+  constructor(props) {
+    super(props);
 
-  // componentDidMount() {
-  //   Api.fetchUserDetails().then(
-  //     response => {
-  //       this.setState({ userData: response.data, pending: false });
-  //     },
-  //     error => {
-  //       this.setState({ pending: false });
-  //     }
-  //   );
-  // }
+    this.state = {
+      userData: null,
+      pending: true
+    };
 
-  // onFormSubmit(e) {
-  //   console.log("onFormSubmit()");
-  //
-  //   if (e.key === "Enter") {
-  //     e.preventDefault();
-  //
-  //     axios.post("/api/users/signin", this.state).then(
-  //       response => {
-  //         this.setState({ userData: response.data });
-  //       },
-  //       error => {
-  //         console.log("status: ", error.response.status);
-  //       }
-  //     );
-  //   }
-  // }
+    // this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.displayPageContent = this.displayPageContent.bind(this);
+    this.onLoginUser = this.onLoginUser.bind(this);
+  }
 
-  // displayLoginForm() {
-  //   return (
-  //     <form onKeyDown={this.onFormSubmit}>
-  //       <input
-  //         placeholder="username"
-  //         onChange={e => this.setState({ username: e.target.value })}
-  //         value={this.state.username}
-  //       />
-  //       <input
-  //         placeholder="password"
-  //         type="password"
-  //         onChange={e => this.setState({ password: e.target.value })}
-  //         value={this.state.password}
-  //       />
-  //     </form>
-  //   );
-  // }
+  componentDidMount() {
+    Api.fetchUserDetails().then(
+      response => {
+        this.setState({ userData: response.data, pending: false });
+      },
+      error => {
+        this.setState({ pending: false });
+      }
+    );
+  }
+
+  onLoginUser(userData) {
+    console.log("onFormSubmit2()");
+    this.setState({
+      userData
+    });
+  }
 
   displayPageContent() {
     return (
@@ -104,12 +74,14 @@ class App extends Component {
   }
 
   render() {
-    let pageContent = <User />;
-    // if (this.state.pending) {
-    //   return <p>Loading...</p>;
-    // }
-    if (pageContent) {
-      this.displayPageContent();
+    let pageContent = null;
+    if (this.state.pending) {
+      return <p>Loading...</p>;
+    }
+    if (!this.state.userData) {
+      pageContent = <User onLogin={this.onLoginUser} />;
+    } else {
+      pageContent = this.displayPageContent();
     }
 
     return (
