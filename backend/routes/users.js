@@ -72,6 +72,7 @@ router.post("/signin", function(req, res) {
         }
         if (result) {
           req.session.user = user;
+          console.log("req.session.user", req.session.user);
           res.status(200).send({
             username: user.username,
             email: user.email
