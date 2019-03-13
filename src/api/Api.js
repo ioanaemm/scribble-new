@@ -1,4 +1,5 @@
 import axios from "axios";
+import query from "query-string";
 
 const API_URL = "/api";
 
@@ -6,8 +7,14 @@ export function addNotebook(notebookData) {
   return axios.post(`${API_URL}/notebooks`, notebookData);
 }
 
-export function fetchNotebooks() {
-  return axios.get(`${API_URL}/notebooks`);
+export function fetchNotebooks({ skip, limit, sort }) {
+  let queryString = query.stringify({
+    skip,
+    limit,
+    sort: JSON.stringify(sort)
+  });
+  console.log("queryString", queryString);
+  return axios.get(`${API_URL}/notebooks?${queryString}`);
 }
 
 export function fetchNotebook(notebookId) {

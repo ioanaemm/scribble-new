@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const query = require("query-string");
 
 const Notebook = require("../models/notebook");
 const Note = require("../models/note");
@@ -18,10 +19,18 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
+  console.log("req.query", req.query);
+
+  let sortParsed = JSON.parse(req.query.sort);
+  for (let key in sortParsed) {
+    sortParsed[key] = parseInt(sortParsed[key]);
+  }
+
   let notebookList = await Notebook.find()
-    .sort({ _id: -1 })
-    .skip(1)
-    .limit(8);
+    .sort(sortParsed)
+    .skip(parseInt(req.query.skip))
+    .limit(parseInt(req.query.limit));
+
   await notebookList.forEach(async (notebook, index) => {
     let noteList = await Note.find({ notebookId: notebook._id });
     notebook.noteCount = noteList.length;

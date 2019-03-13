@@ -14,7 +14,11 @@ export class NotebooksContainer extends Component {
     this.displayNotebookList = this.displayNotebookList.bind(this);
   }
   componentDidMount() {
-    Api.fetchNotebooks().then(response => {
+    Api.fetchNotebooks({
+      limit: Number.MAX_SAFE_INTEGER,
+      sort: { _id: -1 },
+      skip: 0
+    }).then(response => {
       this.setState({ notebooks: response.data });
     });
   }

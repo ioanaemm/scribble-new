@@ -27,7 +27,11 @@ export default class HomeContainer extends Component {
   }
 
   componentDidMount() {
-    ApiConnector.fetchNotebooks().then(response => {
+    ApiConnector.fetchNotebooks({
+      skip: 0,
+      limit: Number.MAX_SAFE_INTEGER,
+      sort: { _id: -1 }
+    }).then(response => {
       this.setState({ notebooks: response.data });
     });
 
