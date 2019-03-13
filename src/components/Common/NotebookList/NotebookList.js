@@ -56,7 +56,7 @@ export default class NotebookList extends Component {
 
   render() {
     return (
-      <Masonry className={"my-gallery-class notebook-list"}>
+      <Masonry className={"notebook-list"}>
         {this.displayNotebookList()}
       </Masonry>
     );
