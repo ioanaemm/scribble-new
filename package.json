@@ -11,11 +11,13 @@
     "draft-js": "^0.10.5",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "jest-puppeteer": "^4.0.0",
     "less": "^3.9.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
     "mongoose": "^5.4.13",
     "node-sass": "^4.11.0",
+    "puppeteer": "^1.13.0",
     "query-string": "^6.3.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
@@ -29,7 +31,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "nodemon backend/server.js"
+    "server": "nodemon backend/server.js",
+    "test:e2e": "cucumber-js features/**/*.feature"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,5 +43,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "cucumber": "^5.1.0"
+  }
 }

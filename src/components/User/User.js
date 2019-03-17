@@ -48,16 +48,18 @@ export default class User extends Component {
     }
     if (!this.state.userData) {
       return (
-        <form onKeyDown={this.onKeyDown}>
+        <form onKeyDown={this.onKeyDown} className="login">
           <input
-            password="username"
+            className="username"
             value={this.state.username}
+            placeholder="Username"
             onChange={e => this.setState({ username: e.target.value })}
           />
           <input
-            password="password"
+            className="password"
             value={this.state.password}
             type="password"
+            placeholder="Password"
             onChange={e => this.setState({ password: e.target.value })}
           />
         </form>
