@@ -11,6 +11,7 @@ Then("I should see a login form", async function() {
 });
 
 When("I put my username and password in", async function() {
+  await this.page.waitForSelector("form.login");
   await this.page.focus("form.login .username");
   await this.page.keyboard.type("ioanam");
   await this.page.focus("form.login .password");
@@ -23,6 +24,4 @@ When("I submit the form", async function() {
 
 Then("I see the home page", async function() {
   await this.page.waitForSelector(".page-content");
-  const loginForm = await this.page.$$(".page-content");
-  await expect(loginForm.length).to.equal(1);
 });
