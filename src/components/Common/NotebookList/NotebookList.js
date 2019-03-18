@@ -30,15 +30,8 @@ export default class NotebookList extends Component {
       return null;
     }
     let notebooks = this.props.notebooks.map(notebook => {
-      notebook.url =
-        "https://images.unsplash.com/photo-1552300977-cbc8b08d95e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80";
-
       return (
-        <div
-          className="notebook-item"
-          key={notebook._id}
-          style={{ backgroundImage: `url(${notebook.url})` }}
-        >
+        <div className="notebook-item" key={notebook._id}>
           <p className="notebook-total">
             Notes in Notebook:
             <span> {notebook.noteCount}</span>
