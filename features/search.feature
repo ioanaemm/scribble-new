@@ -1,4 +1,3 @@
-@run_this
 Feature: Search
 
   Scenario Outline: Search for an item

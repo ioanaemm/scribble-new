@@ -35,19 +35,26 @@ export default class NotebookModal extends Component {
             </button>
             <label>Title</label>
             <input
+              className="new-notebook-title"
               type="text"
               value={this.state.title}
               onChange={e => this.setState({ title: e.target.value })}
             />
             <label>Tags</label>
             <input
+              className="new-notebook-tags"
               type="text"
               value={this.state.tags}
               onChange={e => this.setState({ tags: e.target.value })}
             />
           </div>
           <div className="footer">
-            <Button type="primary" onClick={this.submit} label="Submit">
+            <Button
+              className="newnotebook-btn"
+              type="primary"
+              onClick={this.submit}
+              label="Submit"
+            >
               Submit
             </Button>
           </div>
