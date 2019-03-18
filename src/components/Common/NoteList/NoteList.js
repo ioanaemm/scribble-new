@@ -16,20 +16,20 @@ export default class NoteList extends Component {
     if (!this.props.notes) {
       return null;
     }
-    let noteList = this.props.notes.map(item => {
+    let noteList = this.props.notes.map(note => {
       let timestamp = moment(
-        new Date(parseInt(item._id.substring(0, 8), 16) * 1000)
+        new Date(parseInt(note._id.substring(0, 8), 16) * 1000)
       ).format("Do MMMM YYYY");
 
       return (
-        <div className="note-item" key={item._id}>
+        <div className={`note-item note-item-${note._id}`} key={note._id}>
           <p className="note-timestamp">Created on: {timestamp}</p>
           <span className="note-title">
-            <Link to={`/notes/${item._id}`}>{item.title}</Link>
+            <Link to={`/notes/${note._id}`}>{note.title}</Link>
           </span>
           <div
             className="note-content"
-            dangerouslySetInnerHTML={{ __html: item.body }}
+            dangerouslySetInnerHTML={{ __html: note.body }}
           />
         </div>
       );

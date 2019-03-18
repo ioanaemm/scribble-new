@@ -27,3 +27,13 @@ Then(
     await this.page.waitForXPath(`//a[contains(text(), "${title}")]`);
   }
 );
+
+When("I click the notebook with title {string}", async function(notebookTitle) {
+  const notebookTitleElement = await this.page.$x(
+    `//a[contains(text(), "${notebookTitle}")]`
+  );
+  await Promise.all([
+    this.page.waitForNavigation(),
+    notebookTitleElement[0].click()
+  ]);
+});

@@ -31,7 +31,10 @@ export default class NotebookList extends Component {
     }
     let notebooks = this.props.notebooks.map(notebook => {
       return (
-        <div className="notebook-item" key={notebook._id}>
+        <div
+          className={`notebook-item notebook-item-${notebook._id}`}
+          key={notebook._id}
+        >
           <p className="notebook-total">
             Notes in Notebook:
             <span> {notebook.noteCount}</span>

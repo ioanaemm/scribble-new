@@ -125,7 +125,10 @@ export class Notebook extends Component {
       );
     } else {
       return (
-        <h3 onClick={() => this.setState({ isInput: true })}>
+        <h3
+          className="notebook-title"
+          onClick={() => this.setState({ isInput: true })}
+        >
           {this.state.title}
         </h3>
       );

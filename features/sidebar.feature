@@ -1,4 +1,3 @@
-@run_this
 Feature: Sidebar
   Background:
     Given I am logged in
