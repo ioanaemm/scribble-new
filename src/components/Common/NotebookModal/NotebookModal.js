@@ -27,7 +27,7 @@ export default class NotebookModal extends Component {
   render() {
     return (
       <div className="backdrop">
-        <div className="modal">
+        <div className="modal modal-notebook">
           <Title content="Add a new notebook" />
           <div className="body">
             <button className="close-btn" onClick={this.props.onClose}>

@@ -100,6 +100,7 @@ export default class HomeContainer extends Component {
         <div className="add-item-container">
           <Title content="Notebooks" />
           <Button
+            className="add-notebook"
             type="primary"
             onClick={this.toggleNotebookModal}
             label="New Notebook"
@@ -111,6 +112,7 @@ export default class HomeContainer extends Component {
         <div className="add-item-container">
           <Title content="Notes" />
           <Button
+            className="add-note"
             type="primary"
             onClick={this.toggleNoteModal}
             label="New Note"

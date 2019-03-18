@@ -5,7 +5,10 @@ export default class Button extends Component {
   render() {
     return (
       <button
-        className={this.props.type + " " + this.props.className}
+        className={
+          this.props.type +
+          (this.props.className ? " " + this.props.className : "")
+        }
         onClick={this.props.onClick}
       >
         {this.props.label}

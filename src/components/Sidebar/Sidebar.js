@@ -15,10 +15,10 @@ export default class Sidebar extends Component {
           <Link to={`/`}>S</Link>
         </h1>
         <div className="iconContainer">
-          <Link to="/notebooks">
+          <Link className="notebook-icon" to="/notebooks">
             <img className="icon" src={notebook} alt="notebook" />
           </Link>
-          <Link to="/notes">
+          <Link className="note-icon" to="/notes">
             <img className="icon" src={note} alt="note" />
           </Link>
           <img className="icon" src={clipboard} alt="clipboard" />
