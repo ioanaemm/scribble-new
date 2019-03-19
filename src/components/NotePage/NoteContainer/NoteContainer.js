@@ -15,10 +15,11 @@ export class NoteContainer extends Component {
       title: "",
       isInput: false,
       body: "",
-      notebook: null
+      notebook: null,
+      isSaving: false
     };
     this.handleEditorChange = this.handleEditorChange.bind(this);
-    this.editContent = this.editContent.bind(this);
+    this.saveNoteDetails = this.saveNoteDetails.bind(this);
     this.retrieveNotebook = this.retrieveNotebook.bind(this);
     this.displayNotebookTitle = this.displayNotebookTitle.bind(this);
     this.displayNotesInNotebook = this.displayNotesInNotebook.bind(this);
@@ -94,23 +95,28 @@ export class NoteContainer extends Component {
     });
   }
 
-  editContent() {
-    ApiConnector.patchNoteContent(this.props.match.params.id, {
-      title: this.state.title,
-      body: this.state.body
-    }).then(
-      response => {
-        this.setState({
-          title: response.data.title,
-          isInput: false
-        });
-      },
-      error => {
-        this.setState({
-          error: error.response.data
-        });
-      }
-    );
+  saveNoteDetails() {
+    this.setState({ isSaving: true });
+    setTimeout(() => {
+      ApiConnector.patchNoteContent(this.props.match.params.id, {
+        title: this.state.title,
+        body: this.state.body
+      }).then(
+        response => {
+          this.setState({
+            title: response.data.title,
+            isInput: false,
+            isSaving: false
+          });
+        },
+        error => {
+          this.setState({
+            error: error.response.data,
+            isSaving: false
+          });
+        }
+      );
+    }, 500);
   }
 
   saveInputValue(e) {
@@ -130,9 +136,7 @@ export class NoteContainer extends Component {
             value={this.state.title}
             onChange={this.saveInputValue}
           />
-          <Button type="primary" label="Save" onClick={this.editContent}>
-            {" "}
-          </Button>
+          <Button type="primary" label="Save" onClick={this.saveNoteDetails} />
         </>
       );
     } else {
@@ -177,9 +181,16 @@ export class NoteContainer extends Component {
               <Button
                 type="secondary"
                 label="Share"
-                onClick={this.editContent}
+                onClick={this.saveNoteDetails}
               />
-              <Button type="primary" label="Save" onClick={this.editContent} />
+              <Button
+                type="primary"
+                label={this.state.isSaving ? "Saving..." : "Save"}
+                className={`save-note ${
+                  this.state.isSaving ? "is-saving" : "is-not-saving"
+                }`}
+                onClick={this.saveNoteDetails}
+              />
             </div>
           </div>
           <div className="note-editor">
