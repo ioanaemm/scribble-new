@@ -13,6 +13,7 @@ export class NoteContainer extends Component {
       pending: true,
       error: null,
       title: "",
+      isInput: false,
       body: "",
       notebook: null
     };
@@ -21,6 +22,8 @@ export class NoteContainer extends Component {
     this.retrieveNotebook = this.retrieveNotebook.bind(this);
     this.displayNotebookTitle = this.displayNotebookTitle.bind(this);
     this.displayNotesInNotebook = this.displayNotesInNotebook.bind(this);
+    this.displayUpdatedTitle = this.displayUpdatedTitle.bind(this);
+    this.saveInputValue = this.saveInputValue.bind(this);
   }
 
   componentDidMount() {
@@ -93,15 +96,57 @@ export class NoteContainer extends Component {
 
   editContent() {
     ApiConnector.patchNoteContent(this.props.match.params.id, {
+      title: this.state.title,
       body: this.state.body
     }).then(
-      response => {},
+      response => {
+        this.setState({
+          title: response.data.title,
+          isInput: false
+        });
+      },
       error => {
         this.setState({
           error: error.response.data
         });
       }
     );
+  }
+
+  saveInputValue(e) {
+    e.preventDefault();
+    this.setState({
+      title: e.target.value
+    });
+  }
+
+  displayUpdatedTitle() {
+    // return <h3 className="title">{this.state.title}</h3>;
+    if (this.state.isInput) {
+      return (
+        <>
+          <input
+            type="text"
+            value={this.state.title}
+            onChange={this.saveInputValue}
+          />
+          <Button type="primary" label="Save" onClick={this.editContent}>
+            {" "}
+          </Button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <h3
+            className="title"
+            onClick={() => this.setState({ isInput: true })}
+          >
+            {this.state.title}
+          </h3>
+        </>
+      );
+    }
   }
 
   render() {
@@ -127,7 +172,7 @@ export class NoteContainer extends Component {
             Notebook: {this.displayNotebookTitle()}
           </p>
           <div className="note-header">
-            <h3 className="title">{this.state.title}</h3>
+            {this.displayUpdatedTitle()}
             <div className="btn-container">
               <Button
                 type="secondary"
