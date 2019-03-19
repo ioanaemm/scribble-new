@@ -35,6 +35,7 @@ export default class NotebookList extends Component {
           className={`notebook-item notebook-item-${notebook._id}`}
           key={notebook._id}
         >
+          <p onClick={() => this.props.removeNotebook(notebook._id)}>Delete</p>
           <p className="notebook-total">
             Notes in Notebook:
             <span> {notebook.noteCount}</span>

@@ -54,3 +54,7 @@ export function signInUser(userData) {
 export function fetchUserDetails() {
   return axios.get(`${API_URL}/users/me`);
 }
+
+export function deleteNotebook(notebookId) {
+  return axios.delete(`${API_URL}/notebooks/${notebookId}`);
+}

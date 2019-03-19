@@ -6,7 +6,7 @@ import NotebookModal from "components/Common/NotebookModal/NotebookModal";
 import NoteModal from "components/Common/NoteModal/NoteModal";
 import NotebookList from "components/Common/NotebookList/NotebookList";
 import NoteList from "components/Common/NoteList/NoteList";
-import * as ApiConnector from "Api/Api";
+import * as Api from "Api/Api";
 import "components/HomePage/HomeContainer/HomeContainer.scss";
 
 export default class HomeContainer extends Component {
@@ -20,14 +20,19 @@ export default class HomeContainer extends Component {
       notes: []
     };
 
+    this._isMounted = false;
+
     this.toggleNotebookModal = this.toggleNotebookModal.bind(this);
     this.toggleNoteModal = this.toggleNoteModal.bind(this);
     this.onNotebookModalSubmit = this.onNotebookModalSubmit.bind(this);
     this.onNoteModalSubmit = this.onNoteModalSubmit.bind(this);
+    this.removeNotebook = this.removeNotebook.bind(this);
   }
 
   componentDidMount() {
-    ApiConnector.fetchNotebooks({
+    this._isMounted = true;
+
+    Api.fetchNotebooks({
       skip: 0,
       limit: Number.MAX_SAFE_INTEGER,
       sort: { _id: -1 }
@@ -35,9 +40,15 @@ export default class HomeContainer extends Component {
       this.setState({ notebooks: response.data });
     });
 
-    ApiConnector.fetchNotes().then(response => {
-      this.setState({ notes: response.data });
+    Api.fetchNotes().then(response => {
+      if (this._isMounted) {
+        this.setState({ notes: response.data });
+      }
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   toggleNotebookModal() {
@@ -49,7 +60,7 @@ export default class HomeContainer extends Component {
   }
 
   onNotebookModalSubmit(notebookData) {
-    ApiConnector.addNotebook(notebookData).then(response => {
+    Api.addNotebook(notebookData).then(response => {
       this.setState({
         notebooks: [...this.state.notebooks, response.data]
       });
@@ -58,7 +69,7 @@ export default class HomeContainer extends Component {
   }
 
   onNoteModalSubmit(noteData) {
-    ApiConnector.addNote(noteData).then(response => {
+    Api.addNote(noteData).then(response => {
       this.setState({
         notes: [...this.state.notes, response.data]
       });
@@ -93,6 +104,18 @@ export default class HomeContainer extends Component {
     return noteModal;
   }
 
+  removeNotebook(notebookId) {
+    Api.deleteNotebook(notebookId).then(response => {
+      if (this.state.notebooks) {
+        this.setState({
+          notebooks: this.state.notebooks.filter(
+            notebook => notebook._id !== notebookId
+          )
+        });
+      }
+    });
+  }
+
   render() {
     return (
       <>
@@ -108,7 +131,10 @@ export default class HomeContainer extends Component {
           {this.renderNotebookModal()}
         </div>
 
-        <NotebookList notebooks={this.state.notebooks} />
+        <NotebookList
+          notebooks={this.state.notebooks}
+          removeNotebook={this.removeNotebook}
+        />
         <div className="add-item-container">
           <Title content="Notes" />
           <Button
