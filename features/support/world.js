@@ -15,7 +15,7 @@ function CustomWorld(callback) {
 }
 
 Before(async function(testCase) {
-  const browser = await puppeteer.launch({ headless: false, slowMo: 100 });
+  const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   this.browser = browser;
   this.page = page;

@@ -76,7 +76,7 @@ class App extends Component {
   render() {
     let pageContent = null;
     if (this.state.pending) {
-      return <p>Loading...</p>;
+      return <p className="preloader">Loading...</p>;
     }
     if (!this.state.userData) {
       pageContent = <User onLogin={this.onLoginUser} />;
