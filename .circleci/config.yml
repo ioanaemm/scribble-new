@@ -53,3 +53,12 @@ jobs:
       - run:
           name: Deploying
           command: eb deploy scribble-env
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
