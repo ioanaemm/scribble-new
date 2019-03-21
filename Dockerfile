@@ -6,4 +6,4 @@ RUN npm run build
 
 ENV port 80
 EXPOSE 80
-RUN npm run prod-server
+CMD npm run prod-server
