@@ -1,13 +1,11 @@
 const express = require("express");
 const app = express();
-const port = 5000;
+const port = process.env.port || 5000;
 const bodyParser = require("body-parser");
 const mongoose = require("./db");
-const notebooksRouter = require("./routes/notebooks");
-const notesRouter = require("./routes/notes");
-const searchRouter = require("./routes/search");
-const userRouter = require("./routes/users");
+const apiRouter = require("./routes/api");
 const session = require("express-session");
+const path = require("path");
 
 app.use(
   session({
@@ -18,23 +16,9 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  if (req.url === "/api/users/signin" || req.url === "/api/users") {
-    next();
-  } else {
-    if (!req.session || !req.session.user) {
-      res.status(401).send();
-    } else {
-      next();
-    }
-  }
-});
-
 app.use(bodyParser.json({ extended: true }));
 
+app.use("/api", apiRouter);
+app.use(express.static(path.join(__dirname, "public")));
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-app.get("/", (req, res) => res.send("Hello World!"));
-app.use("/api/notebooks", notebooksRouter);
-app.use("/api/notes", notesRouter);
-app.use("/api/search", searchRouter);
-app.use("/api/users", userRouter);
