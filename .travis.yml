@@ -1,0 +1,9 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t ioana/scribble -f Dockerfile
+
+script:
+  - docker run ioana/scribble npm run test -- --coverage
