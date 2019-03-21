@@ -7,6 +7,3 @@ before_install:
 
 script:
   - docker run ioana/scribble npm run test -- --coverage
-
-deploy:
-  -
