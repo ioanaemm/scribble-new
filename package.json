@@ -27,11 +27,12 @@
   "scripts": {
     "dev-start": "react-scripts start",
     "build": "react-scripts build && mv build backend/public",
-    "test": "react-scripts test",
+    "test": "npm run test:unit && npm run test:e2e",
     "eject": "react-scripts eject",
     "server": "nodemon backend/server.js",
     "start": "node backend/server.js",
-    "test:e2e": "cucumber-js features/**/*.feature"
+    "test:e2e": "cucumber-js features/**/*.feature",
+    "test:unit": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
