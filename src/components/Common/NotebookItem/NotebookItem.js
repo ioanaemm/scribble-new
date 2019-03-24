@@ -20,13 +20,23 @@ export default class NotebookItem extends Component {
     const { notebook } = this.props;
     return (
       <div className={`notebook-item notebook-item-${notebook._id}`}>
-        <p onClick={() => this.props.removeNotebook(notebook._id)}>Delete</p>
+        <button
+          className="delete"
+          onClick={() => this.props.removeNotebook(notebook._id)}
+        >
+          Delete
+        </button>
         <p className="notebook-total">
-          Notes in Notebook:
-          <span> {notebook.noteCount}</span>
+          Notes in Notebook:{" "}
+          <span className="notebook-count">{notebook.noteCount}</span>
         </p>
         <span className="notebook-title">
-          <Link to={`/notebooks/${notebook._id}`}>{notebook.title}</Link>
+          <Link
+            className="notebook-link-title"
+            to={`/notebooks/${notebook._id}`}
+          >
+            {notebook.title}
+          </Link>
         </span>
         {this.displayTags(notebook)}
       </div>

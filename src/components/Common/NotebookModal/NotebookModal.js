@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "components/Common/NotebookModal/NotebookModal.scss";
-import Button from "components/Common/Button/Button";
 import Title from "components/Common/Title/Title";
 
 import closebutton from "icons/close.png";
@@ -49,14 +48,14 @@ export default class NotebookModal extends Component {
             />
           </div>
           <div className="footer">
-            <Button
+            <button
               className="newnotebook-btn"
               type="primary"
               onClick={this.submit}
               label="Submit"
             >
               Submit
-            </Button>
+            </button>
           </div>
         </div>
         <div className="modal-overlay" />
