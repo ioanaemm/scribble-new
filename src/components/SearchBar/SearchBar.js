@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import * as Api from "Api/Api";
+// import * as Api from "api/Api";
 import "components/SearchBar/SearchBar.scss";
 
 export default class SearchBar extends Component {

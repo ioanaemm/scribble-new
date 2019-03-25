@@ -15,7 +15,10 @@ function CustomWorld(callback) {
 }
 
 Before(async function(testCase) {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    executablePath: process.env.GOOGLE_CHROME_BIN
+  });
   const page = await browser.newPage();
   this.browser = browser;
   this.page = page;
