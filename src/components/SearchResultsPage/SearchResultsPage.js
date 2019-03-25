@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import * as Api from "api/Api";
+import * as Api from "Api/Api";
 import { withRouter } from "react-router-dom";
 
 class SearchResultsPage extends Component {

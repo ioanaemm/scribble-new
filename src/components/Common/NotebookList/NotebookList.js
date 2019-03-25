@@ -16,7 +16,13 @@ export default class NotebookList extends Component {
       return null;
     }
     let notebooks = this.props.notebooks.map(notebook => {
-      return <NotebookItem notebook={notebook} key={notebook._id} />;
+      return (
+        <NotebookItem
+          notebook={notebook}
+          key={notebook._id}
+          removeNotebook={this.props.removeNotebook}
+        />
+      );
     });
 
     return <>{notebooks}</>;
