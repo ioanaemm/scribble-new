@@ -9,10 +9,10 @@ export default class NotebookItem extends Component {
       return null;
     }
     return (
-      <>
+      <div className="tags-container">
         <Title content="Tags" />
-        <Button type="secondary" label={notebook.tags} />
-      </>
+        <Button className="tags" type="secondary" label={notebook.tags} />
+      </div>
     );
   }
 

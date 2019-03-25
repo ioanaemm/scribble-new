@@ -31,12 +31,23 @@ describe("NotebookItem component", () => {
     expect(wrapper.find(".notebook-count").text()).toEqual("12");
   });
 
-  // it("includes link to the notebook and renders the notebook title", () => {
-  //   const wrapper = shallow(
-  //     <NotebookItem notebook={{ _id: "121", title: "React post" }}>
-  //       <Link />
-  //     </NotebookItem>
-  //   );
-  //   expect(wrapper.find(".notebook-link-title").text()).toEqual("React post");
-  // });
+  it("includes a link to the notebook, which renders the notebook title", () => {
+    const wrapper = shallow(
+      <NotebookItem notebook={{ _id: "121", title: "React post" }} />
+    );
+    const titleLinkProps = wrapper.find(".notebook-link-title").props();
+    expect(titleLinkProps.children).toEqual("React post");
+    expect(titleLinkProps.to).toEqual("/notebooks/121");
+  });
+
+  it("doesn't render tags if they are not present", () => {
+    const wrapper = shallow(<NotebookItem notebook={{}} />);
+    expect(wrapper.find(".tags").exists()).toBe(false);
+  });
+
+  it("renders tags if they are present", () => {
+    const wrapper = shallow(<NotebookItem notebook={{ tags: "react" }} />);
+    expect(wrapper.find(".tags").exists()).toBe(true);
+    expect(wrapper.find(".tags").props().label).toEqual("react");
+  });
 });
