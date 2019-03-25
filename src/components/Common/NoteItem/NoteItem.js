@@ -11,9 +11,13 @@ export default class NoteItem extends Component {
 
     return (
       <div className={`note-item note-item-${note._id}`}>
-        <p className="note-timestamp">Created on: {timestamp}</p>
+        <p className="note-timestamp">
+          Created on: <span className="timestamp">{timestamp}</span>
+        </p>
         <span className="note-title">
-          <Link to={`/notes/${note._id}`}>{note.title}</Link>
+          <Link className="note-link-title" to={`/notes/${note._id}`}>
+            {note.title}
+          </Link>
         </span>
         <div
           className="note-content"
