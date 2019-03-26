@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import * as Api from "Api/Api";
 import { Link } from "react-router-dom";
 import moment from "moment";
-// import * as ApiConnector from "api/Api";
 
 export class NotebooksContainer extends Component {
   constructor() {

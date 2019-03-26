@@ -26,7 +26,7 @@
   },
   "scripts": {
     "dev-start": "react-scripts start",
-    "build": "react-scripts build && mv build backend/public",
+    "build": "react-scripts build && rm -rf backend/public/build && mv build backend/public",
     "test": "npm run test:unit && npm run test:e2e",
     "eject": "react-scripts eject",
     "server": "nodemon backend/server.js",
@@ -53,7 +53,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.js"
+      "src/**/NoteModal.js"
     ]
   },
   "engines": {

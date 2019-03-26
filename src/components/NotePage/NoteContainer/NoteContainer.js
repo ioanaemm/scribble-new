@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 import * as Api from "Api/Api";
-import * as ApiConnector from "Api/Api";
 
 import Button from "components/Common/Button/Button";
 import "components/NotePage/NoteContainer/NoteContainer.scss";
@@ -98,7 +97,7 @@ export class NoteContainer extends Component {
   saveNoteDetails() {
     this.setState({ isSaving: true });
     setTimeout(() => {
-      ApiConnector.patchNoteContent(this.props.match.params.id, {
+      Api.patchNoteContent(this.props.match.params.id, {
         title: this.state.title,
         body: this.state.body
       }).then(

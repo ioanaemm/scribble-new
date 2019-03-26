@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import * as Api from "Api/Api";
-import * as ApiConnector from "Api/Api";
 
 import Button from "components/Common/Button/Button";
 import NoteModal from "components/Common/NoteModal/NoteModal";
@@ -47,7 +46,7 @@ export class Notebook extends Component {
 
   onModalSubmit(noteData) {
     noteData.notebookId = this.state.notebook._id;
-    ApiConnector.addNote(noteData).then(response => {
+    Api.addNote(noteData).then(response => {
       // console.log("response.data", response.data);
       // console.log("this.state.notebook.notes", this.state.notebook.notes);
       this.setState({
@@ -86,7 +85,7 @@ export class Notebook extends Component {
 
   onTitleSubmit() {
     // console.log("this.state.title", this.state.title);
-    ApiConnector.patchNotebookContent(this.props.match.params.id, {
+    Api.patchNotebookContent(this.props.match.params.id, {
       title: this.state.title
     }).then(
       response => {
