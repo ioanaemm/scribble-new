@@ -32,7 +32,7 @@
     "server": "nodemon backend/server.js",
     "start": "node backend/server.js",
     "test:e2e": "cucumber-js features/**/*.feature",
-    "test:unit": "react-scripts test"
+    "test:unit": "export NODE_PATH=src/ && react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
