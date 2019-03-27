@@ -22,7 +22,7 @@ export class NoteContainer extends Component {
     this.retrieveNotebook = this.retrieveNotebook.bind(this);
     this.displayNotebookTitle = this.displayNotebookTitle.bind(this);
     this.displayNotesInNotebook = this.displayNotesInNotebook.bind(this);
-    this.displayUpdatedTitle = this.displayUpdatedTitle.bind(this);
+    this.displayTitle = this.displayTitle.bind(this);
     this.saveInputValue = this.saveInputValue.bind(this);
   }
 
@@ -125,7 +125,7 @@ export class NoteContainer extends Component {
     });
   }
 
-  displayUpdatedTitle() {
+  displayTitle() {
     // return <h3 className="title">{this.state.title}</h3>;
     if (this.state.isInput) {
       return (
@@ -175,7 +175,7 @@ export class NoteContainer extends Component {
             Notebook: {this.displayNotebookTitle()}
           </p>
           <div className="note-header">
-            {this.displayUpdatedTitle()}
+            {this.displayTitle()}
             <div className="btn-container">
               <Button
                 type="secondary"

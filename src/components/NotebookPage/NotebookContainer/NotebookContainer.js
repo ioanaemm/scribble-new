@@ -6,7 +6,7 @@ import * as Api from "Api/Api";
 import Button from "components/Common/Button/Button";
 import NoteModal from "components/Common/NoteModal/NoteModal";
 
-export class Notebook extends Component {
+export class NotebookContainer extends Component {
   constructor() {
     super();
     this.state = {
@@ -23,7 +23,7 @@ export class Notebook extends Component {
     this.displayNotes = this.displayNotes.bind(this);
     this.onTitleSubmit = this.onTitleSubmit.bind(this);
     this.saveInputValue = this.saveInputValue.bind(this);
-    this.displayUpdatedTitle = this.displayUpdatedTitle.bind(this);
+    this.displayTitle = this.displayTitle.bind(this);
   }
   componentDidMount() {
     Api.fetchNotebook(this.props.match.params.id).then(
@@ -47,8 +47,6 @@ export class Notebook extends Component {
   onModalSubmit(noteData) {
     noteData.notebookId = this.state.notebook._id;
     Api.addNote(noteData).then(response => {
-      // console.log("response.data", response.data);
-      // console.log("this.state.notebook.notes", this.state.notebook.notes);
       this.setState({
         notebook: {
           ...this.state.notebook,
@@ -74,13 +72,13 @@ export class Notebook extends Component {
   }
 
   renderModal() {
-    let modal = null;
-    if (this.state.isOpen) {
-      modal = (
-        <NoteModal onClose={this.toggleModal} onSubmit={this.onModalSubmit} />
-      );
+    if (!this.state.isOpen) {
+      return null;
     }
-    return modal;
+
+    return (
+      <NoteModal onClose={this.toggleModal} onSubmit={this.onModalSubmit} />
+    );
   }
 
   onTitleSubmit() {
@@ -110,16 +108,22 @@ export class Notebook extends Component {
     });
   }
 
-  displayUpdatedTitle() {
+  displayTitle() {
     if (this.state.isInput) {
       return (
         <>
           <input
+            className="title-input"
             type="text"
             value={this.state.title}
             onChange={this.saveInputValue}
           />
-          <Button type="primary" label="Save" onClick={this.onTitleSubmit} />
+          <button
+            className="title-submit"
+            type="primary"
+            label="Save"
+            onClick={this.onTitleSubmit}
+          />
         </>
       );
     } else {
@@ -136,7 +140,7 @@ export class Notebook extends Component {
 
   render() {
     if (this.state.pending) {
-      return <p>Loading...</p>;
+      return <p className="preloader">Loading...</p>;
     }
     if (this.state.error) {
       return <p>Notebook not found</p>;
@@ -144,8 +148,8 @@ export class Notebook extends Component {
 
     return (
       <div>
-        {this.displayUpdatedTitle()}
-        <p>{this.state.notebook.tags}</p>
+        {this.displayTitle()}
+        <p>{this.state.notebook && this.state.notebook.tags}</p>
         <Button type="primary" onClick={this.toggleModal} label="New Note" />
         {this.renderModal()}
         {this.displayNotes()}
@@ -154,4 +158,4 @@ export class Notebook extends Component {
   }
 }
 
-export default withRouter(Notebook);
+export default withRouter(NotebookContainer);
