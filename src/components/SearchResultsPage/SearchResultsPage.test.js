@@ -21,7 +21,7 @@ describe("SearchResultsPage component", () => {
     expect(wrapper.find(".notebook-list").exists()).toBe(false);
   });
 
-  it("renders the notebook list", () => {
+  it("renders the notebook list", async () => {
     Api.fetchSearchList = jest.fn().mockReturnValue(
       new Promise((resolve, reject) => {
         resolve({
@@ -42,9 +42,38 @@ describe("SearchResultsPage component", () => {
     );
 
     const wrapper = shallow(<SearchResultsPage match={match} />);
-    new Promise(resolve => resolve()).then(() => {
-      expect(wrapper.find(".notebook-list").exists()).toBe(true);
-      expect(wrapper.find(".notebook-item").length).toEqual(2);
-    });
+    await new Promise(resolve => resolve());
+    expect(wrapper.find(".notebook-list").exists()).toBe(true);
+    expect(wrapper.find(".notebook-item").length).toEqual(2);
+  });
+
+  it("doesn't render the note list", () => {
+    const wrapper = shallow(<SearchResultsPage match={match} />);
+    expect(wrapper.find(".note-list").exists()).toBe(false);
+  });
+
+  it("renders the note list", async () => {
+    Api.fetchSearchList = jest.fn().mockReturnValue(
+      new Promise((resolve, reject) => {
+        resolve({
+          data: {
+            notes: [
+              {
+                title: "Note1",
+                _id: "1234"
+              },
+              {
+                title: "Note2",
+                _id: "12345"
+              }
+            ]
+          }
+        });
+      })
+    );
+    const wrapper = shallow(<SearchResultsPage match={match} />);
+    await new Promise(resolve => resolve());
+    expect(wrapper.find(".note-list").exists()).toBe(true);
+    expect(wrapper.find(".note-item").length).toEqual(2);
   });
 });

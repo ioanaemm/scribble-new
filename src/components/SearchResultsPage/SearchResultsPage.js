@@ -47,10 +47,14 @@ export class SearchResultsPage extends Component {
     }
 
     let notes = this.state.notes.map(note => {
-      return <li key={note._id}>{note.title}</li>;
+      return (
+        <li className="note-item" key={note._id}>
+          {note.title}
+        </li>
+      );
     });
 
-    return <ul>{notes}</ul>;
+    return <ul className="note-list">{notes}</ul>;
   }
 
   render() {
