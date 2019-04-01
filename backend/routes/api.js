@@ -7,17 +7,19 @@ const userRouter = require("./users");
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-  if (req.url === "/users/signin" || req.url === "/users") {
-    next();
-  } else {
-    if (!req.session || !req.session.user) {
-      res.status(401).send();
-    } else {
+if (process.env.profile !== "nft") {
+  router.use((req, res, next) => {
+    if (req.url === "/users/signin" || req.url === "/users") {
       next();
+    } else {
+      if (!req.session || !req.session.user) {
+        res.status(401).send();
+      } else {
+        next();
+      }
     }
-  }
-});
+  });
+}
 
 router.use("/notebooks", notebooksRouter);
 router.use("/notes", notesRouter);
