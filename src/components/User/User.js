@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-// import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import * as Api from "Api/Api";
-
-// import RegisterUser from "components/User/RegisterUser";
 
 export default class User extends Component {
   constructor(props) {
@@ -16,7 +13,6 @@ export default class User extends Component {
   }
 
   onKeyDown(e) {
-    console.log("onFormSubmit()");
     if (e.key !== "Enter") {
       return;
     }

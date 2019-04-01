@@ -53,7 +53,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/SearchResultsPage.js"
+      "src/**/*.js"
     ]
   },
   "engines": {

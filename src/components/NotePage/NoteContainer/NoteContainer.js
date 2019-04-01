@@ -5,6 +5,7 @@ import * as Api from "Api/Api";
 
 import Button from "components/Common/Button/Button";
 import "components/NotePage/NoteContainer/NoteContainer.scss";
+
 export class NoteContainer extends Component {
   constructor() {
     super();

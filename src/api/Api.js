@@ -13,7 +13,6 @@ export function fetchNotebooks({ skip, limit, sort }) {
     limit,
     sort: JSON.stringify(sort)
   });
-  console.log("queryString", queryString);
   return axios.get(`${API_URL}/notebooks?${queryString}`);
 }
 

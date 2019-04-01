@@ -13,22 +13,24 @@ export default class NotesContainer extends Component {
 
   componentDidMount() {
     Api.fetchNotes().then(response => {
-      console.log("notes: ", response.data);
       this.setState({ pending: false, notes: response.data });
     });
   }
   displayNoteList() {
     if (this.state.pending) {
-      return <p>Loading...</p>;
+      return <p className="preloader">Loading...</p>;
     }
+
     let noteList = this.state.notes.map(note => {
       return (
-        <li key={note._id}>
-          <Link to={`notes/${note._id}`}>{note.title}</Link>
+        <li className="note-item" key={note._id}>
+          <Link className="note-link" to={`notes/${note._id}`}>
+            {note.title}
+          </Link>
         </li>
       );
     });
-    return <ul>{noteList}</ul>;
+    return <ul className="note-list">{noteList}</ul>;
   }
 
   render() {
