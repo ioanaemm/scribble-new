@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 // import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as Api from "Api/Api";
+
+// import RegisterUser from "components/User/RegisterUser";
 
 export default class User extends Component {
   constructor(props) {
@@ -48,21 +51,24 @@ export default class User extends Component {
     }
     if (!this.state.userData) {
       return (
-        <form onKeyDown={this.onKeyDown} className="login">
-          <input
-            className="username"
-            value={this.state.username}
-            placeholder="Username"
-            onChange={e => this.setState({ username: e.target.value })}
-          />
-          <input
-            className="password"
-            value={this.state.password}
-            type="password"
-            placeholder="Password"
-            onChange={e => this.setState({ password: e.target.value })}
-          />
-        </form>
+        <div className="user-container">
+          <form onKeyDown={this.onKeyDown} className="login">
+            <input
+              className="username"
+              value={this.state.username}
+              placeholder="Username"
+              onChange={e => this.setState({ username: e.target.value })}
+            />
+            <input
+              className="password"
+              value={this.state.password}
+              type="password"
+              placeholder="Password"
+              onChange={e => this.setState({ password: e.target.value })}
+            />
+          </form>
+          <Link to="/users/register">New user?</Link>
+        </div>
       );
     }
   }

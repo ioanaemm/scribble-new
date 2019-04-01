@@ -102,7 +102,6 @@ export class NotebookContainer extends Component {
   }
 
   saveInputValue(e) {
-    e.preventDefault();
     this.setState({
       title: e.target.value
     });
@@ -143,14 +142,19 @@ export class NotebookContainer extends Component {
       return <p className="preloader">Loading...</p>;
     }
     if (this.state.error) {
-      return <p>Notebook not found</p>;
+      return <p className="error">Notebook not found</p>;
     }
 
     return (
       <div>
         {this.displayTitle()}
         <p>{this.state.notebook && this.state.notebook.tags}</p>
-        <Button type="primary" onClick={this.toggleModal} label="New Note" />
+        <Button
+          className="newnote-modal"
+          type="primary"
+          onClick={this.toggleModal}
+          label="New Note"
+        />
         {this.renderModal()}
         {this.displayNotes()}
       </div>

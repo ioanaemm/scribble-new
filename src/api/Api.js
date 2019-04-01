@@ -51,6 +51,10 @@ export function signInUser(userData) {
   return axios.post(`${API_URL}/users/signin`, userData);
 }
 
+export function registerUser(userData) {
+  return axios.post(`${API_URL}/users/register`, userData);
+}
+
 export function fetchUserDetails() {
   return axios.get(`${API_URL}/users/me`);
 }

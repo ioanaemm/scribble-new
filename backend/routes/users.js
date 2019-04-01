@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
   console.log("targetUserId", targetUserId);
 });
 
-router.post("/", function(req, res) {
+router.post("/register", function(req, res) {
   bcrypt.hash(req.body.password, 10, function(err, hash) {
     if (err) {
       return res.status(500).json({
