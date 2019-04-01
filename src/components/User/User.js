@@ -15,17 +15,6 @@ export default class User extends Component {
     this.onKeyDown = this.onKeyDown.bind(this);
   }
 
-  // componentDidMount() {
-  //   Api.fetchUserDetails().then(
-  //     response => {
-  //       this.setState({ userData: response.data, pending: false });
-  //     },
-  //     error => {
-  //       this.setState({ pending: false });
-  //     }
-  //   );
-  // }
-
   onKeyDown(e) {
     console.log("onFormSubmit()");
     if (e.key !== "Enter") {

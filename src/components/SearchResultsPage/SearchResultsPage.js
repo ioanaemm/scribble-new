@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as Api from "Api/Api";
 import { withRouter } from "react-router-dom";
 
-class SearchResultsPage extends Component {
+export class SearchResultsPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -20,7 +20,6 @@ class SearchResultsPage extends Component {
 
   fetchResults(term) {
     Api.fetchSearchList(term).then(response => {
-      console.log("response", response.data);
       this.setState({
         notebooks: response.data.notebooks,
         notes: response.data.notes
@@ -29,14 +28,17 @@ class SearchResultsPage extends Component {
   }
 
   displayNotebookList() {
-    console.log("this.state.notebooks", this.state.notebooks);
     if (!this.state.notebooks) {
       return null;
     }
     let notebooks = this.state.notebooks.map(notebook => {
-      return <li key={notebook._id}>{notebook.title}</li>;
+      return (
+        <li key={notebook._id} className="notebook-item">
+          {notebook.title}
+        </li>
+      );
     });
-    return <ul>{notebooks}</ul>;
+    return <ul className="notebook-list">{notebooks}</ul>;
   }
 
   displayNoteList() {
@@ -45,10 +47,14 @@ class SearchResultsPage extends Component {
     }
 
     let notes = this.state.notes.map(note => {
-      return <li key={note._id}>{note.title}</li>;
+      return (
+        <li className="note-item" key={note._id}>
+          {note.title}
+        </li>
+      );
     });
 
-    return <ul>{notes}</ul>;
+    return <ul className="note-list">{notes}</ul>;
   }
 
   render() {
