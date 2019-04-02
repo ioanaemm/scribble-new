@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { shallow } from "enzyme";
 
 import { SearchResultsPage } from "components/SearchResultsPage/SearchResultsPage";
-import * as Api from "Api/Api";
+import * as Api from "api/Api";
 
 const match = {
   params: {

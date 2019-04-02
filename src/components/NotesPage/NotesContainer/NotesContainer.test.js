@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { shallow } from "enzyme";
 import { Link } from "react-router";
 import NotesContainer from "components/NotesPage/NotesContainer/NotesContainer";
-import * as Api from "Api/Api";
+import * as Api from "api/Api";
 
 describe("NotesContainer component", () => {
   xit("renders without crashing", () => {

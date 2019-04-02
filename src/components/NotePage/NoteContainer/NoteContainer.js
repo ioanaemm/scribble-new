@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
-import * as Api from "Api/Api";
+import * as Api from "api/Api";
 
 import Button from "components/Common/Button/Button";
 import "components/NotePage/NoteContainer/NoteContainer.scss";

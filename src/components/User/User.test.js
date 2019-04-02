@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import User from "components/User/User";
 import { shallow } from "enzyme";
 
-import * as Api from "Api/Api";
+import * as Api from "api/Api";
 
 describe("User component", () => {
   it("renders without crashing", () => {

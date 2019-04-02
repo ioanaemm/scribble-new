@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import * as Api from "Api/Api";
+import * as Api from "api/Api";
 
 export default class User extends Component {
   constructor(props) {
