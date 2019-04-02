@@ -7,7 +7,7 @@ const userRouter = require("./users");
 
 const router = express.Router();
 
-if (process.env.profile !== "nft") {
+if (process.env.profile !== "nft" || process.env.CI !== "true") {
   router.use((req, res, next) => {
     if (req.url === "/users/signin" || req.url === "/users") {
       next();
