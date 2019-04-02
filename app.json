@@ -3,7 +3,7 @@
     "test": {
       "scripts": {
         "test-setup": "",
-        "test": "echo 'Tests are not running'"
+        "test": "npm test:unit"
       }
     }
   }
