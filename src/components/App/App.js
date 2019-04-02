@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 
 import "./App.scss";
 
-import * as Api from "Api/Api";
+import * as Api from "src/Api/Api";
 import User from "components/User/User";
 import SearchResultsPage from "components/SearchResultsPage/SearchResultsPage";
 import Sidebar from "components/Sidebar/Sidebar";
