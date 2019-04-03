@@ -132,6 +132,7 @@ export class NoteContainer extends Component {
       return (
         <>
           <input
+            className="input-title"
             type="text"
             value={this.state.title}
             onChange={this.saveInputValue}
@@ -143,7 +144,7 @@ export class NoteContainer extends Component {
       return (
         <>
           <h3
-            className="title"
+            className="note-title"
             onClick={() => this.setState({ isInput: true })}
           >
             {this.state.title}
