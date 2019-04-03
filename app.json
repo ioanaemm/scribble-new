@@ -2,8 +2,8 @@
   "environments": {
     "test": {
       "scripts": {
-        "test-setup": "npm start",
-        "test": "npm run test:unit -- --coverage && npm run load:all"
+        "test-setup": "",
+        "test": "npm start & npm run test:unit -- --coverage && npm run load:all && killall node"
       }
     }
   }
