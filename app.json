@@ -3,7 +3,7 @@
     "test": {
       "scripts": {
         "test-setup": "",
-        "test": "npm start & npm run test:unit -- --coverage && npm run load:all && killall node"
+        "test": "npm run test:unit -- --coverage"
       }
     }
   }
