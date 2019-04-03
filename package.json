@@ -34,7 +34,8 @@
     "start": "node backend/server.js",
     "test:e2e": "cucumber-js features/**/*.feature",
     "test:unit": "export NODE_PATH=src && react-scripts test",
-    "load": "artillery"
+    "load": "artillery",
+    "load:all": "artillery run nft/test.yml"
   },
   "eslintConfig": {
     "extends": "react-app"
