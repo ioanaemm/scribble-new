@@ -1,12 +1,16 @@
 $font-stack: "Roboto", sans-serif;
 $primary-color: #7371fc;
 
+.mobile-sidebar {
+  display: none;
+}
+
 .sidebar {
   background-color: $primary-color;
   width: 80px;
   height: 100%;
 
-  .sidebarTitle {
+  .title {
     font-family: $font-stack;
     color: white;
     font-weight: 100;
@@ -21,7 +25,7 @@ $primary-color: #7371fc;
     }
   }
 
-  .iconContainer {
+  .icon-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,10 +40,6 @@ $primary-color: #7371fc;
   }
 }
 
-.mobile-sidebar {
-  display: none;
-}
-
 @media only screen and (max-width: 600px) {
   .sidebar {
     display: none;
@@ -48,38 +48,47 @@ $primary-color: #7371fc;
     display: flex;
     width: 100%;
 
-    .upper-sidebar {
+    &.top {
       background-color: #7371fc;
-      position: absolute;
-      top: 0;
       width: 100%;
+      z-index: 1;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      .title {
+        a {
+          color: white;
+          text-decoration: none;
+        }
+      }
     }
 
-    .bottom-sidebar {
+    &.bottom {
       background-color: #7371fc;
-      position: fixed;
-      bottom: 0;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      z-index: 1;
 
-      p {
-        color: #fff;
-        margin: 0;
-        font-size: 13px;
-      }
-
-      .notebook-icon,
-      .note-icon,
-      .web-clippings {
+      .section {
         padding: 10px;
-      }
-    }
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
 
-    .icon {
-      width: 16px;
-      height: 16px;
+        p {
+          color: #fff;
+          margin: 0;
+          font-size: 13px;
+        }
+
+        .icon {
+          font-size: 16px;
+        }
+      }
     }
   }
 }

@@ -62,14 +62,26 @@ router.post("/register", function(req, res) {
 });
 router.post("/signin", function(req, res) {
   console.log("req.body: ", req.body);
-  User.findOne({ username: req.body.username })
+  User.findOne({
+    $or: [{ username: req.body.username }, { email: req.body.username }]
+  })
     .exec()
     .then(function(user) {
+      if (!user) {
+        res.status(401).json({
+          failed: "Unauthorized Access"
+        });
+        return;
+      }
       bcrypt.compare(req.body.password, user.password, function(err, result) {
+        console.log("result", result);
+
         if (err) {
+          console.log("error", err);
           res.status(401).json({
             failed: "Unauthorized Access"
           });
+          return;
         }
         if (result) {
           req.session.user = user;

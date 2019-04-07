@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Masonry from "react-masonry-component";
 
 import NoteItem from "components/Common/NoteItem/NoteItem";
 
@@ -20,10 +19,6 @@ export default class NoteList extends Component {
   }
 
   render() {
-    return (
-      <Masonry className="my-gallery-class note-list">
-        {this.displayNotes()}
-      </Masonry>
-    );
+    return <div className="note-list">{this.displayNotes()}</div>;
   }
 }

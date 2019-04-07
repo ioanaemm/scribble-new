@@ -8,6 +8,7 @@ import * as Api from "api/Api";
 import User from "components/User/User";
 import SearchResultsPage from "components/SearchResultsPage/SearchResultsPage";
 import Sidebar from "components/Sidebar/Sidebar";
+import BottomSidebar from "components/Sidebar/BottomSidebar";
 import HomeContainer from "components/HomePage/HomeContainer/HomeContainer";
 import NotebooksContainer from "components/NotebooksPage/NotebooksContainer/NotebooksContainer";
 import NotebookContainer from "components/NotebookPage/NotebookContainer/NotebookContainer";
@@ -48,28 +49,26 @@ class App extends Component {
 
   displayPageContent() {
     return (
-      <div className="page-content">
-        <Switch>
-          <Route exact path="/">
-            <HomeContainer />
-          </Route>
-          <Route exact path="/notebooks">
-            <NotebooksContainer />
-          </Route>
-          <Route exact path="/notebooks/:id">
-            <NotebookContainer />
-          </Route>
-          <Route exact path="/notes">
-            <NotesContainer />
-          </Route>
-          <Route exact path="/notes/:id">
-            <NoteContainer />
-          </Route>
-          <Route exact path="/search/:query">
-            <SearchResultsPage />
-          </Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/">
+          <HomeContainer />
+        </Route>
+        <Route exact path="/notebooks">
+          <NotebooksContainer />
+        </Route>
+        <Route exact path="/notebooks/:id">
+          <NotebookContainer />
+        </Route>
+        <Route exact path="/notes">
+          <NotesContainer />
+        </Route>
+        <Route exact path="/notes/:id">
+          <NoteContainer />
+        </Route>
+        <Route exact path="/search/:query">
+          <SearchResultsPage />
+        </Route>
+      </Switch>
     );
   }
 
@@ -87,7 +86,8 @@ class App extends Component {
     return (
       <div className="app">
         <Sidebar />
-        {pageContent}
+        <div className="page-content">{pageContent}</div>
+        <BottomSidebar />
       </div>
     );
   }

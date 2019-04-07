@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import * as Api from "api/Api";
+import "components/User/User.scss";
 
 export default class User extends Component {
   constructor(props) {
@@ -37,13 +38,16 @@ export default class User extends Component {
     if (!this.state.userData) {
       return (
         <div className="user-container">
+          <h3>Welcome to Scribble!</h3>
           <form onKeyDown={this.onKeyDown} className="login">
+            <label>Username</label>
             <input
               className="username"
               value={this.state.username}
               placeholder="Username"
               onChange={e => this.setState({ username: e.target.value })}
             />
+            <label>Password</label>
             <input
               className="password"
               value={this.state.password}
@@ -52,7 +56,6 @@ export default class User extends Component {
               onChange={e => this.setState({ password: e.target.value })}
             />
           </form>
-          <Link to="/users/register">New user?</Link>
         </div>
       );
     }

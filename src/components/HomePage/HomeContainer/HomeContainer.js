@@ -118,7 +118,7 @@ export default class HomeContainer extends Component {
 
   render() {
     return (
-      <>
+      <div className="home-container">
         <SearchBar />
         <div className="add-item-container">
           <Title content="Notebooks" />
@@ -146,7 +146,7 @@ export default class HomeContainer extends Component {
           {this.renderNoteModal()}
         </div>
         <NoteList notes={this.state.notes} />
-      </>
+      </div>
     );
   }
 }

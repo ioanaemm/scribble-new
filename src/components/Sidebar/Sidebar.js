@@ -11,12 +11,12 @@ import user from "icons/user.png";
 export default class Sidebar extends Component {
   render() {
     return (
-      <div>
+      <>
         <div className="sidebar">
-          <h1 className="sidebarTitle">
+          <h1 className="title">
             <Link to={`/`}>S</Link>
           </h1>
-          <div className="iconContainer">
+          <div className="icon-container">
             <Link className="notebook-icon" to="/notebooks">
               <img className="icon" src={notebook} alt="notebook" />
             </Link>
@@ -27,34 +27,14 @@ export default class Sidebar extends Component {
             <img className="icon" src={plus} alt="plus sign" />
           </div>
         </div>
-        <div className="mobile-sidebar">
-          <div className="upper-sidebar">
-            <h3 className="sidebarTitle">
-              <Link to={`/`}>Scribble</Link>
-            </h3>
-            <img className="icon" src={plus} alt="plus sign" />
-          </div>
-
-          <div className="bottom-sidebar">
-            <div className="notebook-icon">
-              <Link to="/notebooks">
-                <img className="icon" src={notebook} alt="notebook" />
-              </Link>
-              <p>Notebooks</p>
-            </div>
-            <div className="note-icon">
-              <Link to="/notes">
-                <img className="icon" src={note} alt="note" />
-              </Link>
-              <p>Notes</p>
-            </div>
-            <div className="web-clippings">
-              <img className="icon" src={clipboard} alt="clipboard" />
-              <p>Web Clippings</p>
-            </div>
-          </div>
+        <div className="mobile-sidebar top">
+          <i className="icon fa fa-user-circle" />
+          <h3 className="title">
+            <Link to={`/`}>Scribble</Link>
+          </h3>
+          <i className="icon fa fa-plus-circle" />
         </div>
-      </div>
+      </>
     );
   }
 }

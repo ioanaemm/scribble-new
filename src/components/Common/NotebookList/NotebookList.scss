@@ -1,12 +1,24 @@
 .notebook-list,
 .note-list {
+  display: flex;
+  flex-flow: row wrap;
+  margin-left: -8px; /* Adjustment for the gutter */
+  width: 100%;
+
   .notebook-item,
   .note-item {
     border: 2px solid #f3f5f9;
-    border-radius: 5px;
+    border-radius: 10px;
     display: inline-block;
-    margin: 10px;
+    width: calc(100% / 5);
     padding: 10px 15px 10px;
+
+    flex: auto;
+    margin: 10px;
+
+    @media (max-width: 1000px) {
+      width: calc(100% / 3);
+    }
 
     .note-timestamp {
       font-size: 16px;
@@ -15,9 +27,11 @@
     }
 
     .notebook-total {
-      color: #8895b3;
-      font-size: 16px;
       margin: 0;
+      font-weight: 100;
+      font-size: 16px;
+      color: #8895b3;
+      letter-spacing: 1.48px;
     }
 
     .notebook-title,
@@ -25,6 +39,11 @@
       display: inline-block;
       margin-top: 5px;
       margin-bottom: 5px;
+      font-family: Averta-Light;
+      font-size: 30px;
+      color: #262626;
+      letter-spacing: 1.48px;
+
       a {
         color: #000;
         font-size: 30px;
@@ -41,8 +60,11 @@
     }
   }
   .notebook-item {
-    width: 20%;
     background-size: cover;
+
+    .notebook-count {
+      font-weight: 500;
+    }
 
     .delete {
       border: none;
@@ -60,7 +82,6 @@
   }
 
   .note-item {
-    width: 25%;
     background-size: cover;
 
     .note-content {
