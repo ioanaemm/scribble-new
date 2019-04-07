@@ -4,6 +4,7 @@ $primary-color: #7371fc;
 .sidebar {
   background-color: $primary-color;
   width: 80px;
+  height: 100%;
 
   .sidebarTitle {
     font-family: $font-stack;
@@ -11,7 +12,7 @@ $primary-color: #7371fc;
     font-weight: 100;
     font-size: 45px;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 0;
     margin-bottom: 15px;
 
     a {
@@ -29,8 +30,56 @@ $primary-color: #7371fc;
     .icon {
       width: 18px;
       height: 18px;
-      // display: block;
+      display: block;
       padding: 18px;
+    }
+  }
+}
+
+.mobile-sidebar {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+  .mobile-sidebar {
+    display: flex;
+    width: 100%;
+
+    .upper-sidebar {
+      background-color: #7371fc;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    .bottom-sidebar {
+      background-color: #7371fc;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      p {
+        color: #fff;
+        margin: 0;
+        font-size: 13px;
+      }
+
+      .notebook-icon,
+      .note-icon,
+      .web-clippings {
+        padding: 10px;
+      }
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
     }
   }
 }

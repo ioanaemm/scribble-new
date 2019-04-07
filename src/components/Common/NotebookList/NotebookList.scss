@@ -43,16 +43,34 @@
   .notebook-item {
     width: 20%;
     background-size: cover;
+
+    .delete {
+      border: none;
+      float: right;
+      background-color: transparent;
+      .icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    @media only screen and (max-width: 600px) {
+      width: 80%;
+    }
   }
 
   .note-item {
     width: 25%;
+    background-size: cover;
 
     .note-content {
       color: #69758f;
-      // color: #000;
       font-size: 18px;
       letter-spacing: 1px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      width: 80%;
     }
   }
 }
