@@ -3,6 +3,10 @@ import "components/Common/Title/Title.scss";
 
 export default class Title extends Component {
   render() {
-    return <span className="title">{this.props.content}</span>;
+    return (
+      <h1 className="title">
+        {this.props.content} {this.props.children}
+      </h1>
+    );
   }
 }

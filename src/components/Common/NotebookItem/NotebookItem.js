@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Button from "components/Common/Button/Button";
 import Title from "components/Common/Title/Title.js";
-import trash from "icons/bin.png";
 
 export default class NotebookItem extends Component {
   displayTags(notebook) {
@@ -25,7 +24,7 @@ export default class NotebookItem extends Component {
           className="delete"
           onClick={() => this.props.removeNotebook(notebook._id)}
         >
-          <img className="icon" src={trash} alt="trash" />
+          <i className="fa fa-trash-alt" />
         </button>
         <p className="notebook-total">
           Notes in Notebook:{" "}

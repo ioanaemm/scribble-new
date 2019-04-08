@@ -12,12 +12,17 @@
     display: inline-block;
     width: calc(100% / 5);
     padding: 10px 15px 10px;
-
     flex: auto;
     margin: 10px;
 
     @media (max-width: 1000px) {
       width: calc(100% / 3);
+    }
+
+    .delete {
+      padding: 0;
+      color: #8894b3;
+      font-size: 16px;
     }
 
     .note-timestamp {
@@ -37,17 +42,13 @@
     .notebook-title,
     .note-title {
       display: inline-block;
-      margin-top: 5px;
-      margin-bottom: 5px;
+      margin: 0;
       font-family: Averta-Light;
-      font-size: 30px;
-      color: #262626;
+      font-size: 25px;
       letter-spacing: 1.48px;
 
       a {
-        color: #000;
-        font-size: 30px;
-        opacity: 1;
+        color: #262626;
         text-decoration: none;
       }
     }
@@ -64,6 +65,17 @@
 
     .notebook-count {
       font-weight: 500;
+    }
+
+    .tags-container {
+      .title {
+        font-family: Averta-Light;
+        font-size: 16px;
+        color: #8895b3;
+        letter-spacing: 1.48px;
+        margin: 0;
+        margin-top: 5px;
+      }
     }
 
     .delete {

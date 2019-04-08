@@ -121,13 +121,15 @@ export default class HomeContainer extends Component {
       <div className="home-container">
         <SearchBar />
         <div className="add-item-container">
-          <Title content="Notebooks" />
-          <Button
-            className="add-notebook"
-            type="primary"
-            onClick={this.toggleNotebookModal}
-            label="New Notebook"
-          />
+          <Title content="Notebooks">
+            <Button
+              className="add-notebook"
+              type="primary"
+              onClick={this.toggleNotebookModal}
+              label="New Notebook"
+            />
+          </Title>
+
           {this.renderNotebookModal()}
         </div>
 
@@ -136,13 +138,15 @@ export default class HomeContainer extends Component {
           removeNotebook={this.removeNotebook}
         />
         <div className="add-item-container">
-          <Title content="Notes" />
-          <Button
-            className="add-note"
-            type="primary"
-            onClick={this.toggleNoteModal}
-            label="New Note"
-          />
+          <Title content="Notes">
+            <Button
+              className="add-note"
+              type="primary"
+              onClick={this.toggleNoteModal}
+              label="New Note"
+            />
+          </Title>
+
           {this.renderNoteModal()}
         </div>
         <NoteList notes={this.state.notes} />
