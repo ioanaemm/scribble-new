@@ -5,10 +5,29 @@ export default class SearchBar extends Component {
   constructor() {
     super();
     this.state = {
-      term: ""
+      term: "",
+      expanded: false
     };
+
+    this.inputRef = React.createRef();
+
+    this.collapseInput = this.collapseInput.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener("click", this.collapseInput);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("click", this.collapseInput);
+  }
+
+  collapseInput() {
+    if (this.state.term.length === 0) {
+      this.setState({ expanded: false });
+    }
   }
 
   onInputChange(e) {
@@ -24,11 +43,20 @@ export default class SearchBar extends Component {
 
   render() {
     return (
-      <form className="search-container" onSubmit={this.onFormSubmit}>
+      <form
+        className={`search-container ${this.state.expanded ? "expanded" : ""}`}
+        onSubmit={this.onFormSubmit}
+        onClick={e => {
+          e.stopPropagation();
+          this.setState({ expanded: true });
+          this.inputRef.current.focus();
+        }}
+      >
+        <i className="fa fa-search icon" />
         <input
           className="search-input"
           type="text"
-          placeholder="Notebooks, Notes"
+          ref={this.inputRef}
           value={this.state.term}
           onChange={this.onInputChange}
         />
