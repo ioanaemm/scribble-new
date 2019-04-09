@@ -1,4 +1,4 @@
-$font-stack: "Roboto", sans-serif;
+$font-stack: "Averta", sans-serif;
 $primary-color: #7371fc;
 
 .mobile-sidebar {
@@ -13,11 +13,12 @@ $primary-color: #7371fc;
   .title {
     font-family: $font-stack;
     color: white;
-    font-weight: 100;
+    font-weight: 500;
     font-size: 45px;
     text-align: center;
     margin-top: 0;
     margin-bottom: 15px;
+    padding-top: 10px;
 
     a {
       text-decoration: none;
@@ -31,11 +32,13 @@ $primary-color: #7371fc;
     align-items: center;
     flex-direction: column;
 
+    a {
+      text-decoration: none;
+    }
     .icon {
-      width: 18px;
-      height: 18px;
+      color: white;
       display: block;
-      padding: 18px;
+      padding: 20px;
     }
   }
 }

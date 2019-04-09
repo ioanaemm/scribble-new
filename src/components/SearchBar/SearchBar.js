@@ -44,7 +44,9 @@ export default class SearchBar extends Component {
   render() {
     return (
       <form
-        className={`search-container ${this.state.expanded ? "expanded" : ""}`}
+        className={`search-container ${
+          this.state.expanded ? "expanded" : ""
+        } mobile-searchbar`}
         onSubmit={this.onFormSubmit}
         onClick={e => {
           e.stopPropagation();
@@ -59,6 +61,7 @@ export default class SearchBar extends Component {
           ref={this.inputRef}
           value={this.state.term}
           onChange={this.onInputChange}
+          placeholder="Search"
         />
       </form>
     );

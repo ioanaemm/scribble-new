@@ -60,11 +60,17 @@ export default class User extends Component {
               <span className="label"> Password</span>
               <span className="border" />
             </div>
+            <span className="forgotten-password">Forgotten password?</span>
             <button className="signin" type="submit">
               Login
             </button>
           </form>
-          <Link to="/register"> Register </Link>
+          <p className="new-user">
+            New user? &nbsp;
+            <Link className="register-link" to="/register">
+              Signup
+            </Link>
+          </p>
         </div>
       );
     }

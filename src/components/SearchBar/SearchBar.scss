@@ -1,3 +1,9 @@
+$green: #64ae57;
+$purple: #6470ee;
+$gray: #8895b3;
+$gray-dark: #132140;
+$gray-light: #f3f5f9;
+
 .search-container {
   float: right;
   border-radius: 50px;
@@ -7,10 +13,6 @@
   margin-top: 2px;
   transition: all 500ms;
   cursor: pointer;
-
-  @media only screen and (max-width: 600px) {
-    // border: 1px solid red;
-  }
 
   input {
     border: 0;
@@ -47,6 +49,23 @@
       // transform: scaleX(0.1);
       // background-color: white;
       margin-right: 8px;
+    }
+  }
+
+  .mobile-searchbar {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .mobile-searchbar {
+    background-color: #f1f1f2;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 80vw;
+
+    .icon {
+      color: $gray;
     }
   }
 }
