@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+// import MobileSearchBar from "components/MobileSearchBar/MobileSearchBar";
 import "components/SearchBar/SearchBar.scss";
 
 export default class SearchBar extends Component {
@@ -41,29 +42,45 @@ export default class SearchBar extends Component {
     window.location.href = `/search/${this.state.term}`;
   }
 
+  displayMobileSearchBar() {}
+
   render() {
     return (
-      <form
-        className={`search-container ${
-          this.state.expanded ? "expanded" : ""
-        } mobile-searchbar`}
-        onSubmit={this.onFormSubmit}
-        onClick={e => {
-          e.stopPropagation();
-          this.setState({ expanded: true });
-          this.inputRef.current.focus();
-        }}
-      >
-        <i className="fa fa-search icon" />
-        <input
-          className="search-input"
-          type="text"
-          ref={this.inputRef}
-          value={this.state.term}
-          onChange={this.onInputChange}
-          placeholder="Search"
-        />
-      </form>
+      <>
+        <form
+          className={`search-container ${
+            this.state.expanded ? "expanded" : ""
+          } `}
+          onSubmit={this.onFormSubmit}
+          onClick={e => {
+            e.stopPropagation();
+            this.setState({ expanded: true });
+            this.inputRef.current.focus();
+          }}
+        >
+          <i className="fa fa-search icon" />
+          <input
+            className="search-input"
+            type="text"
+            ref={this.inputRef}
+            value={this.state.term}
+            onChange={this.onInputChange}
+            placeholder="Search"
+          />
+        </form>
+        <form className="mobile-searchbar" onSubmit={this.onFormSubmit}>
+          <div className="inner-container">
+            <i className="fa fa-search icon" />
+            <input
+              className="search-input"
+              type="text"
+              value={this.props.term}
+              onChange={this.onInputChange}
+              placeholder="Search"
+            />
+          </div>
+        </form>
+      </>
     );
   }
 }
