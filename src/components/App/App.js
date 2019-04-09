@@ -5,6 +5,8 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import "./App.scss";
 
 import * as Api from "api/Api";
+import SearchBar from "components/SearchBar/SearchBar";
+import Preloader from "components/Common/Preloader/Preloader";
 import User from "components/User/User";
 import Register from "components/Register/Register";
 import SearchResultsPage from "components/SearchResultsPage/SearchResultsPage";
@@ -33,6 +35,11 @@ export class App extends Component {
   }
 
   componentDidMount() {
+    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+    let vh = window.innerHeight * 0.01;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+
     Api.fetchUserDetails().then(
       response => {
         this.setState({ userData: response.data, pending: false });
@@ -85,13 +92,14 @@ export class App extends Component {
 
   render() {
     if (this.state.pending) {
-      return <p className="preloader">Loading...</p>;
+      return <Preloader />;
     }
 
     return (
       <div className="app">
         <Sidebar />
         <div className="page-content" ref={this.pageContentRef}>
+          <SearchBar />
           {this.displayPageContent()}
         </div>
         <BottomSidebar />

@@ -7,8 +7,8 @@ export default class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: ""
+      username: "ioanam",
+      password: "qwerty"
     };
     this.onSubmit = this.onSubmit.bind(this);
   }

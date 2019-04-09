@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import SearchBar from "components/SearchBar/SearchBar";
 import Title from "components/Common/Title/Title";
 import Button from "components/Common/Button/Button";
 import NotebookModal from "components/Common/NotebookModal/NotebookModal";
@@ -10,7 +9,7 @@ import Preloader from "components/Common/Preloader/Preloader";
 import * as Api from "api/Api";
 import "components/HomePage/HomeContainer/HomeContainer.scss";
 
-const REFRESH_PADDING_LIMIT = 50;
+const REFRESH_PADDING_LIMIT = 70;
 
 export default class HomeContainer extends Component {
   constructor(props) {
@@ -153,11 +152,11 @@ export default class HomeContainer extends Component {
   onTouchMove(e) {
     // e.preventDefault();
     if (this.lastTouchY !== null) {
-      let crtTouchY = e.touches[0].clientY;
+      let crtTouchY = e.touches[0].pageY;
       let delta = crtTouchY - this.lastTouchY;
       this.updateRefreshPadding(delta);
     }
-    this.lastTouchY = e.touches[0].clientY;
+    this.lastTouchY = e.touches[0].pageY;
   }
 
   updateRefreshPadding(delta) {
@@ -167,14 +166,16 @@ export default class HomeContainer extends Component {
 
     if (this._isMounted) {
       this.setState({
-        refreshPaddingHeight: this.state.refreshPaddingHeight + delta * friction
+        refreshPaddingHeight:
+          this.state.refreshPaddingHeight + delta * friction * 2
       });
     }
   }
 
   onTouchEnd(e) {
-    if (REFRESH_PADDING_LIMIT - this.state.refreshPaddingHeight < 1) {
-      this.refresh();
+    if (REFRESH_PADDING_LIMIT - this.state.refreshPaddingHeight < 10) {
+      this.setState({ pending: true });
+      setTimeout(this.refresh, 500);
     }
     if (this._isMounted) {
       this.setState({
@@ -198,7 +199,6 @@ export default class HomeContainer extends Component {
 
     return (
       <div className="home-container" ref={this.containerRef}>
-        <SearchBar />
         {this.displayPreloader()}
         <div
           className="refresh-padding"
