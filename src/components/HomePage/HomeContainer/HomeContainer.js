@@ -8,7 +8,6 @@ import NotebookList from "components/Common/NotebookList/NotebookList";
 import NoteList from "components/Common/NoteList/NoteList";
 import * as Api from "api/Api";
 import "components/HomePage/HomeContainer/HomeContainer.scss";
-import ReactPullToRefresh from "react-pull-to-refresh";
 
 const REFRESH_PADDING_LIMIT = 50;
 
@@ -154,7 +153,6 @@ export default class HomeContainer extends Component {
     if (this.lastTouchY !== null) {
       let crtTouchY = e.touches[0].clientY;
       let delta = crtTouchY - this.lastTouchY;
-      let scrollTop = this.props.pageContentRef.current.scrollTop;
       this.updateRefreshPadding(delta);
     }
     this.lastTouchY = e.touches[0].clientY;
