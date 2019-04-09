@@ -25,6 +25,8 @@ export class App extends Component {
       pending: true
     };
 
+    this.pageContentRef = React.createRef();
+
     // this.onFormSubmit = this.onFormSubmit.bind(this);
     this.displayPageContent = this.displayPageContent.bind(this);
     this.onLoginUser = this.onLoginUser.bind(this);
@@ -54,7 +56,7 @@ export class App extends Component {
     return (
       <Switch>
         <Route exact path="/">
-          <HomeContainer />
+          <HomeContainer pageContentRef={this.pageContentRef} />
         </Route>
         <Route exact path="/notebooks">
           <NotebooksContainer />
@@ -82,7 +84,6 @@ export class App extends Component {
   }
 
   render() {
-    let pageContent = null;
     if (this.state.pending) {
       return <p className="preloader">Loading...</p>;
     }
@@ -90,7 +91,9 @@ export class App extends Component {
     return (
       <div className="app">
         <Sidebar />
-        <div className="page-content">{this.displayPageContent()}</div>
+        <div className="page-content" ref={this.pageContentRef}>
+          {this.displayPageContent()}
+        </div>
         <BottomSidebar />
       </div>
     );

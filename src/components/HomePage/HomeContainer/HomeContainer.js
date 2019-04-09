@@ -17,20 +17,26 @@ export default class HomeContainer extends Component {
       isNotebookModalOpen: false,
       isNoteModalOpen: false,
       notebooks: [],
-      notes: []
+      notes: [],
+      showSearchBar: false
     };
 
     this._isMounted = false;
+
+    this.lastTouchY = null;
 
     this.toggleNotebookModal = this.toggleNotebookModal.bind(this);
     this.toggleNoteModal = this.toggleNoteModal.bind(this);
     this.onNotebookModalSubmit = this.onNotebookModalSubmit.bind(this);
     this.onNoteModalSubmit = this.onNoteModalSubmit.bind(this);
     this.removeNotebook = this.removeNotebook.bind(this);
+    this.onTouchMove = this.onTouchMove.bind(this);
+    this.displaySearchBar = this.displaySearchBar.bind(this);
   }
 
   componentDidMount() {
     this._isMounted = true;
+    window.addEventListener("touchmove", this.onTouchMove);
 
     Api.fetchNotebooks({
       skip: 0,
@@ -116,10 +122,45 @@ export default class HomeContainer extends Component {
     });
   }
 
+  onTouchMove(e) {
+    // console.log(e);
+    if (this.lastTouchY === null) {
+      this.lastTouchY = e.touches[0].clientY;
+    } else {
+      let crtTouchY = e.touches[0].clientY;
+      let delta = crtTouchY - this.lastTouchY;
+      // console.log("delta= ", delta);
+      let scrollTop = this.props.pageContentRef.current.scrollTop;
+      if (delta > 0) {
+        // console.log(this.props.pageContentRef.current);
+        if (this.props.pageContentRef.current) {
+          console.log("scrollTOp = ", scrollTop);
+          if (scrollTop <= 0 && !this.state.showSearchBar) {
+            this.setState({ showSearchBar: true });
+          }
+        }
+      } else if (delta < 0) {
+        console.log(scrollTop);
+        if (scrollTop < 50 && this.state.showSearchBar) {
+          this.setState({ showSearchBar: false });
+        }
+      }
+      // console.log(delta);
+    }
+  }
+
+  displaySearchBar() {
+    if (!this.state.showSearchBar) {
+      return null;
+    }
+
+    return <SearchBar />;
+  }
+
   render() {
     return (
-      <div className="home-container">
-        <SearchBar />
+      <div className="home-container" ref={this.containerRef}>
+        {this.displaySearchBar()}
         <div className="add-item-container">
           <Title content="Notebooks">
             <Button
