@@ -8,6 +8,9 @@ import NotebookList from "components/Common/NotebookList/NotebookList";
 import NoteList from "components/Common/NoteList/NoteList";
 import * as Api from "api/Api";
 import "components/HomePage/HomeContainer/HomeContainer.scss";
+import ReactPullToRefresh from "react-pull-to-refresh";
+
+const REFRESH_PADDING_LIMIT = 50;
 
 export default class HomeContainer extends Component {
   constructor(props) {
@@ -18,7 +21,8 @@ export default class HomeContainer extends Component {
       isNoteModalOpen: false,
       notebooks: [],
       notes: [],
-      showSearchBar: false
+      refreshPaddingHeight: 0,
+      pending: true
     };
 
     this._isMounted = false;
@@ -31,54 +35,78 @@ export default class HomeContainer extends Component {
     this.onNoteModalSubmit = this.onNoteModalSubmit.bind(this);
     this.removeNotebook = this.removeNotebook.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
-    this.displaySearchBar = this.displaySearchBar.bind(this);
+    this.onTouchEnd = this.onTouchEnd.bind(this);
+    this.updateRefreshPadding = this.updateRefreshPadding.bind(this);
+    this.refresh = this.refresh.bind(this);
+    this.displayPreloader = this.displayPreloader.bind(this);
   }
 
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener("touchmove", this.onTouchMove);
+    window.addEventListener("touchend", this.onTouchEnd);
 
-    Api.fetchNotebooks({
-      skip: 0,
-      limit: Number.MAX_SAFE_INTEGER,
-      sort: { _id: -1 }
-    }).then(response => {
-      this.setState({ notebooks: response.data });
-    });
-
-    Api.fetchNotes().then(response => {
-      if (this._isMounted) {
-        this.setState({ notes: response.data });
-      }
-    });
+    this.refresh();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
 
+  refresh() {
+    if (this._isMounted) {
+      this.setState({ pending: true });
+    }
+    let notebooksPromise = Api.fetchNotebooks({
+      skip: 0,
+      limit: Number.MAX_SAFE_INTEGER,
+      sort: { _id: -1 }
+    });
+    let notePromise = Api.fetchNotes();
+
+    Promise.all([notebooksPromise, notePromise]).then(
+      ([notebooksResponse, notesResponse]) => {
+        if (this._isMounted) {
+          this.setState({
+            notebooks: notebooksResponse.data,
+            notes: notesResponse.data,
+            pending: false
+          });
+        }
+      }
+    );
+  }
+
   toggleNotebookModal() {
-    this.setState({ isNotebookModalOpen: !this.state.isNotebookModalOpen });
+    if (this._isMounted) {
+      this.setState({ isNotebookModalOpen: !this.state.isNotebookModalOpen });
+    }
   }
 
   toggleNoteModal() {
-    this.setState({ isNoteModalOpen: !this.state.isNoteModalOpen });
+    if (this._isMounted) {
+      this.setState({ isNoteModalOpen: !this.state.isNoteModalOpen });
+    }
   }
 
   onNotebookModalSubmit(notebookData) {
     Api.addNotebook(notebookData).then(response => {
-      this.setState({
-        notebooks: [...this.state.notebooks, response.data]
-      });
+      if (this._isMounted) {
+        this.setState({
+          notebooks: [...this.state.notebooks, response.data]
+        });
+      }
     });
     this.toggleNotebookModal();
   }
 
   onNoteModalSubmit(noteData) {
     Api.addNote(noteData).then(response => {
-      this.setState({
-        notes: [...this.state.notes, response.data]
-      });
+      if (this._isMounted) {
+        this.setState({
+          notes: [...this.state.notes, response.data]
+        });
+      }
     });
 
     this.toggleNoteModal();
@@ -123,43 +151,69 @@ export default class HomeContainer extends Component {
   }
 
   onTouchMove(e) {
-    if (this.lastTouchY === null) {
-      this.lastTouchY = e.touches[0].clientY;
-    } else {
+    if (this.lastTouchY !== null) {
       let crtTouchY = e.touches[0].clientY;
       let delta = crtTouchY - this.lastTouchY;
-      console.log("delta= ", delta);
       let scrollTop = this.props.pageContentRef.current.scrollTop;
-      if (delta > 0) {
-        // console.log(this.props.pageContentRef.current);
-        if (this.props.pageContentRef.current) {
-          console.log("scrollTOp = ", scrollTop);
-          if (scrollTop <= 0 && !this.state.showSearchBar) {
-            this.setState({ showSearchBar: true });
-          }
-        }
-      } else if (delta < 0) {
-        console.log(scrollTop);
-        if (scrollTop < 50 && this.state.showSearchBar) {
-          this.setState({ showSearchBar: false });
-        }
-      }
-      // console.log(delta);
+      this.updateRefreshPadding(delta);
+    }
+    this.lastTouchY = e.touches[0].clientY;
+  }
+
+  updateRefreshPadding(delta) {
+    let oldValue = this.state.refreshPaddingHeight;
+
+    let friction = (REFRESH_PADDING_LIMIT - oldValue) / REFRESH_PADDING_LIMIT;
+
+    if (this._isMounted) {
+      this.setState({
+        refreshPaddingHeight: this.state.refreshPaddingHeight + delta * friction
+      });
     }
   }
 
-  displaySearchBar() {
-    if (!this.state.showSearchBar) {
+  onTouchEnd(e) {
+    if (REFRESH_PADDING_LIMIT - this.state.refreshPaddingHeight < 1) {
+      this.refresh();
+    }
+    if (this._isMounted) {
+      this.setState({
+        refreshPaddingHeight: 0
+      });
+    }
+  }
+
+  displayPreloader() {
+    if (!this.state.pending) {
       return null;
     }
-
-    return <SearchBar />;
+    return <div className="preloader">Loading...</div>;
   }
 
   render() {
+    const opacity =
+      1 -
+      (REFRESH_PADDING_LIMIT - this.state.refreshPaddingHeight) /
+        REFRESH_PADDING_LIMIT;
+
     return (
       <div className="home-container" ref={this.containerRef}>
-        {this.displaySearchBar()}
+        <SearchBar />
+        <div
+          className="refresh-padding"
+          style={{ height: this.state.refreshPaddingHeight + "px" }}
+        >
+          <i
+            className="fa fa-arrow-up icon"
+            style={{
+              transform: `translate(-50%, -50%) rotate(${((REFRESH_PADDING_LIMIT -
+                this.state.refreshPaddingHeight) /
+                REFRESH_PADDING_LIMIT) *
+                180}deg)`,
+              opacity
+            }}
+          />
+        </div>
         <div className="add-item-container">
           <Title content="Notebooks">
             <Button

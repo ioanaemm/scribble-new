@@ -132,4 +132,22 @@
       }
     }
   }
+
+  @media only screen and (max-width: 600px) {
+    .note-list-container {
+      display: none;
+    }
+
+    .note-content {
+      padding: 0;
+
+      .note-header {
+        // display: flex;
+        // justify-content: flex-start;
+        // display: inline-block;
+        // margin-left: auto;
+        // margin-right: auto;
+      }
+    }
+  }
 }
