@@ -6,6 +6,7 @@ import NotebookModal from "components/Common/NotebookModal/NotebookModal";
 import NoteModal from "components/Common/NoteModal/NoteModal";
 import NotebookList from "components/Common/NotebookList/NotebookList";
 import NoteList from "components/Common/NoteList/NoteList";
+import Preloader from "components/Common/Preloader/Preloader";
 import * as Api from "api/Api";
 import "components/HomePage/HomeContainer/HomeContainer.scss";
 
@@ -150,6 +151,7 @@ export default class HomeContainer extends Component {
   }
 
   onTouchMove(e) {
+    // e.preventDefault();
     if (this.lastTouchY !== null) {
       let crtTouchY = e.touches[0].clientY;
       let delta = crtTouchY - this.lastTouchY;
@@ -185,7 +187,7 @@ export default class HomeContainer extends Component {
     if (!this.state.pending) {
       return null;
     }
-    return <div className="preloader">Loading...</div>;
+    return <Preloader />;
   }
 
   render() {
@@ -197,6 +199,7 @@ export default class HomeContainer extends Component {
     return (
       <div className="home-container" ref={this.containerRef}>
         <SearchBar />
+        {this.displayPreloader()}
         <div
           className="refresh-padding"
           style={{ height: this.state.refreshPaddingHeight + "px" }}
