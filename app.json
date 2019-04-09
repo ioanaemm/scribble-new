@@ -3,7 +3,7 @@
     "test": {
       "scripts": {
         "test-setup": "",
-        "test": "npm run test:unit -- --coverage"
+        "test": ""
       }
     }
   }
