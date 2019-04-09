@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 // import axios from "axios";
 
 import "./App.scss";
 
 import * as Api from "api/Api";
 import User from "components/User/User";
+import Register from "components/Register/Register";
 import SearchResultsPage from "components/SearchResultsPage/SearchResultsPage";
 import Sidebar from "components/Sidebar/Sidebar";
 import BottomSidebar from "components/Sidebar/BottomSidebar";
@@ -15,7 +16,7 @@ import NotebookContainer from "components/NotebookPage/NotebookContainer/Noteboo
 import NotesContainer from "components/NotesPage/NotesContainer/NotesContainer";
 import NoteContainer from "components/NotePage/NoteContainer/NoteContainer";
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
 
@@ -36,12 +37,14 @@ class App extends Component {
       },
       error => {
         this.setState({ pending: false });
+        this.props.history.push("/login");
       }
     );
   }
 
   onLoginUser(userData) {
     console.log("onFormSubmit2()");
+    this.props.history.push("/");
     this.setState({
       userData
     });
@@ -68,6 +71,12 @@ class App extends Component {
         <Route exact path="/search/:query">
           <SearchResultsPage />
         </Route>
+        <Route exact path="/login">
+          <User onLogin={this.onLoginUser} />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
       </Switch>
     );
   }
@@ -77,20 +86,15 @@ class App extends Component {
     if (this.state.pending) {
       return <p className="preloader">Loading...</p>;
     }
-    if (!this.state.userData) {
-      pageContent = <User onLogin={this.onLoginUser} />;
-    } else {
-      pageContent = this.displayPageContent();
-    }
 
     return (
       <div className="app">
         <Sidebar />
-        <div className="page-content">{pageContent}</div>
+        <div className="page-content">{this.displayPageContent()}</div>
         <BottomSidebar />
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

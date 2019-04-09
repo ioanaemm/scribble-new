@@ -64,7 +64,7 @@ export default class User extends Component {
               Login
             </button>
           </form>
-          <Link to="/users/register"> Register </Link>
+          <Link to="/register"> Register </Link>
         </div>
       );
     }

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import * as Api from "api/Api";
 
-export default class RegisterUser extends Component {
+export default class Register extends Component {
   render() {
     return <Link to="/users/register"> </Link>;
   }
