@@ -10,13 +10,12 @@ export default class User extends Component {
       username: "",
       password: ""
     };
-    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onKeyDown(e) {
-    if (e.key !== "Enter") {
-      return;
-    }
+  onSubmit(e) {
+    e.preventDefault();
+    console.log("onSubmit()");
 
     Api.signInUser({
       username: this.state.username,
@@ -38,24 +37,34 @@ export default class User extends Component {
     if (!this.state.userData) {
       return (
         <div className="user-container">
-          <h3>Welcome to Scribble!</h3>
-          <form onKeyDown={this.onKeyDown} className="login">
-            <label>Username</label>
-            <input
-              className="username"
-              value={this.state.username}
-              placeholder="Username"
-              onChange={e => this.setState({ username: e.target.value })}
-            />
-            <label>Password</label>
-            <input
-              className="password"
-              value={this.state.password}
-              type="password"
-              placeholder="Password"
-              onChange={e => this.setState({ password: e.target.value })}
-            />
+          <h3 className="header">Welcome to Scribble!</h3>
+          <form onSubmit={this.onSubmit} className="login">
+            <div className="input-group">
+              <input
+                className="username"
+                value={this.state.username}
+                placeholder=" "
+                onChange={e => this.setState({ username: e.target.value })}
+              />
+              <span className="label"> Username</span>
+              <span className="border" />
+            </div>
+            <div className="input-group">
+              <input
+                className="password"
+                value={this.state.password}
+                placeholder=" "
+                type="password"
+                onChange={e => this.setState({ password: e.target.value })}
+              />
+              <span className="label"> Password</span>
+              <span className="border" />
+            </div>
+            <button className="signin" type="submit">
+              Login
+            </button>
           </form>
+          <Link to="/users/register"> Register </Link>
         </div>
       );
     }

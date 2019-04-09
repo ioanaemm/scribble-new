@@ -28,11 +28,11 @@ export default class Sidebar extends Component {
           </div>
         </div>
         <div className="mobile-sidebar top">
-          <i className="icon fa fa-user-circle" />
+          <i className="icon fa fa-user-circle fa-lg" />
           <h3 className="title">
             <Link to={`/`}>Scribble</Link>
           </h3>
-          <i className="icon fa fa-plus-circle" />
+          <i className="icon fa fa-plus-circle fa-lg" />
         </div>
       </>
     );
