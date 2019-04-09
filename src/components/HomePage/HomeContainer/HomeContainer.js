@@ -123,13 +123,12 @@ export default class HomeContainer extends Component {
   }
 
   onTouchMove(e) {
-    // console.log(e);
     if (this.lastTouchY === null) {
       this.lastTouchY = e.touches[0].clientY;
     } else {
       let crtTouchY = e.touches[0].clientY;
       let delta = crtTouchY - this.lastTouchY;
-      // console.log("delta= ", delta);
+      console.log("delta= ", delta);
       let scrollTop = this.props.pageContentRef.current.scrollTop;
       if (delta > 0) {
         // console.log(this.props.pageContentRef.current);
