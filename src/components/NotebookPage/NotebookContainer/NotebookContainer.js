@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import * as Api from "api/Api";
+import ReactHtmlParser from "react-html-parser";
+import moment from "moment";
 
 import Button from "components/Common/Button/Button";
 import NoteModal from "components/Common/NoteModal/NoteModal";
+import "components/NotebookPage/NotebookContainer/NotebookContainer.scss";
 
 export class NotebookContainer extends Component {
   constructor() {
@@ -24,6 +27,7 @@ export class NotebookContainer extends Component {
     this.onTitleSubmit = this.onTitleSubmit.bind(this);
     this.saveInputValue = this.saveInputValue.bind(this);
     this.displayTitle = this.displayTitle.bind(this);
+    // this.showLessNoteContent = this.showLessNoteContent.bind(this);
   }
   componentDidMount() {
     Api.fetchNotebook(this.props.match.params.id).then(
@@ -57,14 +61,45 @@ export class NotebookContainer extends Component {
     this.toggleModal();
   }
 
+  // showLessNoteContent() {
+  //   let showLessContent;
+  //
+  //   if (!this.state.notebook || !this.state.notebook.notes) {
+  //     return null;
+  //   } else {
+  //     let notes = this.state.notebook.notes.map(note => {
+  //       // showLessContent = note.body.substring(0, 100);
+  //       return { __html: note.body };
+  //     });
+  //   }
+  //   // console.log("showLessContent", showLessContent);
+  // }
+
   displayNotes() {
     if (!this.state.notebook || !this.state.notebook.notes) {
       return null;
     }
     let notes = this.state.notebook.notes.map(note => {
+      let htmlContent = note.body.substr(0, note.body.length - 180);
+      console.log("htmlContent", htmlContent);
+      let datestamp = moment(
+        new Date(parseInt(note._id.substring(0, 8), 16) * 1000)
+      ).format("Do MMMM YYYY");
+      let hourstamp = moment(
+        new Date(parseInt(note._id.substring(0, 8), 16) * 1000)
+      ).format("hh:mm A");
+      console.log(hourstamp);
       return (
         <li key={note._id}>
-          <Link to={`/notes/${note._id}`}>{note.title} </Link>
+          <Link className="note-title" to={`/notes/${note._id}`}>
+            {note.title}
+          </Link>
+          <span className="hourstamp">
+            {hourstamp}&nbsp;&nbsp;
+            <i className="icon fa fa-angle-right" />
+          </span>
+          <p className="dateStamp">{datestamp}</p>
+          <div className="note-body">{ReactHtmlParser(htmlContent)} </div>
         </li>
       );
     });
@@ -146,7 +181,7 @@ export class NotebookContainer extends Component {
     }
 
     return (
-      <div>
+      <div className="notebook-container">
         {this.displayTitle()}
         <p>{this.state.notebook && this.state.notebook.tags}</p>
         <Button
