@@ -84,7 +84,7 @@ export class NotebookContainer extends Component {
           <p className="dateStamp">{datestamp}</p>
           <div
             className="note-body"
-            dangerouslySetInnerHTML={this.showLessNoteContent()}
+            dangerouslySetInnerHTML={{ __html: htmlContent }}
           />
         </li>
       );
