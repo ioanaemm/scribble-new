@@ -74,20 +74,25 @@ export class NotebookContainer extends Component {
       let hours = moment(timestamp).format("hh:mm A");
 
       return (
-        <li className="note-item" key={note._id}>
-          <Link className="note-title" to={`/notes/${note._id}`}>
-            {note.title}
-          </Link>
-          <span className="hours">
-            {hours}&nbsp;&nbsp;
-            <i className="icon fa fa-angle-right fa-lg" />
-          </span>
-          <p className="date">{date}</p>
-          <div
-            className="note-body"
-            dangerouslySetInnerHTML={{ __html: htmlContent }}
-          />
-        </li>
+        <Link
+          className="note-item-container"
+          to={`/notes/${note._id}`}
+          key={note._id}
+        >
+          <li className="note-item">
+            <p className="note-title">{note.title}</p>
+
+            <span className="hours">
+              {hours}&nbsp;&nbsp;
+              <i className="icon fa fa-angle-right fa-lg" />
+            </span>
+            <p className="date">{date}</p>
+            <div
+              className="note-body"
+              dangerouslySetInnerHTML={{ __html: htmlContent }}
+            />
+          </li>
+        </Link>
       );
     });
     return <ul>{notes}</ul>;
