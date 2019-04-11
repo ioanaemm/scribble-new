@@ -7,7 +7,11 @@ export function addNotebook(notebookData) {
   return axios.post(`${API_URL}/notebooks`, notebookData);
 }
 
-export function fetchNotebooks({ skip, limit, sort }) {
+export function fetchNotebooks({
+  skip = 0,
+  limit = Number.MAX_SAFE_INTEGER,
+  sort = { _id: -1 }
+}) {
   let queryString = query.stringify({
     skip,
     limit,

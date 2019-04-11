@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 import * as Api from "api/Api";
+import Select from "react-select";
 
 import Button from "components/Common/Button/Button";
 import "components/NotePage/NoteContainer/NoteContainer.scss";
@@ -12,12 +13,19 @@ export class NoteContainer extends Component {
     this.state = {
       pending: true,
       error: null,
-      title: "",
+      title: "New note",
       isInput: false,
       body: "",
       notebook: null,
-      isSaving: false
+      isSaving: false,
+      isNew: false,
+      notebookList: null,
+      notebookOptions: null,
+      selectedNotebook: null
     };
+
+    this.titleInputRef = React.createRef();
+
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.saveNoteDetails = this.saveNoteDetails.bind(this);
     this.retrieveNotebook = this.retrieveNotebook.bind(this);
@@ -26,15 +34,62 @@ export class NoteContainer extends Component {
     this.displayTitle = this.displayTitle.bind(this);
     this.saveInputValue = this.saveInputValue.bind(this);
     this.loadNoteData = this.loadNoteData.bind(this);
+    this.displaySaveButton = this.displaySaveButton.bind(this);
+    this.loadNotebookList = this.loadNotebookList.bind(this);
+    this.handleNotebookChange = this.handleNotebookChange.bind(this);
+    this.removeIsInput = this.removeIsInput.bind(this);
+    this.makeIsInput = this.makeIsInput.bind(this);
+    this.displayNoteList = this.displayNoteList.bind(this);
+    this.displayNoteDetails = this.displayNoteDetails.bind(this);
+    this.displaySidebarNotebookTitle = this.displaySidebarNotebookTitle.bind(
+      this
+    );
   }
 
   componentDidMount() {
     const id = this.props.match.params.id;
     if (id && id !== "new") {
       this.loadNoteData(id);
+    } else {
+      this.loadNotebookList();
+      this.setState({ pending: false, isNew: true });
     }
+    window.addEventListener("click", this.removeIsInput);
 
     // console.log("this.state.notebookId", this.state.notebookId);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("click", this.removeIsInput);
+  }
+
+  removeIsInput() {
+    this.setState({ isInput: false });
+  }
+
+  makeIsInput(e) {
+    e.stopPropagation();
+    this.setState({ isInput: true }, () => {
+      this.titleInputRef.current.focus();
+    });
+  }
+
+  loadNotebookList() {
+    Api.fetchNotebooks({}).then(response => {
+      console.log(response.data);
+      const notebookOptions = response.data.map(notebook => {
+        return {
+          value: notebook._id,
+          label: notebook.title
+        };
+      });
+      const selectedNotebook = notebookOptions[0];
+      this.setState({
+        notebookList: response.data,
+        notebookOptions,
+        selectedNotebook
+      });
+    });
   }
 
   loadNoteData(noteId) {
@@ -56,7 +111,7 @@ export class NoteContainer extends Component {
   }
 
   retrieveNotebook(notebookId) {
-    Api.fetchNotebook(notebookId).then(response => {
+    return Api.fetchNotebook(notebookId).then(response => {
       console.log("response.data", response.data);
       this.setState({
         notebook: response.data
@@ -64,12 +119,41 @@ export class NoteContainer extends Component {
     });
   }
 
-  displayNotebookTitle() {
-    if (!this.state.notebook) {
+  handleNotebookChange(selectedNotebook) {
+    this.setState({ selectedNotebook });
+  }
+
+  displaySidebarNotebookTitle() {
+    if (
+      this.state.isNew ||
+      !this.state.notebook ||
+      !this.state.notebook.title
+    ) {
       return null;
     }
+    return <span>{this.state.notebook.title}:</span>;
+  }
 
-    return <span>{this.state.notebook.title}</span>;
+  displayNotebookTitle() {
+    if (this.state.isNew) {
+      if (!this.state.notebookList) {
+        return null;
+      }
+
+      return (
+        <Select
+          className="notebook-select"
+          value={this.state.selectedNotebook}
+          onChange={this.handleNotebookChange}
+          options={this.state.notebookOptions}
+        />
+      );
+    } else {
+      if (!this.state.notebook) {
+        return null;
+      }
+      return <span>{this.state.notebook.title}:</span>;
+    }
   }
 
   displayNotesInNotebook() {
@@ -105,26 +189,42 @@ export class NoteContainer extends Component {
 
   saveNoteDetails() {
     this.setState({ isSaving: true });
-    setTimeout(() => {
-      Api.patchNoteContent(this.props.match.params.id, {
+
+    if (this.state.isNew) {
+      const noteData = {
         title: this.state.title,
-        body: this.state.body
-      }).then(
-        response => {
-          this.setState({
-            title: response.data.title,
-            isInput: false,
-            isSaving: false
+        body: this.state.body,
+        notebookId: this.state.selectedNotebook.value
+      };
+      Api.addNote(noteData).then(response => {
+        this.retrieveNotebook(response.data.notebookId).then(() => {
+          this.setState({ isNew: false }, () => {
+            this.props.history.push(`/notes/${response.data._id}`);
           });
-        },
-        error => {
-          this.setState({
-            error: error.response.data,
-            isSaving: false
-          });
-        }
-      );
-    }, 500);
+        });
+      });
+    } else {
+      setTimeout(() => {
+        Api.patchNoteContent(this.props.match.params.id, {
+          title: this.state.title,
+          body: this.state.body
+        }).then(
+          response => {
+            this.setState({
+              title: response.data.title,
+              isInput: false,
+              isSaving: false
+            });
+          },
+          error => {
+            this.setState({
+              error: error.response.data,
+              isSaving: false
+            });
+          }
+        );
+      }, 500);
+    }
   }
 
   saveInputValue(e) {
@@ -135,15 +235,16 @@ export class NoteContainer extends Component {
   }
 
   displayTitle() {
-    // return <h3 className="title">{this.state.title}</h3>;
     if (this.state.isInput) {
       return (
         <>
           <input
             className="input-title"
             type="text"
+            ref={this.titleInputRef}
             value={this.state.title}
             onChange={this.saveInputValue}
+            onClick={e => e.stopPropagation}
           />
           <Button type="primary" label="Save" onClick={this.saveNoteDetails} />
         </>
@@ -151,15 +252,60 @@ export class NoteContainer extends Component {
     } else {
       return (
         <>
-          <h3
-            className="note-title"
-            onClick={() => this.setState({ isInput: true })}
-          >
+          <h3 className="note-title" onClick={this.makeIsInput}>
             {this.state.title}
           </h3>
         </>
       );
     }
+  }
+
+  displaySaveButton() {
+    return (
+      <div className="save-button-container">
+        <Button
+          type="primary"
+          label={this.state.isSaving ? "Saving..." : "Save"}
+          className={`save-note ${
+            this.state.isSaving ? "is-saving" : "is-not-saving"
+          }`}
+          onClick={this.saveNoteDetails}
+        />
+      </div>
+    );
+  }
+
+  displayNoteList() {
+    if (this.state.isNew) {
+      return null;
+    }
+    return (
+      <div className="note-list-container">
+        <h3 className="note-list-container-title">
+          {this.displaySidebarNotebookTitle()}
+        </h3>
+        <div className="notelist-divider" />
+        {this.displayNotesInNotebook()}
+      </div>
+    );
+  }
+
+  displayNoteDetails() {
+    return (
+      <div className="note-details">
+        {this.displaySaveButton()}
+        <div className="notebook-title">
+          Notebook: {this.displayNotebookTitle()}
+        </div>
+        <div className="note-header">{this.displayTitle()}</div>
+        <div className="note-editor">
+          <Editor
+            value={this.state.body}
+            onEditorChange={this.handleEditorChange}
+          />
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -173,41 +319,9 @@ export class NoteContainer extends Component {
 
     return (
       <div className="note-container">
-        <div className="note-list-container">
-          <h3 className="note-list-container-title">
-            {this.displayNotebookTitle()} Notebook
-          </h3>
-          <div className="notelist-divider" />
-          {this.displayNotesInNotebook()}
-        </div>
         <div className="note-content">
-          <p className="notebook-title">
-            Notebook: {this.displayNotebookTitle()}
-          </p>
-          <div className="note-header">
-            {this.displayTitle()}
-            <div className="btn-container">
-              <Button
-                type="secondary"
-                label="Share"
-                onClick={this.saveNoteDetails}
-              />
-              <Button
-                type="primary"
-                label={this.state.isSaving ? "Saving..." : "Save"}
-                className={`save-note ${
-                  this.state.isSaving ? "is-saving" : "is-not-saving"
-                }`}
-                onClick={this.saveNoteDetails}
-              />
-            </div>
-          </div>
-          <div className="note-editor">
-            <Editor
-              value={this.state.body}
-              onEditorChange={this.handleEditorChange}
-            />
-          </div>
+          {this.displayNoteDetails()}
+          {this.displayNoteList()}
         </div>
       </div>
     );

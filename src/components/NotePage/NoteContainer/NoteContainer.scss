@@ -1,16 +1,48 @@
 .note-container {
-  display: flex;
+  .notebook-select {
+    width: 150px;
+    display: inline-block;
+    z-index: 3;
+  }
 
   .note-content {
     width: 100%;
-    padding-left: 40px;
-    padding-right: 30px;
+    display: flex;
+
+    .note-details {
+      width: 100%;
+      padding-top: 20px;
+      padding-left: 40px;
+      padding-right: 40px;
+
+      @media (max-width: 600px) {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+      }
+
+      .save-button-container {
+        margin-bottom: 20px;
+        text-align: right;
+
+        .save-note {
+          margin: 0;
+          border-radius: 5px;
+          letter-spacing: 1px;
+          padding: 5px 35px;
+          font-size: 16px;
+        }
+      }
+    }
 
     .notebook-title {
       color: #8895b3;
       font-size: 16px;
-      padding-left: 20px;
       margin-bottom: 0;
+
+      .fa {
+        margin-right: 5px;
+      }
 
       span {
         font-weight: 600;
@@ -19,10 +51,19 @@
 
     .note-header {
       display: flex;
-      justify-content: space-between;
+      margin-top: 16px;
+      margin-bottom: 16px;
 
-      .title {
-        margin-top: 10px;
+      .note-title {
+        margin: 0;
+        font-weight: 100;
+        font-size: 40px;
+        color: #292929;
+      }
+
+      input {
+        font-size: 1.17em;
+        font-weight: bold;
       }
 
       .btn-container {
@@ -50,6 +91,8 @@
       display: block;
       margin-left: auto;
       margin-right: auto;
+      margin-left: -15px;
+
       .tox.tox-tinymce {
         border: none;
         .tox-editor-container {
@@ -85,15 +128,21 @@
     background-color: #7371fc;
     height: 100vh;
     order: 2;
-    overflow: hidden;
-    width: 300px;
+    overflow: auto;
+    width: 400px;
+
     // max-width: 100%;
 
     .note-list-container-title {
       color: #fff;
-      font-size: 25px;
-      font-weight: 400;
-      padding: 20px;
+      font-size: 20px;
+      font-weight: 700;
+      padding: 0px;
+      margin: 0;
+      padding-right: 20px;
+      padding-left: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
       // border-bottom: 1px solid #a4a2f8;
     }
 
@@ -103,11 +152,15 @@
       background-color: #a4a2f8;
       margin-left: auto;
       margin-right: auto;
+      margin-bottom: 20px;
     }
 
     .note-list-content {
-      padding-left: 20px;
+      padding: 0;
+      background-color: #7a79ff;
+      margin-bottom: 20px;
       padding-right: 20px;
+      padding-left: 20px;
 
       .note-list-title {
         font-size: 20px;
@@ -115,18 +168,23 @@
         text-transform: capitalize;
         color: #fff;
         text-align: center;
-        // margin-bottom: 0;
+        padding: 6px;
+        margin: 0;
       }
       .note-list-body {
         color: #fff;
+        margin: 0;
 
         p {
           color: #fff;
-          font-size: 16px;
+          font-size: 14px !important;
+          // font-weight: bold;
+          margin: 0;
+
           span {
-            background-color: #7371fc !important;
+            background-color: #7a79ff !important;
             color: #fff !important;
-            font-size: 16px !important;
+            font-size: 14px !important;
           }
         }
       }
