@@ -10,7 +10,8 @@ export default class User extends Component {
     super(props);
     this.state = {
       username: "ioanam",
-      password: "qwerty"
+      password: "qwerty",
+      submitting: false
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -18,7 +19,7 @@ export default class User extends Component {
   onSubmit(e) {
     e.preventDefault();
     console.log("onSubmit()");
-
+    this.setState({ submitting: true });
     Api.signInUser({
       username: this.state.username,
       password: this.state.password
@@ -64,7 +65,7 @@ export default class User extends Component {
             </div>
             <span className="forgotten-password">Forgotten password?</span>
             <button className="signin" type="submit">
-              Login
+              {this.state.submitting ? <Preloader /> : "Login"}
             </button>
           </form>
           <p className="new-user">

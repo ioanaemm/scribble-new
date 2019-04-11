@@ -19,10 +19,12 @@ export default class SearchBar extends Component {
 
   componentDidMount() {
     window.addEventListener("click", this.collapseInput);
+    window.addEventListener("touchend", this.collapseInput);
   }
 
   componentWillUnmount() {
     window.removeEventListener("click", this.collapseInput);
+    window.removeEventListener("touchend", this.collapseInput);
   }
 
   collapseInput() {

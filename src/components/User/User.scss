@@ -109,10 +109,18 @@ $gray-light: #f3f5f9;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 300ms ease;
+      outline: 0;
 
-      &:hover {
-        transform: scale(0.95);
-        transform-origin: 50% 50%;
+      @media (min-width: 601px) {
+        &:hover {
+          transform: scale(0.95);
+          transform-origin: 50% 50%;
+        }
+      }
+
+      .preloader {
+        margin-top: 2px;
+        margin-bottom: -2px;
       }
     }
   }

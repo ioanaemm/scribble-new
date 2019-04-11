@@ -21,12 +21,16 @@ export class NotebookContainer extends Component {
       title: ""
     };
 
+    this.inputRef = React.createRef();
+
     this.toggleModal = this.toggleModal.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
     this.displayNotes = this.displayNotes.bind(this);
     this.onTitleSubmit = this.onTitleSubmit.bind(this);
     this.saveInputValue = this.saveInputValue.bind(this);
     this.displayTitle = this.displayTitle.bind(this);
+    this.makeInput = this.makeInput.bind(this);
+    this.makeNotInput = this.makeNotInput.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +46,26 @@ export class NotebookContainer extends Component {
         this.setState({ pending: false, error: true });
       }
     );
+
+    window.addEventListener("click", this.makeNotInput);
+    window.addEventListener("touchend", this.makeNotInput);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("click", this.makeNotInput);
+    window.removeEventListener("touchend", this.makeNotInput);
+  }
+
+  makeNotInput() {
+    this.setState({ isInput: false });
+  }
+
+  makeInput(e) {
+    e.stopPropagation();
+
+    this.setState({ isInput: true }, () => {
+      this.inputRef.current.focus();
+    });
   }
 
   toggleModal() {
@@ -143,6 +167,7 @@ export class NotebookContainer extends Component {
             type="text"
             value={this.state.title}
             onChange={this.saveInputValue}
+            ref={this.inputRef}
           />
           <button
             className="title-submit"
@@ -154,10 +179,7 @@ export class NotebookContainer extends Component {
       );
     } else {
       return (
-        <h3
-          className="notebook-title"
-          onClick={() => this.setState({ isInput: true })}
-        >
+        <h3 className="notebook-title" onClick={this.makeInput}>
           <i className="fa fa-book" />
           {this.state.title}
         </h3>

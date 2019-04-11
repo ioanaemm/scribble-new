@@ -1,8 +1,21 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+
+import * as Api from "api/Api";
 import "components/Sidebar/Sidebar.scss";
 
 export default class Sidebar extends Component {
+  constructor(props) {
+    super(props);
+    this.onLogout = this.onLogout.bind(this);
+  }
+
+  onLogout() {
+    Api.signOutUser().then(() => {
+      window.location.href = "/login";
+    });
+  }
+
   render() {
     return (
       <>
@@ -24,7 +37,7 @@ export default class Sidebar extends Component {
           </div>
         </div>
         <div className="mobile-sidebar top">
-          <i className="icon fa fa-user-circle fa-lg" />
+          <i className="icon fa fa-user-circle fa-lg" onClick={this.onLogout} />
           <h3 className="title">
             <Link to={`/`}>Scribble</Link>
           </h3>

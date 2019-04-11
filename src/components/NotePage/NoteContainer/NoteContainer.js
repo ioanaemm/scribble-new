@@ -56,12 +56,14 @@ export class NoteContainer extends Component {
       this.setState({ pending: false, isNew: true });
     }
     window.addEventListener("click", this.removeIsInput);
+    window.addEventListener("touchend", this.removeIsInput);
 
     // console.log("this.state.notebookId", this.state.notebookId);
   }
 
   componentWillUnmount() {
     window.removeEventListener("click", this.removeIsInput);
+    window.removeEventListener("touchend", this.removeIsInput);
   }
 
   removeIsInput() {

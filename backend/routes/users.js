@@ -108,5 +108,6 @@ router.post("/signout", (req, res) => {
   if (req.session && req.session.user) {
     delete req.session.user;
   }
+  res.send("Logged out");
 });
 module.exports = router;

@@ -59,6 +59,14 @@ $gray-light: #f3f5f9;
       }
     }
 
+    .title-input {
+      font-size: 16px;
+      max-width: 100%;
+      border: 1px solid #eee;
+      font-size: 18px;
+      letter-spacing: 2px;
+    }
+
     .note-title {
       text-decoration: none;
       color: $gray-dark;
