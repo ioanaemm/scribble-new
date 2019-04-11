@@ -3,6 +3,8 @@ $primary-color: #7371fc;
 
 .mobile-sidebar {
   display: none;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .sidebar {
@@ -35,6 +37,7 @@ $primary-color: #7371fc;
     a {
       text-decoration: none;
     }
+
     .icon {
       color: white;
       display: block;
@@ -58,7 +61,12 @@ $primary-color: #7371fc;
       color: #fff;
       display: flex;
       align-items: center;
-      justify-content: space-around;
+      justify-content: space-between;
+
+      .icon {
+        text-shadow: 0px 2px 4px #514fce;
+        font-size: 1.5em;
+      }
 
       .title {
         a {
@@ -75,9 +83,10 @@ $primary-color: #7371fc;
       justify-content: space-between;
       align-items: center;
       z-index: 1;
+      padding-top: 12px;
+      padding-bottom: 12px;
 
       .section {
-        padding: 10px;
         color: #fff;
         text-align: center;
         text-decoration: none;
@@ -85,7 +94,8 @@ $primary-color: #7371fc;
         p {
           color: #fff;
           margin: 0;
-          font-size: 13px;
+          font-size: 12px;
+          font-weight: 700;
         }
 
         .icon {
