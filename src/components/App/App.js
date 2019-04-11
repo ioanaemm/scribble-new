@@ -101,13 +101,20 @@ export class App extends Component {
 
     return (
       <div className="app">
-        <Sidebar />
+        <Route
+          path={new RegExp("^(?!.*(/login|/register)).*$")}
+          component={Sidebar}
+        />
+
         <div className="page-content" ref={this.pageContentRef}>
           <Route exact path="/" component={SearchBar} />
 
           {this.displayPageContent()}
         </div>
-        <BottomSidebar />
+        <Route
+          path={new RegExp("^(?!.*(/login|/register)).*$")}
+          component={BottomSidebar}
+        />
       </div>
     );
   }

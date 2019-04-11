@@ -29,8 +29,9 @@ export class NoteContainer extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.id) {
-      this.loadNoteData(this.props.match.params.id);
+    const id = this.props.match.params.id;
+    if (id && id !== "new") {
+      this.loadNoteData(id);
     }
 
     // console.log("this.state.notebookId", this.state.notebookId);

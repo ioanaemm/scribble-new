@@ -18,7 +18,9 @@ export default class Sidebar extends Component {
               <i className="icon fa fa-sticky-note fa-lg" />
             </Link>
             <i className="icon fa fa-clipboard fa-lg" />
-            <i className="icon fa fa-plus-circle fa-lg" />
+            <Link to="/notes/new">
+              <i className="icon fa fa-plus-circle fa-lg" />
+            </Link>
           </div>
         </div>
         <div className="mobile-sidebar top">
@@ -26,7 +28,9 @@ export default class Sidebar extends Component {
           <h3 className="title">
             <Link to={`/`}>Scribble</Link>
           </h3>
-          <i className="icon fa fa-plus-circle fa-lg" />
+          <Link to="/notes/new">
+            <i className="icon fa fa-plus-circle fa-lg" />
+          </Link>
         </div>
       </>
     );

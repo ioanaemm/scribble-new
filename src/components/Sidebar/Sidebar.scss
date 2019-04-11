@@ -5,12 +5,20 @@ $primary-color: #7371fc;
   display: none;
   padding-left: 15px;
   padding-right: 15px;
+
+  .fa {
+    color: white;
+  }
 }
 
 .sidebar {
   background-color: $primary-color;
   width: 80px;
   height: 100%;
+
+  .fa {
+    color: white;
+  }
 
   .title {
     font-family: $font-stack;

@@ -8,6 +8,7 @@ $gray-light: #f3f5f9;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 50px;
 
   .login {
     width: 100%;
@@ -90,6 +91,8 @@ $gray-light: #f3f5f9;
       color: $gray;
       float: right;
       font-size: 13px;
+      margin-top: -30px;
+      margin-bottom: 30px;
     }
 
     button.signin {
