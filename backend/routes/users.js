@@ -47,12 +47,14 @@ router.post("/register", function(req, res) {
       user
         .save()
         .then(function(result) {
-          console.log(result);
+          console.log("result1", result);
           res.status(200).json({
             success: "New user has been created"
           });
         })
         .catch(error => {
+          console.log("errror", error);
+
           res.status(500).json({
             error: err
           });
@@ -60,6 +62,7 @@ router.post("/register", function(req, res) {
     }
   });
 });
+
 router.post("/signin", function(req, res) {
   console.log("req.body: ", req.body);
   User.findOne({
@@ -97,11 +100,6 @@ router.post("/signin", function(req, res) {
         }
       });
     });
-  // .catch(error => {
-  //   res.status(500).json({
-  //     error
-  //   });
-  // });
 });
 
 router.post("/signout", (req, res) => {

@@ -85,6 +85,7 @@ export function signOutUser() {
 }
 
 export function registerUser(userData) {
+  console.log(userData);
   return axios.post(`${API_URL}/users/register`, userData);
 }
 

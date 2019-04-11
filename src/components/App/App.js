@@ -53,7 +53,6 @@ export class App extends Component {
   }
 
   onLoginUser(userData) {
-    console.log("onFormSubmit2()");
     this.props.history.push("/");
     this.setState({
       userData
