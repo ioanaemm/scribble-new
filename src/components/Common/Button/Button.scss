@@ -6,7 +6,7 @@ $default-border-radius-btn: 15px;
 .primary {
   background-color: $primary-color-btn;
   border-radius: $default-border-radius-btn;
-  border-color: $primary-color-btn;
+  border: none;
   color: white;
   font-size: 14px;
   margin: 0 20px;

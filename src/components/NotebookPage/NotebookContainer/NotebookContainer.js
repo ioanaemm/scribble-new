@@ -65,23 +65,23 @@ export class NotebookContainer extends Component {
       return null;
     }
     let notes = this.state.notebook.notes.map(note => {
-      let htmlContent = note.body.substr(0, 180);
+      let htmlContent = note.body.substr(0, 205);
 
       console.log("htmlContent", htmlContent);
       let timestamp = parseInt(note._id.substring(0, 8), 16) * 1000;
-      let datestamp = moment(timestamp).format("Do MMMM YYYY");
-      let hourstamp = moment(timestamp).format("hh:mm A");
-      console.log(hourstamp);
+      let date = moment(timestamp).format("Do MMMM YYYY");
+      let hours = moment(timestamp).format("hh:mm A");
+
       return (
-        <li key={note._id}>
+        <li className="note-item" key={note._id}>
           <Link className="note-title" to={`/notes/${note._id}`}>
             {note.title}
           </Link>
-          <span className="hourstamp">
-            {hourstamp}&nbsp;&nbsp;
-            <i className="icon fa fa-angle-right" />
+          <span className="hours">
+            {hours}&nbsp;&nbsp;
+            <i className="icon fa fa-angle-right fa-lg" />
           </span>
-          <p className="dateStamp">{datestamp}</p>
+          <p className="date">{date}</p>
           <div
             className="note-body"
             dangerouslySetInnerHTML={{ __html: htmlContent }}
@@ -169,7 +169,7 @@ export class NotebookContainer extends Component {
     return (
       <div className="notebook-container">
         {this.displayTitle()}
-        <p>{this.state.notebook && this.state.notebook.tags}</p>
+
         <Button
           className="newnote-modal"
           type="primary"

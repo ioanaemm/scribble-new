@@ -1,7 +1,26 @@
+$green: #64ae57;
+$purple: #6470ee;
+$gray: #8895b3;
+$gray-dark: #132140;
+$gray-light: #f3f5f9;
+
 .notebook-container {
   ul {
     list-style: none;
     padding: 0;
+    margin-bottom: 5px;
+    margin-top: 5px;
+
+    .note-item {
+      padding-top: 10px;
+    }
+
+    .hours {
+      .icon {
+        color: lighten($gray, 25);
+        cursor: pointer;
+      }
+    }
   }
   @media only screen and (max-width: 600px) {
     width: 100%;
@@ -10,13 +29,46 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    .hourstamp {
-      float: right;
+
+    .notebook-title {
+      color: $gray;
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin: 0;
     }
 
-    .dateStamp {
-      margin-top: 5px;
-      margin-bottom: 0;
+    .note-title {
+      text-decoration: none;
+      color: $gray-dark;
+    }
+
+    button {
+      display: none;
+    }
+
+    .hours {
+      float: right !important;
+      font-size: 14px;
+      color: $gray;
+    }
+
+    .date {
+      color: $gray-dark;
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .note-body {
+      border-bottom: 1px solid darken(#ebebeb, 10);
+      color: $gray;
+
+      padding-bottom: 25px;
+
+      p {
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
     }
   }
 }
