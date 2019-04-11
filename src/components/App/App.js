@@ -78,6 +78,9 @@ export class App extends Component {
         <Route exact path="/notes/:id">
           <NoteContainer />
         </Route>
+        <Route exact path="/notes/new">
+          <NoteContainer />
+        </Route>
         <Route exact path="/search/:query">
           <SearchResultsPage />
         </Route>
@@ -93,17 +96,14 @@ export class App extends Component {
 
   render() {
     if (this.state.pending) {
-      return <Preloader />;
+      return <Preloader centered={true} />;
     }
 
     return (
       <div className="app">
         <Sidebar />
         <div className="page-content" ref={this.pageContentRef}>
-          <Route
-            path={new RegExp("^(?!.*(/login|/register)).*$")}
-            component={SearchBar}
-          />
+          <Route exact path="/" component={SearchBar} />
 
           {this.displayPageContent()}
         </div>

@@ -25,10 +25,19 @@ export class NoteContainer extends Component {
     this.displayNotesInNotebook = this.displayNotesInNotebook.bind(this);
     this.displayTitle = this.displayTitle.bind(this);
     this.saveInputValue = this.saveInputValue.bind(this);
+    this.loadNoteData = this.loadNoteData.bind(this);
   }
 
   componentDidMount() {
-    Api.fetchNote(this.props.match.params.id).then(
+    if (this.props.match.params.id) {
+      this.loadNoteData(this.props.match.params.id);
+    }
+
+    // console.log("this.state.notebookId", this.state.notebookId);
+  }
+
+  loadNoteData(noteId) {
+    Api.fetchNote(noteId).then(
       response => {
         console.log("response.data.notebookId", response.data);
         this.retrieveNotebook(response.data.notebookId);
@@ -43,8 +52,6 @@ export class NoteContainer extends Component {
         this.setState({ error: error.response.data, pending: false });
       }
     );
-
-    // console.log("this.state.notebookId", this.state.notebookId);
   }
 
   retrieveNotebook(notebookId) {

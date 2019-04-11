@@ -29,6 +29,11 @@ $gray-light: #f3f5f9;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 20px;
+
+    .note-item {
+      border-bottom: 1px solid #f1f1f1;
+    }
 
     .notebook-title {
       color: $gray;
@@ -36,6 +41,11 @@ $gray-light: #f3f5f9;
       font-weight: bold;
       letter-spacing: 1px;
       margin: 0;
+      margin-bottom: 5px;
+
+      .fa {
+        margin-right: 5px;
+      }
     }
 
     .note-title {
@@ -60,10 +70,9 @@ $gray-light: #f3f5f9;
     }
 
     .note-body {
-      border-bottom: 1px solid darken(#ebebeb, 10);
       color: $gray;
 
-      padding-bottom: 25px;
+      padding-bottom: 5px;
 
       p {
         margin-top: 5px;

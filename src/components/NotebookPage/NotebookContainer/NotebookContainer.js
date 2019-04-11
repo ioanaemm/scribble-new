@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import * as Api from "api/Api";
 import moment from "moment";
 
+import Preloader from "components/Common/Preloader/Preloader";
 import Button from "components/Common/Button/Button";
 import NoteModal from "components/Common/NoteModal/NoteModal";
 import "components/NotebookPage/NotebookContainer/NotebookContainer.scss";
@@ -152,6 +153,7 @@ export class NotebookContainer extends Component {
           className="notebook-title"
           onClick={() => this.setState({ isInput: true })}
         >
+          <i className="fa fa-book" />
           {this.state.title}
         </h3>
       );
@@ -160,10 +162,18 @@ export class NotebookContainer extends Component {
 
   render() {
     if (this.state.pending) {
-      return <p className="preloader">Loading...</p>;
+      return (
+        <div className="notebook-container">
+          <Preloader centered={true} />
+        </div>
+      );
     }
     if (this.state.error) {
-      return <p className="error">Notebook not found</p>;
+      return (
+        <div className="notebook-container">
+          <p className="error">Notebook not found</p>
+        </div>
+      );
     }
 
     return (

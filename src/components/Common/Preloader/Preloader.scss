@@ -9,6 +9,10 @@ $purple: #6f76f4;
   animation-duration: 700ms;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+
+  &.centered {
+    margin-top: 40vh;
+  }
 }
 
 .spinner > div {
