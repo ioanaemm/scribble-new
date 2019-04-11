@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Button from "components/Common/Button/Button";
 import Title from "components/Common/Title/Title.js";
 

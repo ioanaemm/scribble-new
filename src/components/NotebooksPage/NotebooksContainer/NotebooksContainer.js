@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import * as Api from "api/Api";
-import { Link } from "react-router-dom";
-import moment from "moment";
 
-import Button from "components/Common/Button/Button";
-import Title from "components/Common/Title/Title.js";
 import NotebookList from "components/Common/NotebookList/NotebookList";
 
 import "./NotebooksContainer.scss";

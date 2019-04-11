@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
 import * as Api from "api/Api";
-import moment from "moment";
 
 import Preloader from "components/Common/Preloader/Preloader";
 import NoteList from "components/Common/NoteList/NoteList";

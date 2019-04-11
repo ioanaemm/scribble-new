@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as Api from "api/Api";
-import { Link } from "react-router-dom";
 
 import NoteList from "components/Common/NoteList/NoteList";
 import Preloader from "components/Common/Preloader/Preloader";
