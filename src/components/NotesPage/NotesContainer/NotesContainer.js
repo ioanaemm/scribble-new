@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import * as Api from "api/Api";
 import { Link } from "react-router-dom";
 
+import Preloader from "components/Common/Preloader/Preloader";
+
 export default class NotesContainer extends Component {
   constructor() {
     super();
@@ -18,7 +20,7 @@ export default class NotesContainer extends Component {
   }
   displayNoteList() {
     if (this.state.pending) {
-      return <p className="preloader">Loading...</p>;
+      return <Preloader />;
     }
 
     let noteList = this.state.notes.map(note => {

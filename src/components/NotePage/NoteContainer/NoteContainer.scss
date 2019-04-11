@@ -1,3 +1,5 @@
+$purple: #7274f4;
+
 .note-container {
   .notebook-select {
     width: 150px;
@@ -59,11 +61,26 @@
         font-weight: 100;
         font-size: 40px;
         color: #292929;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(black, 0.03);
+        }
       }
 
       input {
-        font-size: 1.17em;
-        font-weight: bold;
+        font-weight: 100;
+        font-size: 40px;
+        color: #292929;
+        border: 1px dashed #ddd;
+        outline: 0;
+        position: relative;
+        top: -3px;
+        letter-spacing: 2px;
+
+        &:focus {
+          // color: $purple;
+        }
       }
 
       .btn-container {

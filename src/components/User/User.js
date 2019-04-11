@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+
+import Preloader from "components/Common/Preloader/Preloader";
 import * as Api from "api/Api";
 import "components/User/User.scss";
 
@@ -32,7 +34,7 @@ export default class User extends Component {
 
   render() {
     if (this.state.pending) {
-      return <p>Loading...</p>;
+      return <Preloader />;
     }
     if (!this.state.userData) {
       return (

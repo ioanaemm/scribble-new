@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 import Title from "components/Common/Title/Title";
 import Button from "components/Common/Button/Button";
 import NotebookModal from "components/Common/NotebookModal/NotebookModal";
@@ -262,12 +264,9 @@ export default class HomeContainer extends Component {
         />
         <div className="add-item-container">
           <Title content="Notes">
-            <Button
-              className="add-note"
-              type="primary"
-              onClick={this.toggleNoteModal}
-              label="New Note"
-            />
+            <Link to="/notes/new">
+              <Button className="add-note" type="primary" label="New Note" />
+            </Link>
           </Title>
 
           {this.renderNoteModal()}

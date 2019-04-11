@@ -4,6 +4,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import * as Api from "api/Api";
 import Select from "react-select";
 
+import Preloader from "components/Common/Preloader/Preloader";
 import Button from "components/Common/Button/Button";
 import "components/NotePage/NoteContainer/NoteContainer.scss";
 
@@ -246,7 +247,6 @@ export class NoteContainer extends Component {
             onChange={this.saveInputValue}
             onClick={e => e.stopPropagation}
           />
-          <Button type="primary" label="Save" onClick={this.saveNoteDetails} />
         </>
       );
     } else {
@@ -310,7 +310,7 @@ export class NoteContainer extends Component {
 
   render() {
     if (this.state.pending) {
-      return <p>Loading...</p>;
+      return <Preloader />;
     }
 
     if (this.state.error) {
