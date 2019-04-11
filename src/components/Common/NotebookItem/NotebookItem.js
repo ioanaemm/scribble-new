@@ -19,27 +19,25 @@ export default class NotebookItem extends Component {
   render() {
     const { notebook } = this.props;
     return (
-      <div className={`notebook-item notebook-item-${notebook._id}`}>
-        <button
-          className="delete"
-          onClick={() => this.props.removeNotebook(notebook._id)}
-        >
-          <i className="fa fa-trash-alt" />
-        </button>
-        <p className="notebook-total">
-          Notes in Notebook:{" "}
-          <span className="notebook-count">{notebook.noteCount}</span>
-        </p>
-        <span className="notebook-title">
-          <Link
-            className="notebook-link-title"
-            to={`/notebooks/${notebook._id}`}
+      <Link
+        className="notebook-item-container"
+        to={`/notebooks/${notebook._id}`}
+      >
+        <div className={`notebook-item notebook-item-${notebook._id}`}>
+          <button
+            className="delete"
+            onClick={() => this.props.removeNotebook(notebook._id)}
           >
-            {notebook.title}
-          </Link>
-        </span>
-        {this.displayTags(notebook)}
-      </div>
+            <i className="fa fa-trash-alt" />
+          </button>
+          <p className="notebook-total">
+            Notes in Notebook:{" "}
+            <span className="notebook-count">{notebook.noteCount}</span>
+          </p>
+          <span className="notebook-title">{notebook.title}</span>
+          {this.displayTags(notebook)}
+        </div>
+      </Link>
     );
   }
 }

@@ -2,23 +2,41 @@
 .note-list {
   display: flex;
   flex-flow: row wrap;
-  margin-left: -8px; /* Adjustment for the gutter */
+  // margin-left: -8px; /* Adjustment for the gutter */
   overflow-x: hidden;
   width: 100%;
+  padding: 10px;
 
+  .notebook-item-container,
+  .note-item-container {
+    width: 100%;
+    display: inline-block;
+    text-decoration: none;
+
+    &:focus {
+      color: inherit;
+    }
+  }
   .notebook-item,
   .note-item {
+    display: inline-block;
     border: 2px solid #f3f5f9;
     border-radius: 10px;
     display: inline-block;
-    width: calc(100% / 5);
     padding: 10px 15px 10px;
     flex: auto;
-    margin: 10px;
+    margin-bottom: 20px;
+    width: 100%;
 
-    @media (max-width: 1000px) {
-      width: calc(100% / 3);
-    }
+    // width: calc(100% / 5);
+
+    // @media (max-width: 1000px) {
+    //   width: calc(100% / 3);
+    // }
+
+    // @media only screen and (max-width: 600px) {
+    //   width: 80%;
+    // }
 
     .delete {
       padding: 0;
@@ -48,11 +66,7 @@
       font-weight: 100;
       font-size: 25px;
       letter-spacing: 1.48px;
-
-      a {
-        color: #262626;
-        text-decoration: none;
-      }
+      color: #262626;
     }
 
     .title {
@@ -90,10 +104,6 @@
         height: 18px;
       }
     }
-
-    @media only screen and (max-width: 600px) {
-      width: 80%;
-    }
   }
 
   .note-item {
@@ -103,10 +113,6 @@
       color: #69758f;
       font-size: 18px;
       letter-spacing: 1px;
-    }
-
-    @media only screen and (max-width: 600px) {
-      width: 80%;
     }
   }
 }

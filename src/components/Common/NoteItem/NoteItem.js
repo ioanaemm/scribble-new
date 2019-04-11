@@ -10,20 +10,18 @@ export default class NoteItem extends Component {
     ).format("Do MMMM YYYY");
 
     return (
-      <div className={`note-item note-item-${note._id}`}>
-        <p className="note-timestamp">
-          Created on: <span className="timestamp">{timestamp}</span>
-        </p>
-        <span className="note-title">
-          <Link className="note-link-title" to={`/notes/${note._id}`}>
-            {note.title}
-          </Link>
-        </span>
-        <div
-          className="note-content"
-          dangerouslySetInnerHTML={{ __html: note.body }}
-        />
-      </div>
+      <Link className="note-item-container" to={`/notes/${note._id}`}>
+        <div className={`note-item note-item-${note._id}`}>
+          <p className="note-timestamp">
+            Created on: <span className="timestamp">{timestamp}</span>
+          </p>
+          <span className="note-title">{note.title}</span>
+          <div
+            className="note-content"
+            dangerouslySetInnerHTML={{ __html: note.body }}
+          />
+        </div>
+      </Link>
     );
   }
 }
