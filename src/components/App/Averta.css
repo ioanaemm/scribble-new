@@ -29,6 +29,22 @@
 @import url("//hello.myfonts.net/count/39256f");
 
 @font-face {
+  font-family: Averta;
+  src: url("/webfonts/averta_1.woff");
+  font-weight: 700;
+}
+@font-face {
+  font-family: Averta;
+  src: url("/webfonts/averta_2.woff");
+  font-weight: 500;
+}
+@font-face {
+  font-family: Averta;
+  src: url("/webfonts/averta_3.woff");
+  font-weight: 100;
+}
+/*
+@font-face {
   font-family: "Averta-Bold";
   src: url("./webfonts/39256F_0_0.eot");
   src: url("./webfonts/39256F_0_0.eot?#iefix") format("embedded-opentype"),
@@ -53,4 +69,4 @@
     url("./webfonts/39256F_2_0.woff2") format("woff2"),
     url("./webfonts/39256F_2_0.woff") format("woff"),
     url("./webfonts/39256F_2_0.ttf") format("truetype");
-}
+} */
