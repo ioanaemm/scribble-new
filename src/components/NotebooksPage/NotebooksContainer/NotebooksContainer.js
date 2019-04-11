@@ -78,7 +78,12 @@ export class NotebooksContainer extends Component {
   }
 
   render() {
-    return <div className="notebooks-group">{this.displayNotebookList()}</div>;
+    return (
+      <div className="notebooks-group">
+        <h1 className="title">All Notebooks</h1>
+        {this.displayNotebookList()}
+      </div>
+    );
   }
 }
 

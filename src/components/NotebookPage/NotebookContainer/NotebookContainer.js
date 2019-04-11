@@ -5,6 +5,7 @@ import * as Api from "api/Api";
 import moment from "moment";
 
 import Preloader from "components/Common/Preloader/Preloader";
+import NoteList from "components/Common/NoteList/NoteList";
 import Button from "components/Common/Button/Button";
 import NoteModal from "components/Common/NoteModal/NoteModal";
 import "components/NotebookPage/NotebookContainer/NotebookContainer.scss";
@@ -89,37 +90,8 @@ export class NotebookContainer extends Component {
     if (!this.state.notebook || !this.state.notebook.notes) {
       return null;
     }
-    let notes = this.state.notebook.notes.map(note => {
-      let htmlContent = note.body.substr(0, 205);
 
-      console.log("htmlContent", htmlContent);
-      let timestamp = parseInt(note._id.substring(0, 8), 16) * 1000;
-      let date = moment(timestamp).format("Do MMMM YYYY");
-      let hours = moment(timestamp).format("hh:mm A");
-
-      return (
-        <Link
-          className="note-item-container"
-          to={`/notes/${note._id}`}
-          key={note._id}
-        >
-          <li className="note-item">
-            <p className="note-title">{note.title}</p>
-
-            <span className="hours">
-              {hours}&nbsp;&nbsp;
-              <i className="icon fa fa-angle-right fa-lg" />
-            </span>
-            <p className="date">{date}</p>
-            <div
-              className="note-body"
-              dangerouslySetInnerHTML={{ __html: htmlContent }}
-            />
-          </li>
-        </Link>
-      );
-    });
-    return <ul>{notes}</ul>;
+    return <NoteList notes={this.state.notebook.notes} />;
   }
 
   renderModal() {
