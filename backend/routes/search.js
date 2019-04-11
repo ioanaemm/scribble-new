@@ -6,10 +6,20 @@ const Notebook = require("../models/notebook");
 
 router.get("/:searchTerm", async (req, res) => {
   let notebooks = await Notebook.find({
-    titleLowercase: req.params.searchTerm.toLowerCase()
+    $or: [
+      {
+        titleLowercase: req.params.searchTerm.toLowerCase()
+      },
+      { title: req.params.searchTerm }
+    ]
   });
   let notes = await Note.find({
-    titleLowercase: req.params.searchTerm.toLowerCase()
+    $or: [
+      {
+        titleLowercase: req.params.searchTerm.toLowerCase()
+      },
+      { title: req.params.searchTerm }
+    ]
   });
   let dictionary = {
     notebooks,
