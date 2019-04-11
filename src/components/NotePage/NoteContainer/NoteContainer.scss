@@ -1,4 +1,4 @@
-$purple: #7274f4;
+@import "../../../Variables";
 
 .note-container {
   .notebook-select {
@@ -33,8 +33,72 @@ $purple: #7274f4;
           letter-spacing: 1px;
           padding: 5px 35px;
           font-size: 16px;
+          outline: 0;
+
+          &.desktop {
+            display: block;
+          }
+          &.mobile {
+            display: none;
+            position: fixed;
+            color: white;
+            top: 13px;
+            right: -20px;
+            background-color: transparent;
+            border: 0;
+            z-index: 2;
+
+            @keyframes scale-and-rotate {
+              from {
+                transform: scale(0) rotate(90deg);
+              }
+              to {
+                transform: scale(1) rotate(0deg);
+              }
+            }
+
+            .fa {
+              transform: scale(0) rotate(90deg);
+
+              animation-name: scale-and-rotate;
+              animation-duration: 0.3s;
+              animation-fill-mode: forwards;
+              animation-iteration-count: 1;
+            }
+
+            .fa-check {
+              // color: lighten(green, 20);
+            }
+
+            .fa-cloud-upload-alt {
+              text-shadow: 0px 2px 4px #514fce;
+            }
+
+            .preloader {
+              position: relative;
+              left: 30px;
+              margin: 0;
+
+              & > div {
+                width: 10px;
+                height: 10px;
+                background-color: white;
+                margin-left: 1px;
+                margin-right: 1px;
+              }
+            }
+          }
+
           @media (max-width: 600px) {
-            width: 100%;
+            &.desktop {
+              display: none;
+            }
+            &.mobile {
+              display: block;
+            }
+          }
+
+          &.desktop {
           }
         }
       }
@@ -111,7 +175,6 @@ $purple: #7274f4;
       display: block;
       margin-left: auto;
       margin-right: auto;
-      margin-left: -15px;
 
       .tox.tox-tinymce {
         border: none;

@@ -19,6 +19,7 @@ export class NoteContainer extends Component {
       body: "",
       notebook: null,
       isSaving: false,
+      isSaved: false,
       isNew: false,
       notebookList: null,
       notebookOptions: null,
@@ -42,6 +43,7 @@ export class NoteContainer extends Component {
     this.makeIsInput = this.makeIsInput.bind(this);
     this.displayNoteList = this.displayNoteList.bind(this);
     this.displayNoteDetails = this.displayNoteDetails.bind(this);
+    this.displaySaveIcon = this.displaySaveIcon.bind(this);
     this.displaySidebarNotebookTitle = this.displaySidebarNotebookTitle.bind(
       this
     );
@@ -199,13 +201,21 @@ export class NoteContainer extends Component {
         body: this.state.body,
         notebookId: this.state.selectedNotebook.value
       };
-      Api.addNote(noteData).then(response => {
-        this.retrieveNotebook(response.data.notebookId).then(() => {
-          this.setState({ isNew: false }, () => {
-            this.props.history.push(`/notes/${response.data._id}`);
+      setTimeout(() => {
+        Api.addNote(noteData).then(response => {
+          this.retrieveNotebook(response.data.notebookId).then(() => {
+            this.setState(
+              { isNew: false, isSaving: false, isSaved: true },
+              () => {
+                this.props.history.push(`/notes/${response.data._id}`);
+                setTimeout(() => {
+                  this.setState({ isSaved: false });
+                }, 2000);
+              }
+            );
           });
         });
-      });
+      }, 500);
     } else {
       setTimeout(() => {
         Api.patchNoteContent(this.props.match.params.id, {
@@ -213,11 +223,19 @@ export class NoteContainer extends Component {
           body: this.state.body
         }).then(
           response => {
-            this.setState({
-              title: response.data.title,
-              isInput: false,
-              isSaving: false
-            });
+            this.setState(
+              {
+                title: response.data.title,
+                isInput: false,
+                isSaving: false,
+                isSaved: true
+              },
+              () => {
+                setTimeout(() => {
+                  this.setState({ isSaved: false });
+                }, 2000);
+              }
+            );
           },
           error => {
             this.setState({
@@ -268,13 +286,26 @@ export class NoteContainer extends Component {
         <Button
           type="primary"
           label={this.state.isSaving ? "Saving..." : "Save"}
-          className={`save-note ${
+          className={`save-note desktop ${
             this.state.isSaving ? "is-saving" : "is-not-saving"
           }`}
           onClick={this.saveNoteDetails}
         />
+        <Button className="save-note mobile" onClick={this.saveNoteDetails}>
+          {this.displaySaveIcon()}
+        </Button>
       </div>
     );
+  }
+
+  displaySaveIcon() {
+    if (this.state.isSaving) {
+      return <Preloader />;
+    } else if (this.state.isSaved) {
+      return <i className="fa icon fa-check fa-lg" />;
+    } else {
+      return <i className="fa icon fa-cloud-upload-alt fa-lg" />;
+    }
   }
 
   displayNoteList() {

@@ -9,7 +9,8 @@ import NotebookList from "components/Common/NotebookList/NotebookList";
 import NoteList from "components/Common/NoteList/NoteList";
 import Preloader from "components/Common/Preloader/Preloader";
 import * as Api from "api/Api";
-import "components/HomePage/HomeContainer/HomeContainer.scss";
+
+import "./HomeContainer.scss";
 
 const REFRESH_PADDING_LIMIT = 25;
 
@@ -66,7 +67,7 @@ export default class HomeContainer extends Component {
       limit: Number.MAX_SAFE_INTEGER,
       sort: { _id: -1 }
     });
-    let notePromise = Api.fetchNotes();
+    let notePromise = Api.fetchNotes({});
 
     Promise.all([notebooksPromise, notePromise]).then(
       ([notebooksResponse, notesResponse]) => {

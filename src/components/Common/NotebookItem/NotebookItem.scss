@@ -1,0 +1,83 @@
+.notebook-item-container {
+  width: 100%;
+  display: inline-block;
+  text-decoration: none;
+
+  &:focus {
+    color: inherit;
+  }
+
+  .notebook-item {
+    display: inline-block;
+    border: 2px solid #f3f5f9;
+    border-radius: 10px;
+    display: inline-block;
+    padding: 10px 15px 10px;
+    flex: auto;
+    margin-bottom: 20px;
+    width: 100%;
+
+    // width: calc(100% / 5);
+
+    // @media (max-width: 1000px) {
+    //   width: calc(100% / 3);
+    // }
+
+    // @media only screen and (max-width: 600px) {
+    //   width: 80%;
+    // }
+
+    .notebook-total {
+      margin: 0;
+      font-weight: 100;
+      font-size: 16px;
+      color: #8895b3;
+      letter-spacing: 1.48px;
+    }
+
+    .notebook-title {
+      display: inline-block;
+      margin: 0;
+      font-family: Averta;
+      font-weight: 100;
+      font-size: 25px;
+      letter-spacing: 1.48px;
+      color: #262626;
+    }
+  }
+  background-size: cover;
+
+  .notebook-count {
+    font-weight: 500;
+  }
+
+  .tags-container {
+    .title {
+      font-family: Averta;
+      font-weight: 100;
+      font-size: 16px;
+      color: #8895b3;
+      letter-spacing: 1.48px;
+      margin: 0;
+      margin-top: 5px;
+    }
+  }
+
+  .delete {
+    border: none;
+    float: right;
+    background-color: transparent;
+    padding: 10px;
+    position: relative;
+    top: -10px;
+    left: 10px;
+
+    color: #8894b3;
+    font-size: 16px;
+
+    .icon {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

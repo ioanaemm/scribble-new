@@ -17,7 +17,7 @@ export default class NotesContainer extends Component {
   }
 
   componentDidMount() {
-    Api.fetchNotes().then(response => {
+    Api.fetchNotes({}).then(response => {
       this.setState({ pending: false, notes: response.data });
     });
   }

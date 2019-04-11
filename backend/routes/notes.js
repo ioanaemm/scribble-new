@@ -15,10 +15,16 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  let noteList = await Note.find({})
-    .sort({ _id: -1 })
-    .skip(1)
-    .limit(6);
+  let sortParsed = JSON.parse(req.query.sort);
+  for (let key in sortParsed) {
+    sortParsed[key] = parseInt(sortParsed[key]);
+  }
+
+  let noteList = await Note.find()
+    .sort(sortParsed)
+    .skip(parseInt(req.query.skip))
+    .limit(parseInt(req.query.limit));
+
   res.send(noteList);
 });
 
