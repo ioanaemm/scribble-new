@@ -5,8 +5,12 @@ const Note = require("../models/note");
 const Notebook = require("../models/notebook");
 
 router.get("/:searchTerm", async (req, res) => {
-  let notebooks = await Notebook.find({ title: req.params.searchTerm });
-  let notes = await Note.find({ title: req.params.searchTerm });
+  let notebooks = await Notebook.find({
+    titleLowercase: req.params.searchTerm.toLowerCase()
+  });
+  let notes = await Note.find({
+    titleLowercase: req.params.searchTerm.toLowerCase()
+  });
   let dictionary = {
     notebooks,
     notes

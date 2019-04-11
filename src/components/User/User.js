@@ -25,7 +25,7 @@ export default class User extends Component {
         this.props.onLogin(response.data);
       },
       error => {
-        console.log("status: ", error.response.status);
+        console.log("status: ", error);
       }
     );
   }

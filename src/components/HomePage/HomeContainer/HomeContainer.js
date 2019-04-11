@@ -9,7 +9,7 @@ import Preloader from "components/Common/Preloader/Preloader";
 import * as Api from "api/Api";
 import "components/HomePage/HomeContainer/HomeContainer.scss";
 
-const REFRESH_PADDING_LIMIT = 70;
+const REFRESH_PADDING_LIMIT = 25;
 
 export default class HomeContainer extends Component {
   constructor(props) {
@@ -21,7 +21,8 @@ export default class HomeContainer extends Component {
       notebooks: [],
       notes: [],
       refreshPaddingHeight: 0,
-      pending: true
+      pending: true,
+      isFirstRequest: true
     };
 
     this._isMounted = false;
@@ -38,6 +39,8 @@ export default class HomeContainer extends Component {
     this.updateRefreshPadding = this.updateRefreshPadding.bind(this);
     this.refresh = this.refresh.bind(this);
     this.displayPreloader = this.displayPreloader.bind(this);
+    this.displayContent = this.displayContent.bind(this);
+    this.displayRefreshPadding = this.displayRefreshPadding.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +70,7 @@ export default class HomeContainer extends Component {
       ([notebooksResponse, notesResponse]) => {
         if (this._isMounted) {
           this.setState({
+            isFirstRequest: false,
             notebooks: notebooksResponse.data,
             notes: notesResponse.data,
             pending: false
@@ -151,31 +155,51 @@ export default class HomeContainer extends Component {
 
   onTouchMove(e) {
     // e.preventDefault();
-    if (this.lastTouchY !== null) {
+
+    if (
+      this.lastTouchY !== null &&
+      this.props.pageContentRef &&
+      this.props.pageContentRef.current
+    ) {
+      const pageContent = this.props.pageContentRef.current;
       let crtTouchY = e.touches[0].pageY;
       let delta = crtTouchY - this.lastTouchY;
-      this.updateRefreshPadding(delta);
+
+      let scrollTop = pageContent.scrollTop;
+      if (scrollTop === 0) {
+        this.updateRefreshPadding(delta);
+      } else {
+        this.lastTouchY = null;
+      }
     }
     this.lastTouchY = e.touches[0].pageY;
   }
 
   updateRefreshPadding(delta) {
-    let oldValue = this.state.refreshPaddingHeight;
+    let oldHeight = this.state.refreshPaddingHeight;
 
-    let friction = (REFRESH_PADDING_LIMIT - oldValue) / REFRESH_PADDING_LIMIT;
+    let multiplier = 0;
+    const limit = REFRESH_PADDING_LIMIT;
+
+    if (oldHeight < limit) {
+      multiplier = 1;
+    } else {
+      multiplier = 1 - (oldHeight - limit) / limit;
+    }
 
     if (this._isMounted) {
       this.setState({
         refreshPaddingHeight:
-          this.state.refreshPaddingHeight + delta * friction * 2
+          this.state.refreshPaddingHeight + delta * multiplier
       });
     }
   }
 
   onTouchEnd(e) {
-    if (REFRESH_PADDING_LIMIT - this.state.refreshPaddingHeight < 10) {
+    this.lastTouchY = null;
+    if (REFRESH_PADDING_LIMIT * 2 - this.state.refreshPaddingHeight < 10) {
       this.setState({ pending: true });
-      setTimeout(this.refresh, 500);
+      setTimeout(this.refresh, 800);
     }
     if (this._isMounted) {
       this.setState({
@@ -191,30 +215,34 @@ export default class HomeContainer extends Component {
     return <Preloader />;
   }
 
-  render() {
-    const opacity =
-      1 -
-      (REFRESH_PADDING_LIMIT - this.state.refreshPaddingHeight) /
-        REFRESH_PADDING_LIMIT;
+  displayRefreshPadding() {
+    const limit = REFRESH_PADDING_LIMIT;
+    const current = this.state.refreshPaddingHeight;
+    const arrowAngle = ((limit * 2 - current) / limit / 2) * 180;
+    const opacity = 1 - (limit - current) / limit;
 
     return (
-      <div className="home-container" ref={this.containerRef}>
-        {this.displayPreloader()}
-        <div
-          className="refresh-padding"
-          style={{ height: this.state.refreshPaddingHeight + "px" }}
-        >
-          <i
-            className="fa fa-arrow-up icon"
-            style={{
-              transform: `translate(-50%, -50%) rotate(${((REFRESH_PADDING_LIMIT -
-                this.state.refreshPaddingHeight) /
-                REFRESH_PADDING_LIMIT) *
-                180}deg)`,
-              opacity
-            }}
-          />
-        </div>
+      <div
+        className="refresh-padding"
+        style={{ height: this.state.refreshPaddingHeight + "px" }}
+      >
+        <i
+          className="fa fa-arrow-up icon"
+          style={{
+            transform: `translate(-50%, -50%) rotate(${arrowAngle}deg)`,
+            opacity
+          }}
+        />
+      </div>
+    );
+  }
+
+  displayContent() {
+    if (this.state.pending && this.state.isFirstRequest) {
+      return null;
+    }
+    return (
+      <>
         <div className="add-item-container">
           <Title content="Notebooks">
             <Button
@@ -245,6 +273,16 @@ export default class HomeContainer extends Component {
           {this.renderNoteModal()}
         </div>
         <NoteList notes={this.state.notes} />
+      </>
+    );
+  }
+
+  render() {
+    return (
+      <div className="home-container" ref={this.containerRef}>
+        {this.displayPreloader()}
+        {this.displayRefreshPadding()}
+        {this.displayContent()}
       </div>
     );
   }

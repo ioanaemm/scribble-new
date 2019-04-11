@@ -11,6 +11,7 @@ const Note = require("../models/note");
 router.post("/", async (req, res) => {
   const newNotebook = new Notebook();
   newNotebook.title = req.body.title;
+  newNotebook.titleLowercase = req.body.title.toLowerCase();
   newNotebook.tags = req.body.tags;
   await newNotebook.save();
 
@@ -67,6 +68,9 @@ router.patch("/:id", async (req, res) => {
   } else {
     for (let key in req.body) {
       targetNotebook[key] = req.body[key];
+    }
+    if (req.body.title) {
+      targetNotebook.titleLowercase = req.body.title.toLowerCase();
     }
     await targetNotebook.save();
     res.send(targetNotebook);

@@ -3,6 +3,8 @@ import { Route, Switch, withRouter } from "react-router-dom";
 // import axios from "axios";
 
 import "./App.scss";
+import "./Averta.css";
+// require("./Averta.js");
 
 import * as Api from "api/Api";
 import SearchBar from "components/SearchBar/SearchBar";

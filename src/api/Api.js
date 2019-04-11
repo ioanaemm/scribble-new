@@ -13,37 +13,63 @@ export function fetchNotebooks({ skip, limit, sort }) {
     limit,
     sort: JSON.stringify(sort)
   });
-  return axios.get(`${API_URL}/notebooks?${queryString}`);
+  return axios.get(`${API_URL}/notebooks?${queryString}`).catch(error => {
+    console.log("error fetching notebooks", error);
+    window.location.href = "/login";
+  });
 }
 
 export function fetchNotebook(notebookId) {
-  return axios.get(`${API_URL}/notebooks/${notebookId}`);
+  return axios.get(`${API_URL}/notebooks/${notebookId}`).catch(error => {
+    console.log("error fetching notebook details", error);
+    window.location.href = "/login";
+  });
 }
 
 export function addNote(noteData) {
-  return axios.post(`${API_URL}/notes`, noteData);
+  return axios.post(`${API_URL}/notes`, noteData).catch(error => {
+    console.log("error adding note", error);
+    window.location.href = "/login";
+  });
 }
 
 export function fetchNotes() {
-  return axios.get(`${API_URL}/notes`);
+  return axios.get(`${API_URL}/notes`).catch(error => {
+    console.log("error fetching notes", error);
+    window.location.href = "/login";
+  });
 }
 
 export function fetchNote(noteId) {
-  return axios.get(`${API_URL}/notes/${noteId}`);
+  return axios.get(`${API_URL}/notes/${noteId}`).catch(error => {
+    console.log("error fetching note details", error);
+    window.location.href = "/login";
+  });
 }
 
 export function patchNoteContent(noteId, noteData) {
   // console.log("patchNoteContent");
-  return axios.patch(`${API_URL}/notes/${noteId}`, noteData);
+  return axios.patch(`${API_URL}/notes/${noteId}`, noteData).catch(error => {
+    console.log("error updating note details", error);
+    window.location.href = "/login";
+  });
 }
 
 export function patchNotebookContent(notebookId, notebookData) {
   // console.log("patchNotebookContent");
-  return axios.patch(`${API_URL}/notebooks/${notebookId}`, notebookData);
+  return axios
+    .patch(`${API_URL}/notebooks/${notebookId}`, notebookData)
+    .catch(error => {
+      console.log("error updating note details", error);
+      window.location.href = "/login";
+    });
 }
 
 export function fetchSearchList(searchTerm) {
-  return axios.get(`${API_URL}/search/${searchTerm}`);
+  return axios.get(`${API_URL}/search/${searchTerm}`).catch(error => {
+    console.log("error fetching notebooks", error);
+    window.location.href = "/login";
+  });
 }
 
 export function signInUser(userData) {
@@ -59,5 +85,8 @@ export function fetchUserDetails() {
 }
 
 export function deleteNotebook(notebookId) {
-  return axios.delete(`${API_URL}/notebooks/${notebookId}`);
+  return axios.delete(`${API_URL}/notebooks/${notebookId}`).catch(error => {
+    console.log("error deleting notebook", error);
+    window.location.href = "/login";
+  });
 }

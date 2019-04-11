@@ -18,7 +18,15 @@ app.use(
 
 app.use(bodyParser.json({ extended: true }));
 
+// serve all API requests using this router
 app.use("/api", apiRouter);
+
+// serve all static files using the 'static' built-in middleware
 app.use(express.static(path.join(__dirname, "public")));
+
+// for all other requests, serve the home page
+app.use("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/public/index.html"));
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

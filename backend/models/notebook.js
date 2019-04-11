@@ -4,6 +4,7 @@ let Schema = mongoose.Schema;
 let NotebookSchema = new Schema({
   // generic
   title: String,
+  titleLowercase: String,
   tags: String,
   notes: Array,
   noteCount: Number
