@@ -11,9 +11,11 @@ export default class User extends Component {
     this.state = {
       username: "ioanam",
       password: "qwerty",
-      submitting: false
+      submitting: false,
+      errorMessage: null
     };
     this.onSubmit = this.onSubmit.bind(this);
+    this.displayErrorMessage = this.displayErrorMessage.bind(this);
   }
 
   onSubmit(e) {
@@ -28,9 +30,34 @@ export default class User extends Component {
         this.props.onLogin(response.data);
       },
       error => {
-        console.log("status: ", error);
+        const status = error.response.status;
+        if (status === 401) {
+          this.setState({
+            submitting: false,
+            errorMessage: "Username and password don't match"
+          });
+        } else if (status === 403) {
+          this.setState({
+            submitting: false,
+            errorMessage:
+              "You need to activate your account before using it. Please check your email (including the spam folder) for the activation link."
+          });
+        } else {
+          this.setState({
+            submitting: false,
+            errorMessage: "Sorry, something went wrong. Please try again later."
+          });
+        }
       }
     );
+  }
+
+  displayErrorMessage() {
+    if (!this.state.errorMessage) {
+      return null;
+    }
+
+    return <p className="error-message">{this.state.errorMessage}</p>;
   }
 
   render() {
@@ -64,6 +91,7 @@ export default class User extends Component {
               <span className="border" />
             </div>
             <span className="forgotten-password">Forgotten password?</span>
+
             <button className="signin" type="submit">
               {this.state.submitting ? <Preloader /> : "Login"}
             </button>
@@ -74,6 +102,7 @@ export default class User extends Component {
               Signup
             </Link>
           </p>
+          {this.displayErrorMessage()}
         </div>
       );
     }
