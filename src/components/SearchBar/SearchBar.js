@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 // import MobileSearchBar from "components/MobileSearchBar/MobileSearchBar";
 import "components/SearchBar/SearchBar.scss";
 
-export default class SearchBar extends Component {
+export class SearchBar extends Component {
   constructor() {
     super();
     this.state = {
@@ -41,7 +42,7 @@ export default class SearchBar extends Component {
 
   onFormSubmit(e) {
     e.preventDefault();
-    window.location.href = `/search/${this.state.term}`;
+    this.props.history.push(`/search/${this.state.term}`);
   }
 
   displayMobileSearchBar() {}
@@ -89,3 +90,5 @@ export default class SearchBar extends Component {
     );
   }
 }
+
+export default withRouter(SearchBar);
