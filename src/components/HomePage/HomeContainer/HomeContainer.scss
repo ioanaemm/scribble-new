@@ -4,6 +4,11 @@
   justify-content: center;
   align-items: center;
 
+  .add-item-container {
+    position: relative;
+    z-index: 3;
+  }
+
   .refresh-padding {
     background-color: transparent;
     width: 100%;

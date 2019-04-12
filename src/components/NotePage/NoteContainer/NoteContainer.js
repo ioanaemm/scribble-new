@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Editor } from "@tinymce/tinymce-react";
+import { Editor } from "react-draft-wysiwyg";
+import htmlToDraft from "html-to-draftjs";
+import draftToHtml from "draftjs-to-html";
+import { EditorState, ContentState, convertToRaw } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import * as Api from "api/Api";
 import Select from "react-select";
 
@@ -102,10 +106,18 @@ export class NoteContainer extends Component {
       response => {
         console.log("response.data.notebookId", response.data);
         this.retrieveNotebook(response.data.notebookId);
+
+        const contentBlock = htmlToDraft(response.data.body || "");
+        const contentState = ContentState.createFromBlockArray(
+          contentBlock.contentBlocks
+        );
+        const editorState = EditorState.createWithContent(contentState);
+
         this.setState({
           pending: false,
           title: response.data.title,
-          body: response.data.body || ""
+          body: response.data.body || "",
+          editorState
         });
       },
       error => {
@@ -157,7 +169,7 @@ export class NoteContainer extends Component {
       if (!this.state.notebook) {
         return null;
       }
-      return <span>{this.state.notebook.title}:</span>;
+      return <span>{this.state.notebook.title}</span>;
     }
   }
 
@@ -186,9 +198,13 @@ export class NoteContainer extends Component {
     return notes;
   }
 
-  handleEditorChange(body) {
+  handleEditorChange(/*body*/ editorState) {
+    // this.setState({
+    //   body: body
+    // });
     this.setState({
-      body: body
+      editorState,
+      body: draftToHtml(convertToRaw(editorState.getCurrentContent()))
     });
   }
 
@@ -302,9 +318,9 @@ export class NoteContainer extends Component {
     if (this.state.isSaving) {
       return <Preloader />;
     } else if (this.state.isSaved) {
-      return <i className="fa icon fa-check fa-lg" />;
+      return <i className="fa icon fa-check fa-lg" key="check" />;
     } else {
-      return <i className="fa icon fa-cloud-upload-alt fa-lg" />;
+      return <i className="fa icon fa-cloud-upload-alt fa-lg" key="cloud" />;
     }
   }
 
@@ -332,9 +348,15 @@ export class NoteContainer extends Component {
         </div>
         <div className="note-header">{this.displayTitle()}</div>
         <div className="note-editor">
-          <Editor
+          {/*<Editor
             value={this.state.body}
             onEditorChange={this.handleEditorChange}
+          />*/}
+          <Editor
+            editorState={this.state.editorState}
+            wrapperClassName="editor-wrapper"
+            editorClassName="editor-inner-container"
+            onEditorStateChange={this.handleEditorChange}
           />
         </div>
       </div>
