@@ -1,0 +1,84 @@
+@import "../../Variables";
+
+.user-popup-container {
+  position: fixed;
+  top: 52px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  left: 0;
+  width: 100%;
+  height: calc(var(--vh) * 100 - 52px - 55px);
+  z-index: 4;
+  // opacity: 0;
+
+  animation-name: fade-in;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      margin-left: -20px;
+    }
+
+    to {
+      opacity: 1;
+      margin-left: 0px;
+    }
+  }
+
+  .user-popup {
+    background-color: white;
+    border-radius: 10px;
+    // width: 150px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    list-style-type: none;
+    margin-top: 0;
+    opacity: 0;
+    margin-left: -20px;
+
+    animation-name: slide-down;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-delay: 0.2s;
+
+    li {
+      button {
+        display: block;
+        color: $gray;
+        font-size: 14px;
+        border: 0;
+        background-color: transparent;
+        padding-top: 12px;
+        padding-bottom: 12px;
+
+        .fa {
+          color: $gray;
+          margin-right: 10px;
+        }
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid darken($gray-light, 5);
+      }
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+}

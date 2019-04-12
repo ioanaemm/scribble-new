@@ -6,7 +6,9 @@
 
   .add-item-container {
     position: relative;
-    z-index: 3;
+    @media (min-width: 601px) {
+      z-index: 3;
+    }
   }
 
   .refresh-padding {
