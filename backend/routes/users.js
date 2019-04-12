@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+
 const User = require("../models/user");
 
 router.get("/me", async (req, res) => {
@@ -42,12 +43,14 @@ router.post("/register", function(req, res) {
       const user = new User({
         username: req.body.username,
         email: req.body.email,
-        password: hash
+        password: hash,
+        activated: false
       });
       user
         .save()
         .then(function(result) {
           console.log("result1", result);
+          sendConfirmationEmail(result);
           res.status(200).json({
             success: "New user has been created"
           });
@@ -62,6 +65,35 @@ router.post("/register", function(req, res) {
     }
   });
 });
+
+function sendConfirmationEmail(user) {
+  const sendmail = require("sendmail")();
+
+  const url = `https://www.scribblewebapp.com/verify/${user.email}`;
+
+  sendmail(
+    {
+      from: "noreply@scribblewebapp.com",
+      to: user.email,
+      subject: "Verify your Scribble account",
+      html: `
+        <p>Hey ${user.username}, your account is now created!</p>
+        <p>In order to use it, you have to follow this link and activate your account:</p>
+        <br/>
+        <a href="${url}">${url}</a>
+       `
+    },
+    function(err, reply) {
+      // console.log(err && err.stack);
+      // console.dir(reply);
+      if (err) {
+        console.log("Error sending email:", err);
+      } else {
+        console.log("Email sent successfully!");
+      }
+    }
+  );
+}
 
 router.post("/signin", function(req, res) {
   console.log("req.body: ", req.body);
@@ -87,12 +119,18 @@ router.post("/signin", function(req, res) {
           return;
         }
         if (result) {
-          req.session.user = user;
-          console.log("req.session.user", req.session.user);
-          res.status(200).send({
-            username: user.username,
-            email: user.email
-          });
+          if (!result.activated) {
+            res.status(403).json({
+              failed: "Your account has not been activated yet"
+            });
+          } else {
+            req.session.user = user;
+            console.log("req.session.user", req.session.user);
+            res.status(200).send({
+              username: user.username,
+              email: user.email
+            });
+          }
         } else {
           res.status(401).json({
             failed: "Unauthorized Access"

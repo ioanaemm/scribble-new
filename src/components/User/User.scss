@@ -11,13 +11,23 @@ $gray-light: #f3f5f9;
   align-items: center;
   margin-top: 50px;
 
+  .error-message {
+    margin-top: 30px;
+    margin-bottom: -20px;
+    color: #6470f2;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    max-width: 350px;
+  }
+
   .login,
   .register {
     width: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: center;
-    max-width: 280px;
+    max-width: 350px;
 
     .header {
       text-align: center;
