@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 // import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import * as Api from "api/Api";
 import "components/Register/Register.scss";
 
@@ -39,7 +41,16 @@ export default class Register extends Component {
     if (!this.state.isMessageShowing) {
       return null;
     }
-    return <p>Account created successfully</p>;
+    return (
+      <div className="account-created">
+        <h3 className="title">Account successfully created! </h3>
+        <i className="fa fa-check-circle fa-4x" />
+        <Link className="login-link" to="/login">
+          <i className="fa fa-chevron-left" />
+          Go to login
+        </Link>
+      </div>
+    );
   }
 
   render() {
@@ -83,8 +94,8 @@ export default class Register extends Component {
           <button className="create-account" type="submit">
             Register
           </button>
-          {this.displaySuccessMessage()}
         </form>
+        {this.displaySuccessMessage()}
       </div>
     );
   }
