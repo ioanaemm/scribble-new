@@ -11,14 +11,13 @@ export default class BottomSidebar extends Component {
           <p>Notebooks</p>
         </Link>
 
+        <Link to="/notes/new" className="plus-button-container">
+          <i className="icon fa fa-plus-circle fa-lg" />
+        </Link>
+
         <Link className="note section" to="/notes">
           <i className="icon fa fa-sticky-note" />
           <p>Notes</p>
-        </Link>
-
-        <Link className="web-clippings section" to="/">
-          <i className="icon fa fa-clipboard" />
-          <p>Web Clippings</p>
         </Link>
       </div>
     );

@@ -18,15 +18,9 @@ export default class Sidebar extends Component {
   }
 
   displayPlusButton() {
-    if (window.location.href.includes("/notes/")) {
-      return <i />;
-    }
-
-    return (
-      <Link to="/notes/new">
-        <i className="icon fa fa-plus-circle fa-lg" />
-      </Link>
-    );
+    // if (window.location.href.includes("/notes/")) {
+    return <i />;
+    // }
   }
 
   render() {
