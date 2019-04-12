@@ -3,7 +3,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 60px;
+
+  @media (min-width: 601px) {
+    padding-top: 60px;
+  }
 
   .add-item-container {
     position: relative;
