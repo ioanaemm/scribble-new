@@ -31,7 +31,7 @@ $gray-light: #f3f5f9;
     padding: 6px 8px;
     margin-right: 18px;
     margin-top: 2px;
-    transition: all 500ms;
+    transition: all 500ms ease-in-out;
     cursor: pointer;
     // width: 50px;
     position: absolute;
@@ -59,11 +59,6 @@ $gray-light: #f3f5f9;
   .icon {
     color: white;
     transition: all 400ms;
-    // background-color: #8893b3;
-    // padding: 8px 8px;
-    // z-index: 1;
-    // position: relative;
-    // border-radius: 50px;
   }
 
   &.expanded {
@@ -71,24 +66,22 @@ $gray-light: #f3f5f9;
     cursor: text;
 
     input {
-      width: 100px;
+      width: 200px;
     }
 
     .icon {
-      // transform: scaleX(0.1);
-      // background-color: white;
       margin-right: 8px;
     }
   }
 }
 
-@media only screen and (min-width: 600px) {
+@media (min-width: 600px) {
   .mobile-searchbar {
     display: none !important;
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media (max-width: 600px) {
   .search-container {
     display: none;
   }
