@@ -10,6 +10,7 @@ import SearchBar from "components/SearchBar/SearchBar";
 import Preloader from "components/Common/Preloader/Preloader";
 import User from "components/User/User";
 import Register from "components/Register/Register";
+import AccountDetails from "components/AccountDetails/AccountDetails";
 import SearchResultsPage from "components/SearchResultsPage/SearchResultsPage";
 import Sidebar from "components/Sidebar/Sidebar";
 import BottomSidebar from "components/Sidebar/BottomSidebar";
@@ -96,7 +97,7 @@ export class App extends Component {
           <Register />
         </Route>
         <Route exact path="/account">
-          <p>My account</p>
+          <AccountDetails />
         </Route>
       </Switch>
     );

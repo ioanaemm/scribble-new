@@ -13,7 +13,8 @@ export default class UserPopup extends Component {
     this.onLogout = this.onLogout.bind(this);
   }
 
-  onLogout() {
+  onLogout(e) {
+    e.stopPropagation();
     Api.signOutUser().then(() => {
       window.location.href = "/login";
     });

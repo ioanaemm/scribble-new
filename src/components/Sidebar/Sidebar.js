@@ -26,14 +26,18 @@ export default class Sidebar extends Component {
   }
 
   hideUserPopup() {
-    this.setState({ showUserPopup: false });
+    setTimeout(() => {
+      this.setState({ showUserPopup: false });
+    }, 100);
   }
 
   toggleUserPopup(e) {
     if (e) {
       e.stopPropagation();
     }
-    this.setState({ showUserPopup: !this.state.showUserPopup });
+    setTimeout(() => {
+      this.setState({ showUserPopup: !this.state.showUserPopup });
+    }, 300);
   }
 
   displayUserPopup() {

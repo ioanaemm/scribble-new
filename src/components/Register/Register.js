@@ -43,8 +43,8 @@ export default class Register extends Component {
     }
     return (
       <div className="account-created">
-        <h3 className="title">Account successfully created! </h3>
         <i className="fa fa-check-circle fa-4x" />
+        <h3 className="title">Account successfully created! </h3>
         <Link className="login-link" to="/login">
           <i className="fa fa-chevron-left" />
           Go to login
