@@ -29,6 +29,12 @@
     flex: auto;
     margin-bottom: 20px;
     width: 100%;
+    transition: all 400ms;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(#8895b3, 0.05);
+    }
 
     .notebook-total {
       margin: 0;

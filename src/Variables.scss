@@ -3,3 +3,14 @@ $purple: #6470ee;
 $gray: #8895b3;
 $gray-dark: #132140;
 $gray-light: #f3f5f9;
+
+@mixin hoverable {
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: all 400ms;
+  display: inline-block;
+
+  &:hover {
+    transform: scale(0.85);
+  }
+}

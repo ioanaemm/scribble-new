@@ -1,5 +1,4 @@
-$font-stack: "Averta", sans-serif;
-$primary-color: #7371fc;
+@import "../../Variables";
 
 .mobile-sidebar {
   display: none;
@@ -13,7 +12,7 @@ $primary-color: #7371fc;
 }
 
 .sidebar {
-  background-color: $primary-color;
+  background-color: $purple;
   width: 80px;
   height: 100%;
   z-index: 3;
@@ -24,7 +23,6 @@ $primary-color: #7371fc;
   }
 
   .title {
-    font-family: $font-stack;
     color: white;
     font-weight: 500;
     font-size: 45px;

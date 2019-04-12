@@ -3,19 +3,21 @@ $white-bg-btn: #fff;
 $black-text: #000;
 $default-border-radius-btn: 15px;
 
-.primary {
+button.primary {
   background-color: $primary-color-btn;
   border-radius: $default-border-radius-btn;
   border: none;
   color: white;
   font-size: 14px;
   margin: 0 20px;
-  padding: 3px 30px;
+  padding: 6px 30px;
+  font-weight: 500;
   position: relative;
   top: -2px;
+  cursor: pointer;
 }
 
-.secondary {
+button.secondary {
   background-color: #fff;
   border: 1px solid #8895b3;
   border-radius: $default-border-radius-btn;
@@ -24,4 +26,17 @@ $default-border-radius-btn: 15px;
   margin: 10px 0;
   padding: 2px 25px;
   text-transform: capitalize;
+  cursor: pointer;
+}
+
+button.primary,
+button.secondary {
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: all 400ms;
+  outline: 0;
+
+  &:hover {
+    transform: scale(0.9);
+  }
 }
