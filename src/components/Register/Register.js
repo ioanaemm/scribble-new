@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 // import { withRouter } from "react-router-dom";
 import * as Api from "api/Api";
-import Button from "components/Common/Button/Button";
 import "components/Register/Register.scss";
-import Preloader from "components/Common/Preloader/Preloader";
 
 export default class Register extends Component {
   constructor(props) {
