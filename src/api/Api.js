@@ -17,63 +17,48 @@ export function fetchNotebooks({
     limit,
     sort: JSON.stringify(sort)
   });
-  return axios.get(`${API_URL}/notebooks?${queryString}`).catch(error => {
-    console.log("error fetching notebooks", error);
-    window.location.href = "/login";
-  });
+  return axios.get(`${API_URL}/notebooks?${queryString}`).catch(handleError);
 }
 
 export function fetchNotebook(notebookId) {
-  return axios.get(`${API_URL}/notebooks/${notebookId}`).catch(error => {
-    console.log("error fetching notebook details", error);
-    window.location.href = "/login";
-  });
+  return axios.get(`${API_URL}/notebooks/${notebookId}`).catch(handleError);
 }
 
 export function addNote(noteData) {
-  return axios.post(`${API_URL}/notes`, noteData).catch(error => {
-    console.log("error adding note", error);
-    window.location.href = "/login";
-  });
+  return axios.post(`${API_URL}/notes`, noteData).catch(handleError);
 }
 
-export function fetchNotes() {
-  return axios.get(`${API_URL}/notes`).catch(error => {
-    console.log("error fetching notes", error);
-    window.location.href = "/login";
+export function fetchNotes({
+  skip = 0,
+  limit = Number.MAX_SAFE_INTEGER,
+  sort = { _id: -1 }
+}) {
+  let queryString = query.stringify({
+    skip,
+    limit,
+    sort: JSON.stringify(sort)
   });
+  return axios.get(`${API_URL}/notes?${queryString}`).catch(handleError);
 }
 
 export function fetchNote(noteId) {
-  return axios.get(`${API_URL}/notes/${noteId}`).catch(error => {
-    console.log("error fetching note details", error);
-    window.location.href = "/login";
-  });
+  return axios.get(`${API_URL}/notes/${noteId}`).catch(handleError);
 }
 
 export function patchNoteContent(noteId, noteData) {
   // console.log("patchNoteContent");
-  return axios.patch(`${API_URL}/notes/${noteId}`, noteData).catch(error => {
-    console.log("error updating note details", error);
-    window.location.href = "/login";
-  });
+  return axios.patch(`${API_URL}/notes/${noteId}`, noteData).catch(handleError);
 }
 
 export function patchNotebookContent(notebookId, notebookData) {
   // console.log("patchNotebookContent");
   return axios
     .patch(`${API_URL}/notebooks/${notebookId}`, notebookData)
-    .catch(error => {
-      console.log("error updating note details", error);
-      window.location.href = "/login";
-    });
+    .catch(handleError);
 }
 
 export function fetchSearchList(searchTerm) {
-  return axios.get(`${API_URL}/search/${searchTerm}`).catch(error => {
-    console.log("error fetching notebooks", error);
-    window.location.href = "/login";
-  });
+  return axios.get(`${API_URL}/search/${searchTerm}`).catch(handleError);
 }
 
 export function signInUser(userData) {
@@ -94,8 +79,12 @@ export function fetchUserDetails() {
 }
 
 export function deleteNotebook(notebookId) {
-  return axios.delete(`${API_URL}/notebooks/${notebookId}`).catch(error => {
-    console.log("error deleting notebook", error);
-    window.location.href = "/login";
-  });
+  return axios.delete(`${API_URL}/notebooks/${notebookId}`).catch(handleError);
+}
+
+function handleError(e) {
+  // console.log("error deleting notebook", e);
+  // if(e.data)
+  // console.log(e.data);
+  // window.location.href = "/login";
 }

@@ -6,13 +6,39 @@ $gray-light: #f3f5f9;
 
 .search-container {
   float: right;
-  border-radius: 50px;
-  background-color: #8893b3;
-  padding: 6px 8px;
-  margin-right: 18px;
-  margin-top: 2px;
-  transition: all 500ms;
-  cursor: pointer;
+  position: fixed;
+  z-index: 2;
+  text-align: right;
+  width: 100%;
+  left: 0;
+  padding-right: 15px;
+  padding-top: 15px;
+
+  .background {
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: white;
+    width: 100vw;
+    height: 65px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .inner-container {
+    border-radius: 50px;
+    background-color: #8893b3;
+    padding: 6px 8px;
+    margin-right: 18px;
+    margin-top: 2px;
+    transition: all 500ms;
+    cursor: pointer;
+    // width: 50px;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    z-index: 3;
+  }
 
   input {
     border: 0;
@@ -33,12 +59,15 @@ $gray-light: #f3f5f9;
   .icon {
     color: white;
     transition: all 400ms;
-    // transition-delay: 300ms;
+    // background-color: #8893b3;
+    // padding: 8px 8px;
+    // z-index: 1;
+    // position: relative;
+    // border-radius: 50px;
   }
 
   &.expanded {
     padding: 3px 8px;
-    margin-top: 5px;
     cursor: text;
 
     input {

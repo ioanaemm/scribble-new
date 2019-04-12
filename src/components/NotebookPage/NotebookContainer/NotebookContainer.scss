@@ -1,8 +1,4 @@
-$green: #64ae57;
-$purple: #6470ee;
-$gray: #8895b3;
-$gray-dark: #132140;
-$gray-light: #f3f5f9;
+@import "../../../Variables";
 
 .notebook-container {
   ul {
@@ -22,83 +18,37 @@ $gray-light: #f3f5f9;
       }
     }
   }
-  @media only screen and (max-width: 3600px) {
-    width: 100%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-top: 20px;
+  width: 100%;
 
-    .note-item-container {
-      text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 20px;
+
+  .notebook-title {
+    color: $gray;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 0;
+    margin-bottom: 5px;
+    margin-left: 20px;
+
+    .fa {
+      margin-right: 5px;
     }
+  }
 
-    .note-item {
-      padding-left: 20px;
-      padding-right: 20px;
-      border-bottom: 1px solid #f1f1f1;
-      cursor: pointer;
+  .title-input {
+    font-size: 16px;
+    max-width: 100%;
+    border: 1px solid #eee;
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
 
-      &:hover {
-        background-color: rgba(#8895b3, 0.05);
-      }
-    }
-
-    .notebook-title {
-      color: $gray;
-      font-size: 18px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      margin: 0;
-      margin-bottom: 5px;
-      margin-left: 20px;
-
-      .fa {
-        margin-right: 5px;
-      }
-    }
-
-    .title-input {
-      font-size: 16px;
-      max-width: 100%;
-      border: 1px solid #eee;
-      font-size: 18px;
-      letter-spacing: 2px;
-    }
-
-    .note-title {
-      text-decoration: none;
-      color: $gray-dark;
-      margin-top: 5px;
-      margin-bottom: 5px;
-    }
-
-    button {
-      display: none;
-    }
-
-    .hours {
-      float: right !important;
-      font-size: 14px;
-      color: $gray;
-    }
-
-    .date {
-      color: $gray-dark;
-      font-size: 13px;
-      margin: 0;
-    }
-
-    .note-body {
-      color: $gray;
-
-      padding-bottom: 5px;
-
-      p {
-        margin-top: 5px;
-        margin-bottom: 5px;
-      }
-    }
+  button {
+    display: none;
   }
 }

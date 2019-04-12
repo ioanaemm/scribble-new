@@ -60,15 +60,18 @@ export default class SearchBar extends Component {
             this.inputRef.current.focus();
           }}
         >
-          <i className="fa fa-search icon" />
-          <input
-            className="search-input"
-            type="text"
-            ref={this.inputRef}
-            value={this.state.term}
-            onChange={this.onInputChange}
-            placeholder="Search"
-          />
+          <div className="background" />
+          <div className="inner-container">
+            <i className="fa fa-search icon" />
+            <input
+              className="search-input"
+              type="text"
+              ref={this.inputRef}
+              value={this.state.term}
+              onChange={this.onInputChange}
+              placeholder="Search"
+            />
+          </div>
         </form>
         <form className="mobile-searchbar" onSubmit={this.onFormSubmit}>
           <div className="inner-container">

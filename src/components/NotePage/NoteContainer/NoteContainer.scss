@@ -1,4 +1,4 @@
-$purple: #7274f4;
+@import "../../../Variables";
 
 .note-container {
   .notebook-select {
@@ -27,14 +27,82 @@ $purple: #7274f4;
         margin-bottom: 20px;
         text-align: right;
 
+        @media (max-width: 600px) {
+          margin-bottom: 5px;
+        }
+
         .save-note {
           margin: 0;
           border-radius: 5px;
           letter-spacing: 1px;
           padding: 5px 35px;
           font-size: 16px;
+          outline: 0;
+
+          &.desktop {
+            display: block;
+          }
+          &.mobile {
+            display: none;
+            position: fixed;
+            color: white;
+            top: 13px;
+            right: -20px;
+            background-color: transparent;
+            border: 0;
+            z-index: 2;
+
+            @keyframes scale-and-rotate {
+              from {
+                transform: scale(0) rotate(90deg);
+              }
+              to {
+                transform: scale(1) rotate(0deg);
+              }
+            }
+
+            .fa {
+              transform: scale(0) rotate(90deg);
+
+              animation-name: scale-and-rotate;
+              animation-duration: 0.3s;
+              animation-fill-mode: forwards;
+              animation-iteration-count: 1;
+            }
+
+            .fa-check {
+              // color: lighten(green, 20);
+            }
+
+            .fa-cloud-upload-alt {
+              text-shadow: 0px 2px 4px #514fce;
+            }
+
+            .preloader {
+              position: relative;
+              left: 30px;
+              margin: 0;
+
+              & > div {
+                width: 10px;
+                height: 10px;
+                background-color: white;
+                margin-left: 1px;
+                margin-right: 1px;
+              }
+            }
+          }
+
           @media (max-width: 600px) {
-            width: 100%;
+            &.desktop {
+              display: none;
+            }
+            &.mobile {
+              display: block;
+            }
+          }
+
+          &.desktop {
           }
         }
       }
@@ -59,12 +127,23 @@ $purple: #7274f4;
       margin-top: 16px;
       margin-bottom: 16px;
 
+      @media (max-width: 600px) {
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+
       .note-title {
         margin: 0;
         font-weight: 100;
         font-size: 40px;
         color: #292929;
         cursor: pointer;
+
+        @media (max-width: 600px) {
+          font-size: 25px;
+          font-weight: 400;
+          width: 100%;
+        }
 
         &:hover {
           background-color: rgba(black, 0.03);
@@ -83,6 +162,15 @@ $purple: #7274f4;
 
         &:focus {
           // color: $purple;
+        }
+
+        @media (max-width: 600px) {
+          font-size: 25px;
+          font-weight: 400;
+          letter-spacing: 0px;
+          width: 100%;
+          color: $purple;
+          border: 0;
         }
       }
 
@@ -107,11 +195,118 @@ $purple: #7274f4;
       }
     }
 
+    .editor-wrapper {
+      .rdw-editor-toolbar {
+        border: 0;
+        border-top: 1px solid darken($gray-light, 3);
+        // border-bottom: 1px solid darken($gray-light, 3);
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 0;
+        padding-right: 0;
+
+        .rdw-option-wrapper {
+          border: 0;
+          // margin-bottom: 10px;
+        }
+
+        .rdw-inline-wrapper,
+        .rdw-text-align-wrapper {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .rdw-text-align-wrapper {
+          order: 1;
+          margin-top: 10px;
+        }
+
+        .rdw-inline-wrapper {
+          margin-top: 10px;
+        }
+
+        .rdw-block-wrapper {
+          width: 46%;
+          order: 0;
+        }
+        .rdw-fontsize-wrapper {
+          width: 50px;
+        }
+        .rdw-list-wrapper {
+          width: calc(54% - 50px);
+          justify-content: space-between;
+        }
+
+        .rdw-block-dropdown {
+          width: 100%;
+        }
+
+        .rdw-fontfamily-wrapper,
+        .rdw-embedded-wrapper,
+        .rdw-image-wrapper,
+        .rdw-remove-wrapper,
+        .rdw-history-wrapper,
+        .rdw-colorpicker-wrapper,
+        .rdw-link-wrapper,
+        .rdw-emoji-wrapper {
+          display: none;
+        }
+
+        .rdw-option-wrapper {
+          &[title="Superscript"],
+          &[title="Subscript"],
+          &[title="Monospace"],
+          &[title="Indent"],
+          &[title="Outdent"],
+          &[title="Monospace"] {
+            display: none;
+          }
+        }
+
+        @media (min-width: 601px) {
+          padding-top: 10px;
+
+          .rdw-block-wrapper,
+          .rdw-fontsize-wrapper {
+            position: relative;
+            top: 5px;
+          }
+          .rdw-inline-wrapper {
+            width: auto;
+            margin: 0;
+          }
+          .rdw-fontfamily-wrapper {
+            width: 150px;
+            margin: 0;
+          }
+          .rdw-list-wrapper {
+            width: auto;
+            margin: 0;
+          }
+          .rdw-text-align-wrapper {
+            width: auto;
+            margin: 0;
+          }
+        }
+      }
+
+      .editor-inner-container {
+        height: calc(var(--vh) * 100 - 330px);
+
+        @media (min-width: 701px) {
+          height: calc(var(--vh) * 100 - 250px);
+        }
+
+        // padding-left: 20px;
+        // padding-right: 20px;
+        // background-color: lighten($gray-light, 2);
+      }
+    }
+
     .note-editor {
       display: block;
       margin-left: auto;
       margin-right: auto;
-      margin-left: -15px;
 
       .tox.tox-tinymce {
         border: none;

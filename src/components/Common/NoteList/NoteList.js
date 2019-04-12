@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import "./NoteList.scss";
+
 import NoteItem from "components/Common/NoteItem/NoteItem";
 
 export default class NoteList extends Component {

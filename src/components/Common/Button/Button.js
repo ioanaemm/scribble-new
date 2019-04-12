@@ -6,12 +6,12 @@ export default class Button extends Component {
     return (
       <button
         className={
-          this.props.type +
+          (this.props.type || "") +
           (this.props.className ? " " + this.props.className : "")
         }
         onClick={this.props.onClick}
       >
-        {this.props.label}
+        {this.props.label} {this.props.children}
       </button>
     );
   }

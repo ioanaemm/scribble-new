@@ -8,12 +8,19 @@ export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.onLogout = this.onLogout.bind(this);
+    this.displayPlusButton = this.displayPlusButton.bind(this);
   }
 
   onLogout() {
     Api.signOutUser().then(() => {
       window.location.href = "/login";
     });
+  }
+
+  displayPlusButton() {
+    // if (window.location.href.includes("/notes/")) {
+    return <i />;
+    // }
   }
 
   render() {
@@ -31,9 +38,7 @@ export default class Sidebar extends Component {
               <i className="icon fa fa-sticky-note fa-lg" />
             </Link>
             <i className="icon fa fa-clipboard fa-lg" />
-            <Link to="/notes/new">
-              <i className="icon fa fa-plus-circle fa-lg" />
-            </Link>
+            {this.displayPlusButton()}
           </div>
         </div>
         <div className="mobile-sidebar top">
@@ -41,9 +46,7 @@ export default class Sidebar extends Component {
           <h3 className="title">
             <Link to={`/`}>Scribble</Link>
           </h3>
-          <Link to="/notes/new">
-            <i className="icon fa fa-plus-circle fa-lg" />
-          </Link>
+          {this.displayPlusButton()}
         </div>
       </>
     );
