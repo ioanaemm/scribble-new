@@ -33,13 +33,12 @@ export class App extends Component {
     // this.onFormSubmit = this.onFormSubmit.bind(this);
     this.displayPageContent = this.displayPageContent.bind(this);
     this.onLoginUser = this.onLoginUser.bind(this);
+    this.updateDocumentSize = this.updateDocumentSize.bind(this);
   }
 
   componentDidMount() {
-    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
-    let vh = window.innerHeight * 0.01;
-    // Then we set the value in the --vh custom property to the root of the document
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
+    this.updateDocumentSize();
+    window.addEventListener("resize", this.updateDocumentSize);
 
     Api.fetchUserDetails().then(
       response => {
@@ -50,6 +49,13 @@ export class App extends Component {
         this.props.history.push("/login");
       }
     );
+  }
+
+  updateDocumentSize() {
+    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+    let vh = window.innerHeight * 0.01;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
   }
 
   onLoginUser(userData) {
@@ -88,6 +94,9 @@ export class App extends Component {
         </Route>
         <Route exact path="/register">
           <Register />
+        </Route>
+        <Route exact path="/account">
+          <p>My account</p>
         </Route>
       </Switch>
     );

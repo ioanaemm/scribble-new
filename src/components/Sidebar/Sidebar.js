@@ -1,26 +1,45 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import * as Api from "api/Api";
+import UserPopup from "components/UserPopup/UserPopup";
 import "components/Sidebar/Sidebar.scss";
 
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
-    this.onLogout = this.onLogout.bind(this);
-    this.displayPlusButton = this.displayPlusButton.bind(this);
+
+    this.state = { showUserPopup: false };
+
+    this.toggleUserPopup = this.toggleUserPopup.bind(this);
+    this.displayUserPopup = this.displayUserPopup.bind(this);
+    this.hideUserPopup = this.hideUserPopup.bind(this);
   }
 
-  onLogout() {
-    Api.signOutUser().then(() => {
-      window.location.href = "/login";
-    });
+  componentDidMount() {
+    window.addEventListener("click", this.hideUserPopup);
   }
 
-  displayPlusButton() {
-    // if (window.location.href.includes("/notes/")) {
-    return <i />;
-    // }
+  componentWillUnmount() {
+    window.removeEventListener("click", this.hideUserPopup);
+  }
+
+  hideUserPopup() {
+    this.setState({ showUserPopup: false });
+  }
+
+  toggleUserPopup(e) {
+    if (e) {
+      e.stopPropagation();
+    }
+    this.setState({ showUserPopup: !this.state.showUserPopup });
+  }
+
+  displayUserPopup() {
+    if (!this.state.showUserPopup) {
+      return null;
+    }
+
+    return <UserPopup />;
   }
 
   render() {
@@ -38,15 +57,19 @@ export default class Sidebar extends Component {
               <i className="icon fa fa-sticky-note fa-lg" />
             </Link>
             <i className="icon fa fa-clipboard fa-lg" />
-            {this.displayPlusButton()}
+            <i />
           </div>
         </div>
         <div className="mobile-sidebar top">
-          <i className="icon fa fa-user-circle fa-lg" onClick={this.onLogout} />
+          <i
+            className="icon fa fa-user-circle fa-lg"
+            onClick={this.toggleUserPopup}
+          />
           <h3 className="title">
             <Link to={`/`}>Scribble</Link>
           </h3>
-          {this.displayPlusButton()}
+          <i />
+          {this.displayUserPopup()}
         </div>
       </>
     );
