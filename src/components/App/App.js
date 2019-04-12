@@ -116,6 +116,7 @@ export class App extends Component {
 
         <div className="page-content" ref={this.pageContentRef}>
           <Route exact path="/" component={SearchBar} />
+          <Route path="/search" component={SearchBar} />
 
           {this.displayPageContent()}
         </div>

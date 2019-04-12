@@ -67,7 +67,7 @@ export default class HomeContainer extends Component {
       limit: Number.MAX_SAFE_INTEGER,
       sort: { _id: -1 }
     });
-    let notePromise = Api.fetchNotes({});
+    let notePromise = Api.fetchNotes({ limit: 10 });
 
     Promise.all([notebooksPromise, notePromise]).then(
       ([notebooksResponse, notesResponse]) => {

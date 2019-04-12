@@ -2,10 +2,18 @@ import React, { Component } from "react";
 import * as Api from "api/Api";
 import { withRouter } from "react-router-dom";
 
+import NotebookList from "components/Common/NotebookList/NotebookList";
+import NoteList from "components/Common/NoteList/NoteList";
+import Title from "components/Common/Title/Title";
+
+import Preloader from "components/Common/Preloader/Preloader";
+import "./SearchResultsPage.scss";
+
 export class SearchResultsPage extends Component {
   constructor() {
     super();
     this.state = {
+      pending: true,
       notebooks: null,
       notes: null
     };
@@ -15,14 +23,27 @@ export class SearchResultsPage extends Component {
   }
 
   componentDidMount() {
-    this.fetchResults(this.props.match.params.query);
+    this.fetchResults();
+    // this.props.history.listenBefore((location, done) => this.fetchResults());
   }
 
-  fetchResults(term) {
-    Api.fetchSearchList(term).then(response => {
-      this.setState({
-        notebooks: response.data.notebooks,
-        notes: response.data.notes
+  componentWillReceiveProps() {
+    setTimeout(this.fetchResults, 500);
+  }
+
+  // componentDidUpdate() {
+  //   // this.fetchResults(this.props.match.params.query);
+  // }
+
+  fetchResults() {
+    this.setState({ pending: true });
+    setTimeout(() => {
+      Api.fetchSearchList(this.props.match.params.query).then(response => {
+        this.setState({
+          notebooks: response.data.notebooks,
+          notes: response.data.notes,
+          pending: false
+        });
       });
     });
   }
@@ -31,41 +52,38 @@ export class SearchResultsPage extends Component {
     if (!this.state.notebooks) {
       return null;
     }
-    let notebooks = this.state.notebooks.map(notebook => {
-      return (
-        <li key={notebook._id} className="notebook-item">
-          {notebook.title}
-        </li>
-      );
-    });
-    return <ul className="notebook-list">{notebooks}</ul>;
+    if (this.state.notebooks.length === 0) {
+      return <p className="message-no-results">No notebooks found</p>;
+    }
+    return <NotebookList notebooks={this.state.notebooks} />;
   }
 
   displayNoteList() {
     if (!this.state.notes) {
       return null;
     }
-
-    let notes = this.state.notes.map(note => {
-      return (
-        <li className="note-item" key={note._id}>
-          {note.title}
-        </li>
-      );
-    });
-
-    return <ul className="note-list">{notes}</ul>;
+    if (this.state.notes.length === 0) {
+      return <p className="message-no-results">No notebooks found</p>;
+    }
+    return <NoteList notes={this.state.notes} />;
   }
 
   render() {
+    if (this.state.pending) {
+      return (
+        <div className="search-list-container">
+          <Preloader />
+        </div>
+      );
+    }
     return (
       <div className="search-list-container">
         <div>
-          <p>Notebooks</p>
+          <Title content="Notebooks" />
           {this.displayNotebookList()}
         </div>
         <div>
-          <p>Notes</p>
+          <Title content="Notes" />
           {this.displayNoteList()}
         </div>
       </div>

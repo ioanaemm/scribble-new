@@ -8,17 +8,33 @@ router.get("/:searchTerm", async (req, res) => {
   let notebooks = await Notebook.find({
     $or: [
       {
-        titleLowercase: req.params.searchTerm.toLowerCase()
+        titleLowercase: {
+          $regex: req.params.searchTerm.toLowerCase(),
+          $options: "i"
+        }
       },
-      { title: req.params.searchTerm }
+      {
+        title: {
+          $regex: req.params.searchTerm,
+          $options: "i"
+        }
+      }
     ]
   });
   let notes = await Note.find({
     $or: [
       {
-        titleLowercase: req.params.searchTerm.toLowerCase()
+        titleLowercase: {
+          $regex: req.params.searchTerm.toLowerCase(),
+          $options: "i"
+        }
       },
-      { title: req.params.searchTerm }
+      {
+        title: {
+          $regex: req.params.searchTerm,
+          $options: "i"
+        }
+      }
     ]
   });
   let dictionary = {
