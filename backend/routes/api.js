@@ -9,7 +9,11 @@ const router = express.Router();
 
 if (process.env.profile !== "nft" || process.env.CI !== "true") {
   router.use((req, res, next) => {
-    if (req.url === "/users/signin" || req.url === "/users") {
+    if (
+      req.url === "/users/signin" ||
+      req.url === "/users" ||
+      req.url === "/users/register"
+    ) {
       next();
     } else {
       if (!req.session || !req.session.user) {
