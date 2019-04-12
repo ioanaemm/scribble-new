@@ -56,8 +56,11 @@ export default class Sidebar extends Component {
             <Link className="note-icon" to="/notes">
               <i className="icon fa fa-sticky-note fa-lg" />
             </Link>
-            <i className="icon fa fa-clipboard fa-lg" />
-            <i />
+            <i
+              className="icon fa fa-user-circle fa-lg"
+              onClick={this.toggleUserPopup}
+            />
+            {this.displayUserPopup()}
           </div>
         </div>
         <div className="mobile-sidebar top">

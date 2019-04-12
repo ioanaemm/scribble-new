@@ -9,12 +9,19 @@
   width: 100%;
   height: calc(var(--vh) * 100 - 52px - 55px);
   z-index: 4;
-  // opacity: 0;
 
   animation-name: fade-in;
   animation-duration: 0.4s;
   animation-fill-mode: forwards;
   animation-iteration-count: 1;
+
+  @media (min-width: 601px) {
+    left: 75px;
+    top: 0;
+    height: calc(var(--vh) * 100);
+    position: absolute;
+    width: calc(100vw - 75px);
+  }
 
   @keyframes fade-in {
     from {
@@ -41,7 +48,6 @@
   .user-popup {
     background-color: white;
     border-radius: 10px;
-    // width: 150px;
     position: absolute;
     top: 10px;
     left: 10px;
@@ -57,7 +63,18 @@
     animation-iteration-count: 1;
     animation-delay: 0.2s;
 
+    @media (min-width: 601px) {
+      bottom: 0;
+      top: unset;
+    }
+
     li {
+      cursor: pointer;
+
+      a {
+        cursor: pointer;
+      }
+
       button {
         display: block;
         color: $gray;
@@ -66,6 +83,8 @@
         background-color: transparent;
         padding-top: 12px;
         padding-bottom: 12px;
+        outline: 0;
+        cursor: pointer;
 
         .fa {
           color: $gray;
@@ -74,6 +93,10 @@
       }
       &:not(:last-child) {
         border-bottom: 1px solid darken($gray-light, 5);
+      }
+
+      &:hover {
+        background-color: lighten($gray-light, 1);
       }
     }
 

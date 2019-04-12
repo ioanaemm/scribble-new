@@ -3,11 +3,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 50px;
 
   .add-item-container {
     position: relative;
     @media (min-width: 601px) {
-      z-index: 3;
+      // z-index: 3;
     }
   }
 

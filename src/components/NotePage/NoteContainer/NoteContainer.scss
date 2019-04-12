@@ -4,7 +4,7 @@
   .notebook-select {
     width: 150px;
     display: inline-block;
-    z-index: 3;
+    // z-index: 3;
   }
 
   .note-content {
@@ -199,7 +199,6 @@
       .rdw-editor-toolbar {
         border: 0;
         border-top: 1px solid darken($gray-light, 3);
-        // border-bottom: 1px solid darken($gray-light, 3);
         padding-top: 10px;
         padding-bottom: 10px;
         padding-left: 0;
@@ -207,7 +206,6 @@
 
         .rdw-option-wrapper {
           border: 0;
-          // margin-bottom: 10px;
         }
 
         .rdw-inline-wrapper,
@@ -295,46 +293,6 @@
 
         @media (min-width: 701px) {
           height: calc(var(--vh) * 100 - 250px);
-        }
-
-        // padding-left: 20px;
-        // padding-right: 20px;
-        // background-color: lighten($gray-light, 2);
-      }
-    }
-
-    .note-editor {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-
-      .tox.tox-tinymce {
-        border: none;
-        .tox-editor-container {
-          margin-left: 15px;
-          margin-right: 15px;
-          .tox-menubar {
-            display: none;
-          }
-        }
-
-        .tox-toolbar {
-          border-top: 0;
-          border-bottom: 1px solid #8895b3;
-
-          .tox-toolbar__group {
-            border: 0;
-          }
-        }
-
-        .tox-sidebar-wrap {
-          .tox-edit-area {
-            border: 0;
-          }
-        }
-
-        .tox-statusbar {
-          display: none;
         }
       }
     }
