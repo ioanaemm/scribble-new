@@ -18,7 +18,7 @@ export default class Sidebar extends Component {
   }
 
   displayPlusButton() {
-    if (window.location.href.includes("/notes")) {
+    if (window.location.href.includes("/notes/")) {
       return <i />;
     }
 
