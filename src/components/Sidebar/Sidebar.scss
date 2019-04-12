@@ -5,6 +5,7 @@
   padding-left: 15px;
   padding-right: 15px;
   position: relative;
+  z-index: 6;
 
   .fa {
     color: white;
@@ -53,6 +54,7 @@
       padding: 20px;
       text-shadow: 0px 2px 4px #514fce;
       cursor: pointer;
+      z-index: 5;
     }
 
     .fa-user-circle {
@@ -81,9 +83,10 @@
     }
 
     &.top {
+      position: relative;
       background-color: #7371fc;
       width: 100%;
-      z-index: 1;
+      z-index: 6;
       color: #fff;
       display: flex;
       align-items: center;
@@ -92,6 +95,7 @@
       .icon {
         text-shadow: 0px 2px 4px #514fce;
         font-size: 1.5em;
+        z-index: 5;
       }
 
       .title {

@@ -17,10 +17,12 @@ export default class Sidebar extends Component {
 
   componentDidMount() {
     window.addEventListener("click", this.hideUserPopup);
+    window.addEventListener("touchend", this.hideUserPopup);
   }
 
   componentWillUnmount() {
     window.removeEventListener("click", this.hideUserPopup);
+    window.removeEventListener("touchend", this.hideUserPopup);
   }
 
   hideUserPopup() {
