@@ -11,7 +11,7 @@ export default class BottomSidebar extends Component {
           <p>Notebooks</p>
         </Link>
 
-        <Link to="/notes/new" className="plus-button-container">
+        <Link to="/newnote" className="plus-button-container">
           <i className="icon fa fa-plus-circle fa-lg" />
         </Link>
 

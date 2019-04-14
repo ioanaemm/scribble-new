@@ -55,7 +55,8 @@ export class NoteContainer extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    if (id && id !== "new") {
+    console.log("this.props.match.params.id:", this.props.match.params.id);
+    if (id) {
       this.loadNoteData(id);
     } else {
       this.loadNotebookList();

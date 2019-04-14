@@ -85,12 +85,12 @@ export class App extends Component {
           <NotebookContainer />
         </Route>
         <Route exact path="/notes">
-          <NotesContainer />
+          <NotesContainer key="noteDetails" />
+        </Route>
+        <Route exact path="/newnote">
+          <NoteContainer key="newnote" />
         </Route>
         <Route exact path="/notes/:id">
-          <NoteContainer />
-        </Route>
-        <Route exact path="/notes/new">
           <NoteContainer />
         </Route>
         <Route exact path="/search/:query">
