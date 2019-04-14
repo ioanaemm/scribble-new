@@ -22,11 +22,16 @@ export class NotebooksContainer extends Component {
       limit: Number.MAX_SAFE_INTEGER,
       sort: { _id: -1 },
       skip: 0
-    }).then(response => {
-      if (response) {
-        this.setState({ notebooks: response.data });
+    }).then(
+      response => {
+        if (response) {
+          this.setState({ notebooks: response.data });
+        }
+      },
+      error => {
+        alert("There has been an error, please try again later");
       }
-    });
+    );
   }
 
   removeNotebook(notebookId) {

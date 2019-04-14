@@ -26,26 +26,36 @@
   justify-content: space-between;
   margin-top: 20px;
 
-  .notebook-title {
+  .notebook-title,
+  .title-input {
     color: $gray;
-    font-size: 18px;
+    font-size: 25px;
     font-weight: bold;
     letter-spacing: 1px;
     margin: 0;
-    margin-bottom: 5px;
+    margin-bottom: 25px;
     margin-left: 20px;
+    margin-right: 10px;
 
     .fa {
       margin-right: 5px;
     }
   }
 
+  .notebook-title {
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(black, 0.03);
+    }
+  }
+
   .title-input {
-    font-size: 16px;
-    max-width: 100%;
-    border: 1px solid #eee;
-    font-size: 18px;
-    letter-spacing: 2px;
+    border: 1px dashed #ddd;
+    outline: 0;
+    position: relative;
+    top: -2px;
+    left: -1px;
   }
 
   button {

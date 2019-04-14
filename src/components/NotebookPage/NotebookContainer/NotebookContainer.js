@@ -4,15 +4,12 @@ import * as Api from "api/Api";
 
 import Preloader from "components/Common/Preloader/Preloader";
 import NoteList from "components/Common/NoteList/NoteList";
-import Button from "components/Common/Button/Button";
-import NoteModal from "components/Common/NoteModal/NoteModal";
-import "components/NotebookPage/NotebookContainer/NotebookContainer.scss";
+import "./NotebookContainer.scss";
 
 export class NotebookContainer extends Component {
   constructor() {
     super();
     this.state = {
-      isOpen: false,
       notebook: null,
       pending: true,
       error: false,
@@ -22,19 +19,21 @@ export class NotebookContainer extends Component {
 
     this.inputRef = React.createRef();
 
-    this.toggleModal = this.toggleModal.bind(this);
-    this.onModalSubmit = this.onModalSubmit.bind(this);
     this.displayNotes = this.displayNotes.bind(this);
     this.onTitleSubmit = this.onTitleSubmit.bind(this);
     this.saveInputValue = this.saveInputValue.bind(this);
     this.displayTitle = this.displayTitle.bind(this);
     this.makeInput = this.makeInput.bind(this);
     this.makeNotInput = this.makeNotInput.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
   }
 
   componentDidMount() {
     Api.fetchNotebook(this.props.match.params.id).then(
       response => {
+        window.addEventListener("click", this.makeNotInput);
+        window.addEventListener("touchend", this.makeNotInput);
+
         this.setState({
           pending: false,
           title: response.data.title,
@@ -45,9 +44,6 @@ export class NotebookContainer extends Component {
         this.setState({ pending: false, error: true });
       }
     );
-
-    window.addEventListener("click", this.makeNotInput);
-    window.addEventListener("touchend", this.makeNotInput);
   }
 
   componentWillUnmount() {
@@ -55,7 +51,14 @@ export class NotebookContainer extends Component {
     window.removeEventListener("touchend", this.makeNotInput);
   }
 
+  onKeyUp(e) {
+    if (e.key === "Enter") {
+      this.makeNotInput();
+    }
+  }
+
   makeNotInput() {
+    this.onTitleSubmit();
     this.setState({ isInput: false });
   }
 
@@ -67,23 +70,6 @@ export class NotebookContainer extends Component {
     });
   }
 
-  toggleModal() {
-    this.setState({ isOpen: !this.state.isOpen });
-  }
-
-  onModalSubmit(noteData) {
-    noteData.notebookId = this.state.notebook._id;
-    Api.addNote(noteData).then(response => {
-      this.setState({
-        notebook: {
-          ...this.state.notebook,
-          notes: [...this.state.notebook.notes, response.data]
-        }
-      });
-    });
-    this.toggleModal();
-  }
-
   displayNotes() {
     if (!this.state.notebook || !this.state.notebook.notes) {
       return null;
@@ -92,18 +78,7 @@ export class NotebookContainer extends Component {
     return <NoteList notes={this.state.notebook.notes} />;
   }
 
-  renderModal() {
-    if (!this.state.isOpen) {
-      return null;
-    }
-
-    return (
-      <NoteModal onClose={this.toggleModal} onSubmit={this.onModalSubmit} />
-    );
-  }
-
   onTitleSubmit() {
-    // console.log("this.state.title", this.state.title);
     Api.patchNotebookContent(this.props.match.params.id, {
       title: this.state.title
     }).then(
@@ -138,19 +113,13 @@ export class NotebookContainer extends Component {
             value={this.state.title}
             onChange={this.saveInputValue}
             ref={this.inputRef}
-          />
-          <button
-            className="title-submit"
-            type="primary"
-            label="Save"
-            onClick={this.onTitleSubmit}
+            onKeyUp={this.onKeyUp}
           />
         </>
       );
     } else {
       return (
         <h3 className="notebook-title" onClick={this.makeInput}>
-          <i className="fa fa-book" />
           {this.state.title}
         </h3>
       );
@@ -176,14 +145,6 @@ export class NotebookContainer extends Component {
     return (
       <div className="notebook-container">
         {this.displayTitle()}
-
-        <Button
-          className="newnote-modal"
-          type="primary"
-          onClick={this.toggleModal}
-          label="New Note"
-        />
-        {this.renderModal()}
         {this.displayNotes()}
       </div>
     );

@@ -54,6 +54,7 @@ export class NoteContainer extends Component {
       this
     );
     this.refreshData = this.refreshData.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
   }
 
   componentDidMount() {
@@ -293,6 +294,12 @@ export class NoteContainer extends Component {
     });
   }
 
+  onKeyUp(e) {
+    if (e.key === "Enter") {
+      this.removeIsInput();
+    }
+  }
+
   displayTitle() {
     if (this.state.isInput) {
       return (
@@ -304,6 +311,7 @@ export class NoteContainer extends Component {
             value={this.state.title}
             onChange={this.saveInputValue}
             onClick={e => e.stopPropagation}
+            onKeyUp={this.onKeyUp}
           />
         </>
       );
@@ -321,14 +329,9 @@ export class NoteContainer extends Component {
   displaySaveButton() {
     return (
       <div className="save-button-container">
-        <Button
-          type="primary"
-          label={this.state.isSaving ? "Saving..." : "Save"}
-          className={`save-note desktop ${
-            this.state.isSaving ? "is-saving" : "is-not-saving"
-          }`}
-          onClick={this.saveNoteDetails}
-        />
+        <Button className="save-note desktop" onClick={this.saveNoteDetails}>
+          {this.displaySaveIcon()}
+        </Button>
         <Button
           type="secondary"
           label={
@@ -384,10 +387,6 @@ export class NoteContainer extends Component {
         </div>
         <div className="note-header">{this.displayTitle()}</div>
         <div className="note-editor">
-          {/*<Editor
-            value={this.state.body}
-            onEditorChange={this.handleEditorChange}
-          />*/}
           <Editor
             editorState={this.state.editorState}
             wrapperClassName="editor-wrapper"

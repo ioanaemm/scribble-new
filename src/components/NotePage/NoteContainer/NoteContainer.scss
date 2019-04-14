@@ -39,7 +39,7 @@
           font-size: 16px;
           outline: 0;
           position: relative;
-          top: -2px;
+          // top: -2px;
 
           @media (max-width: 600px) {
             margin-left: auto;
@@ -59,13 +59,34 @@
           margin: 0;
           border-radius: 5px;
           letter-spacing: 1px;
-          padding: 5px 35px;
+          padding: 4px 30px;
           font-size: 16px;
           outline: 0;
 
           &.desktop {
             display: inline-block;
             margin-right: 10px;
+            border-color: $purple;
+            color: $purple;
+            width: 80px;
+            text-align: center;
+            padding-left: 0;
+            padding-right: 0;
+
+            .preloader {
+              position: relative;
+              // left: 30px;
+              margin: 0;
+              left: -7px;
+
+              & > div {
+                width: 10px;
+                height: 10px;
+                background-color: $purple;
+                margin-left: 1px;
+                margin-right: 1px;
+              }
+            }
           }
           &.mobile {
             display: none;
@@ -76,28 +97,6 @@
             background-color: transparent;
             border: 0;
             z-index: 6;
-
-            @keyframes scale-and-rotate {
-              from {
-                transform: scale(0) rotate(90deg);
-              }
-              to {
-                transform: scale(1) rotate(0deg);
-              }
-            }
-
-            .fa {
-              transform: scale(0) rotate(90deg);
-
-              animation-name: scale-and-rotate;
-              animation-duration: 0.3s;
-              animation-fill-mode: forwards;
-              animation-iteration-count: 1;
-            }
-
-            .fa-check {
-              // color: lighten(green, 20);
-            }
 
             .fa-cloud-upload-alt {
               text-shadow: 0px 2px 4px #514fce;
@@ -125,6 +124,28 @@
             &.mobile {
               display: block;
             }
+          }
+
+          @keyframes scale-and-rotate {
+            from {
+              transform: scale(0) rotate(90deg);
+            }
+            to {
+              transform: scale(1) rotate(0deg);
+            }
+          }
+
+          .fa {
+            transform: scale(0) rotate(90deg);
+
+            animation-name: scale-and-rotate;
+            animation-duration: 0.3s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+          }
+
+          .fa-check {
+            // color: lighten(green, 20);
           }
 
           &.desktop {
