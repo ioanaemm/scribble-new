@@ -1,4 +1,12 @@
+@import "../../../Variables";
+
 .note-list {
   width: 100%;
   max-width: 1200px;
+
+  .message-no-results {
+    width: 100%;
+    text-align: center;
+    color: lighten($gray, 10);
+  }
 }

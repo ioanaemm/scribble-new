@@ -20,20 +20,17 @@ export class SearchResultsPage extends Component {
     this.fetchResults = this.fetchResults.bind(this);
     this.displayNotebookList = this.displayNotebookList.bind(this);
     this.displayNoteList = this.displayNoteList.bind(this);
+    this.removeNotebook = this.removeNotebook.bind(this);
+    this.addNotebook = this.addNotebook.bind(this);
   }
 
   componentDidMount() {
     this.fetchResults();
-    // this.props.history.listenBefore((location, done) => this.fetchResults());
   }
 
   componentWillReceiveProps() {
     setTimeout(this.fetchResults, 500);
   }
-
-  // componentDidUpdate() {
-  //   // this.fetchResults(this.props.match.params.query);
-  // }
 
   fetchResults() {
     this.setState({ pending: true });
@@ -55,7 +52,13 @@ export class SearchResultsPage extends Component {
     if (this.state.notebooks.length === 0) {
       return <p className="message-no-results">No notebooks found</p>;
     }
-    return <NotebookList notebooks={this.state.notebooks} />;
+    return (
+      <NotebookList
+        notebooks={this.state.notebooks}
+        removeNotebook={this.removeNotebook}
+        addNotebook={this.addNotebook}
+      />
+    );
   }
 
   displayNoteList() {
@@ -66,6 +69,29 @@ export class SearchResultsPage extends Component {
       return <p className="message-no-results">No notebooks found</p>;
     }
     return <NoteList notes={this.state.notes} />;
+  }
+
+  removeNotebook(notebookId) {
+    Api.deleteNotebook(notebookId).then(response => {
+      console.log(response.data);
+      if (this.state.notebooks) {
+        this.setState({
+          notebooks: this.state.notebooks.filter(
+            notebook => notebook._id !== notebookId
+          )
+        });
+      }
+    });
+  }
+
+  addNotebook(notebookData) {
+    Api.addNotebook(notebookData).then(response => {
+      if (this._isMounted) {
+        this.setState({
+          notebooks: [response.data, ...this.state.notebooks]
+        });
+      }
+    });
   }
 
   render() {

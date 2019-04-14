@@ -13,6 +13,7 @@ router.post("/", async (req, res) => {
   newNotebook.title = req.body.title;
   newNotebook.titleLowercase = req.body.title.toLowerCase();
   newNotebook.tags = req.body.tags;
+  newNotebook.userId = req.session.user._id;
   await newNotebook.save();
 
   res.status(201);
@@ -27,12 +28,16 @@ router.get("/", async (req, res) => {
     sortParsed[key] = parseInt(sortParsed[key]);
   }
 
-  let notebookList = await Notebook.find()
+  let notebookList = await Notebook.find({ userId: req.session.user._id })
     .sort(sortParsed)
     .skip(parseInt(req.query.skip))
     .limit(parseInt(req.query.limit));
 
-  await notebookList.forEach(async (notebook, index) => {
+  if (notebookList.length === 0) {
+    res.send([]);
+    return;
+  }
+  notebookList.forEach(async (notebook, index) => {
     let noteList = await Note.find({ notebookId: notebook._id });
     notebook.noteCount = noteList.length;
 

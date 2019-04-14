@@ -30,22 +30,14 @@
     }
   }
 
-  .add-item-container {
-    .title {
-      font-size: 25px;
-      color: #8895b3;
-      font-weight: 600;
-      letter-spacing: 2px;
-    }
-
+  .title {
+    font-size: 25px;
+    color: #8895b3;
+    font-weight: 600;
+    letter-spacing: 2px;
     @media (max-width: 600px) {
-      button {
-        display: none;
-      }
-      .title {
-        margin-top: 6px;
-        margin-bottom: 6px;
-      }
+      margin-top: 6px;
+      margin-bottom: 6px;
     }
   }
 }

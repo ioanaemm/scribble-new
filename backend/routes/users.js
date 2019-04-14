@@ -3,6 +3,14 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
+var crypto = require("crypto");
+
+var algorithm = "aes256";
+var inputEncoding = "utf8";
+var outputEncoding = "hex";
+
+var key = process.env.SECRET_KEY;
+
 const User = require("../models/user");
 
 router.get("/me", async (req, res) => {
@@ -66,10 +74,27 @@ router.post("/register", function(req, res) {
   });
 });
 
+function computeChunk(userId) {
+  var text = String(userId);
+  console.log("text", typeof text);
+
+  // console.log('Ciphering "%s" with key "%s" using %s', text, key, algorithm);
+
+  var cipher = crypto.createCipher(algorithm, key);
+
+  var ciphered = cipher.update(text, inputEncoding, outputEncoding);
+  ciphered += cipher.final(outputEncoding);
+
+  console.log('Result in %s is "%s"', outputEncoding, ciphered);
+
+  return ciphered;
+}
+
 function sendConfirmationEmail(user) {
   const sendmail = require("sendmail")();
+  const chunk = computeChunk(user._id);
 
-  const url = `https://www.scribblewebapp.com/verify/${user.email}`;
+  const url = `https://www.scribblewebapp.com/verify/${user.username}/${chunk}`;
 
   sendmail(
     {
@@ -119,13 +144,13 @@ router.post("/signin", function(req, res) {
           return;
         }
         if (result) {
-          if (!result.activated) {
+          console.log("user = ", user);
+          if (!user.activated) {
             res.status(403).json({
               failed: "Your account has not been activated yet"
             });
           } else {
             req.session.user = user;
-            console.log("req.session.user", req.session.user);
             res.status(200).send({
               username: user.username,
               email: user.email
@@ -138,6 +163,28 @@ router.post("/signin", function(req, res) {
         }
       });
     });
+});
+
+function decryptChunk(chunk) {
+  var decipher = crypto.createDecipher(algorithm, key);
+  var deciphered = decipher.update(chunk, outputEncoding, inputEncoding);
+  deciphered += decipher.final(inputEncoding);
+  return deciphered;
+}
+
+router.post("/verify/:chunk", async (req, res) => {
+  const chunk = req.params.chunk;
+  const userId = decryptChunk(chunk);
+
+  let targetUser = await User.findById(userId);
+  if (targetUser) {
+    targetUser.activated = true;
+    targetUser.save();
+
+    res.send();
+  } else {
+    res.status(404).send();
+  }
 });
 
 router.post("/signout", (req, res) => {

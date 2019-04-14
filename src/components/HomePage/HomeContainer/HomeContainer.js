@@ -1,14 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
+import * as Api from "api/Api";
 import Title from "components/Common/Title/Title";
-import Button from "components/Common/Button/Button";
-import NotebookModal from "components/Common/NotebookModal/NotebookModal";
-import NoteModal from "components/Common/NoteModal/NoteModal";
 import NotebookList from "components/Common/NotebookList/NotebookList";
 import NoteList from "components/Common/NoteList/NoteList";
 import Preloader from "components/Common/Preloader/Preloader";
-import * as Api from "api/Api";
 
 import "./HomeContainer.scss";
 
@@ -19,8 +15,6 @@ export default class HomeContainer extends Component {
     super(props);
 
     this.state = {
-      isNotebookModalOpen: false,
-      isNoteModalOpen: false,
       notebooks: [],
       notes: [],
       refreshPaddingHeight: 0,
@@ -32,11 +26,6 @@ export default class HomeContainer extends Component {
 
     this.lastTouchY = null;
 
-    this.toggleNotebookModal = this.toggleNotebookModal.bind(this);
-    this.toggleNoteModal = this.toggleNoteModal.bind(this);
-    this.onNotebookModalSubmit = this.onNotebookModalSubmit.bind(this);
-    this.onNoteModalSubmit = this.onNoteModalSubmit.bind(this);
-    this.removeNotebook = this.removeNotebook.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
     this.updateRefreshPadding = this.updateRefreshPadding.bind(this);
@@ -44,13 +33,14 @@ export default class HomeContainer extends Component {
     this.displayPreloader = this.displayPreloader.bind(this);
     this.displayContent = this.displayContent.bind(this);
     this.displayRefreshPadding = this.displayRefreshPadding.bind(this);
+    this.removeNotebook = this.removeNotebook.bind(this);
+    this.addNotebook = this.addNotebook.bind(this);
   }
 
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener("touchmove", this.onTouchMove);
     window.addEventListener("touchend", this.onTouchEnd);
-
     this.refresh();
   }
 
@@ -81,79 +71,6 @@ export default class HomeContainer extends Component {
         }
       }
     );
-  }
-
-  toggleNotebookModal() {
-    if (this._isMounted) {
-      this.setState({ isNotebookModalOpen: !this.state.isNotebookModalOpen });
-    }
-  }
-
-  toggleNoteModal() {
-    if (this._isMounted) {
-      this.setState({ isNoteModalOpen: !this.state.isNoteModalOpen });
-    }
-  }
-
-  onNotebookModalSubmit(notebookData) {
-    Api.addNotebook(notebookData).then(response => {
-      if (this._isMounted) {
-        this.setState({
-          notebooks: [...this.state.notebooks, response.data]
-        });
-      }
-    });
-    this.toggleNotebookModal();
-  }
-
-  onNoteModalSubmit(noteData) {
-    Api.addNote(noteData).then(response => {
-      if (this._isMounted) {
-        this.setState({
-          notes: [...this.state.notes, response.data]
-        });
-      }
-    });
-
-    this.toggleNoteModal();
-  }
-
-  renderNotebookModal() {
-    let notebookModal = null;
-    if (this.state.isNotebookModalOpen) {
-      notebookModal = (
-        <NotebookModal
-          onClose={this.toggleNotebookModal}
-          onSubmit={this.onNotebookModalSubmit}
-        />
-      );
-    }
-    return notebookModal;
-  }
-
-  renderNoteModal() {
-    let noteModal = null;
-    if (this.state.isNoteModalOpen) {
-      noteModal = (
-        <NoteModal
-          onClose={this.toggleNoteModal}
-          onSubmit={this.onNoteModalSubmit}
-        />
-      );
-    }
-    return noteModal;
-  }
-
-  removeNotebook(notebookId) {
-    Api.deleteNotebook(notebookId).then(response => {
-      if (this.state.notebooks) {
-        this.setState({
-          notebooks: this.state.notebooks.filter(
-            notebook => notebook._id !== notebookId
-          )
-        });
-      }
-    });
   }
 
   onTouchMove(e) {
@@ -196,6 +113,29 @@ export default class HomeContainer extends Component {
           this.state.refreshPaddingHeight + delta * multiplier
       });
     }
+  }
+
+  removeNotebook(notebookId) {
+    Api.deleteNotebook(notebookId).then(response => {
+      console.log(response.data);
+      if (this.state.notebooks) {
+        this.setState({
+          notebooks: this.state.notebooks.filter(
+            notebook => notebook._id !== notebookId
+          )
+        });
+      }
+    });
+  }
+
+  addNotebook(notebookData) {
+    Api.addNotebook(notebookData).then(response => {
+      if (this._isMounted) {
+        this.setState({
+          notebooks: [response.data, ...this.state.notebooks]
+        });
+      }
+    });
   }
 
   onTouchEnd(e) {
@@ -246,32 +186,14 @@ export default class HomeContainer extends Component {
     }
     return (
       <>
-        <div className="add-item-container">
-          <Title content="Notebooks">
-            <Button
-              className="add-notebook"
-              type="primary"
-              onClick={this.toggleNotebookModal}
-              label="New Notebook"
-            />
-          </Title>
-
-          {this.renderNotebookModal()}
-        </div>
-
+        <Title content="Notebooks" />
         <NotebookList
           notebooks={this.state.notebooks}
           removeNotebook={this.removeNotebook}
+          addNotebook={this.addNotebook}
         />
-        <div className="add-item-container">
-          <Title content="Notes">
-            <Link to="/notes/new">
-              <Button className="add-note" type="primary" label="New Note" />
-            </Link>
-          </Title>
 
-          {this.renderNoteModal()}
-        </div>
+        <Title content="Notes" />
         <NoteList notes={this.state.notes} />
       </>
     );

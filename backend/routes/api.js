@@ -12,7 +12,8 @@ if (process.env.profile !== "nft" || process.env.CI !== "true") {
     if (
       req.url === "/users/signin" ||
       req.url === "/users" ||
-      req.url === "/users/register"
+      req.url === "/users/register" ||
+      req.url.includes("/users/verify")
     ) {
       next();
     } else {

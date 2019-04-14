@@ -9,8 +9,8 @@ export default class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "ioanam",
-      password: "qwerty",
+      username: "",
+      password: "",
       submitting: false,
       errorMessage: null
     };
@@ -66,7 +66,7 @@ export default class User extends Component {
     }
     if (!this.state.userData) {
       return (
-        <div className="user-container">
+        <div className="user-container form-container">
           <h3 className="header">Welcome to Scribble!</h3>
           <form onSubmit={this.onSubmit} className="login">
             <div className="input-group">

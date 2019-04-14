@@ -1,62 +1,116 @@
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  max-width: 100%;
-  height: 300px;
-  max-height: 100%;
-  z-index: 1010;
-  background-color: white;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 10px;
+@import "../../../Variables";
 
-  .body {
-    // padding: 10px;
-    input[type="text"] {
-      display: flex;
-      width: 550px;
-      max-width: 100%;
-      border: 1px solid #8895b3;
-      border-radius: 3px;
-      padding: 10px;
-      margin: 5px;
+.modal-container {
+  animation-name: fade;
+  animation-duration: 400ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    max-width: 100%;
+    height: 300px;
+    max-height: 100%;
+    z-index: 1010;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    padding-top: 20px;
+    max-width: 90%;
+    margin-top: 20px;
+    opacity: 0;
+
+    animation-name: slide;
+    animation-duration: 400ms;
+    animation-delay: 0.2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+
+    &.form-container {
+      .title {
+        letter-spacing: 0;
+      }
     }
 
-    label {
+    .body {
+      // padding: 10px;
+      input[type="text"] {
+        display: block;
+        width: 550px;
+        max-width: 100%;
+        border: 1px solid #8895b3;
+        border-radius: 3px;
+        padding: 10px;
+        margin: 5px;
+      }
+
+      label {
+        font-size: 18px;
+        color: #8895b3;
+        font-weight: 500;
+        margin-left: 5px;
+      }
+    }
+
+    .footer {
+      .primary {
+        margin: 0;
+      }
+    }
+
+    .close-btn {
+      top: 3px;
+      right: 3px;
+      position: absolute;
+      border: none;
+      background-color: transparent;
+      z-index: 200;
       font-size: 18px;
-      color: #8895b3;
-      font-weight: 500;
-      margin-left: 5px;
+
+      .icon {
+        color: $gray;
+        z-index: 200;
+      }
     }
   }
 
-  .footer {
-    .primary {
-      margin: 0;
+  .modal-overlay {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.7;
+  }
+
+  @keyframes slide {
+    from {
+      margin-top: 20px;
+      opacity: 0;
+    }
+
+    to {
+      margin-top: 0px;
+      opacity: 1;
     }
   }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
 
-  .close-btn {
-    top: 10px;
-    right: 10px;
-    position: absolute;
-    border: none;
+    to {
+      opacity: 1;
+    }
   }
-}
-
-.modal-overlay {
-  z-index: 1000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.7;
 }

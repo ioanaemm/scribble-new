@@ -9,6 +9,7 @@ router.post("/", async (req, res) => {
   newNote.titleLowercase = req.body.title.toLowerCase();
   newNote.body = req.body.body;
   newNote.notebookId = req.body.notebookId;
+  newNote.userId = req.session.user._id;
 
   await newNote.save();
   res.send(newNote);
@@ -20,7 +21,7 @@ router.get("/", async (req, res) => {
     sortParsed[key] = parseInt(sortParsed[key]);
   }
 
-  let noteList = await Note.find()
+  let noteList = await Note.find({ userId: req.session.user._id })
     .sort(sortParsed)
     .skip(parseInt(req.query.skip))
     .limit(parseInt(req.query.limit));

@@ -82,7 +82,14 @@ export function deleteNotebook(notebookId) {
   return axios.delete(`${API_URL}/notebooks/${notebookId}`).catch(handleError);
 }
 
+export function verifyAccount(chunk) {
+  return axios.post(`${API_URL}/users/verify/${chunk}`);
+}
+
 function handleError(e) {
+  if (e.response.status === 401) {
+    window.location.href = "/login";
+  }
   // console.log("error deleting notebook", e);
   // if(e.data)
   // console.log(e.data);

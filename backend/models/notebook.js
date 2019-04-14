@@ -7,7 +7,8 @@ let NotebookSchema = new Schema({
   titleLowercase: String,
   tags: String,
   notes: Array,
-  noteCount: Number
+  noteCount: Number,
+  userId: String
 });
 
 module.exports = mongoose.model("Notebook", NotebookSchema);

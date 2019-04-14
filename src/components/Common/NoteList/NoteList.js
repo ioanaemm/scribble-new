@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import "./NoteList.scss";
-
 import NoteItem from "components/Common/NoteItem/NoteItem";
+
+import "./NoteList.scss";
 
 export default class NoteList extends Component {
   constructor() {
@@ -14,6 +14,9 @@ export default class NoteList extends Component {
   displayNotes() {
     if (!this.props.notes) {
       return null;
+    }
+    if (this.props.notes.length === 0) {
+      return <p className="message-no-results">No notes found</p>;
     }
     return this.props.notes.map(note => {
       return <NoteItem key={note._id} note={note} />;

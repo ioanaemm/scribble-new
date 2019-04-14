@@ -11,6 +11,7 @@ import Preloader from "components/Common/Preloader/Preloader";
 import User from "components/User/User";
 import Register from "components/Register/Register";
 import AccountDetails from "components/AccountDetails/AccountDetails";
+import VerifyAccount from "components/VerifyAccount/VerifyAccount";
 import SearchResultsPage from "components/SearchResultsPage/SearchResultsPage";
 import Sidebar from "components/Sidebar/Sidebar";
 import BottomSidebar from "components/Sidebar/BottomSidebar";
@@ -41,15 +42,20 @@ export class App extends Component {
     this.updateDocumentSize();
     window.addEventListener("resize", this.updateDocumentSize);
 
-    Api.fetchUserDetails().then(
-      response => {
-        this.setState({ userData: response.data, pending: false });
-      },
-      error => {
-        this.setState({ pending: false });
-        this.props.history.push("/login");
-      }
-    );
+    if (!window.location.href.includes("/verify/")) {
+      Api.fetchUserDetails().then(
+        response => {
+          this.setState({ userData: response.data, pending: false });
+        },
+        error => {
+          this.setState({ pending: false });
+        }
+      );
+    } else {
+      this.setState({
+        pending: false
+      });
+    }
   }
 
   updateDocumentSize() {
@@ -98,6 +104,9 @@ export class App extends Component {
         </Route>
         <Route exact path="/account">
           <AccountDetails />
+        </Route>
+        <Route exact path="/verify/:username/:chunk">
+          <VerifyAccount />
         </Route>
       </Switch>
     );

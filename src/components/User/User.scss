@@ -4,8 +4,7 @@ $gray: #8895b3;
 $gray-dark: #132140;
 $gray-light: #f3f5f9;
 
-.user-container,
-.register-container {
+.form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,8 +20,7 @@ $gray-light: #f3f5f9;
     max-width: 350px;
   }
 
-  .login,
-  .register {
+  form {
     width: 80%;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -107,8 +105,7 @@ $gray-light: #f3f5f9;
       margin-bottom: 30px;
     }
 
-    button.signin,
-    button.create-account {
+    button[type="submit"] {
       background-color: $purple;
       border: 0;
       border-radius: 5px;

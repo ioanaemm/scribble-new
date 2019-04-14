@@ -14,6 +14,7 @@ export class NotebooksContainer extends Component {
     };
     this.displayNotebookList = this.displayNotebookList.bind(this);
     this.removeNotebook = this.removeNotebook.bind(this);
+    this.addNotebook = this.addNotebook.bind(this);
   }
 
   componentDidMount() {
@@ -41,6 +42,16 @@ export class NotebooksContainer extends Component {
     });
   }
 
+  addNotebook(notebookData) {
+    Api.addNotebook(notebookData).then(response => {
+      if (this._isMounted) {
+        this.setState({
+          notebooks: [response.data, ...this.state.notebooks]
+        });
+      }
+    });
+  }
+
   displayNotebookList() {
     if (!this.state.notebooks) {
       return null;
@@ -50,40 +61,9 @@ export class NotebooksContainer extends Component {
       <NotebookList
         notebooks={this.state.notebooks}
         removeNotebook={this.removeNotebook}
+        addNotebook={this.addNotebook}
       />
     );
-
-    // let notebookList = this.state.notebooks.map(notebook => {
-    //   let timestamp = moment(
-    //     new Date(parseInt(notebook._id.substring(0, 8), 16) * 1000)
-    //   ).format("Do MMMM YYYY");
-    //
-    //   if (!notebook.tags) {
-    //     return null;
-    //   }
-    //
-    //   return (
-    //     <li className="notebook-item" key={notebook._id}>
-    //       <Link className="note-link" to={`/notebooks/${notebook._id}`}>
-    //         {notebook.title}
-    //       </Link>
-    //       <button
-    //         className="delete"
-    //         onClick={() => this.removeNotebook(notebook._id)}
-    //       >
-    //         <i className="fa fa-trash-alt" />
-    //       </button>
-    //       <p>Created on: {timestamp}</p>
-    //       <p> Posts in notebook: {notebook.noteCount}</p>
-    //       <div className="tags-container">
-    //         <Title content="Tags" />
-    //         <Button className="tags" type="secondary" label={notebook.tags} />
-    //       </div>
-    //     </li>
-    //   );
-    // });
-    //
-    // return <ul className="notebook-list">{notebookList}</ul>;
   }
 
   render() {

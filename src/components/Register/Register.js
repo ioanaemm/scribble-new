@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import * as Api from "api/Api";
@@ -55,7 +54,7 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div className="register-container">
+      <div className="register-container form-container">
         <form onSubmit={this.onSubmit} className="register">
           <h3 className="title">Create account</h3>
           <div className="input-group">

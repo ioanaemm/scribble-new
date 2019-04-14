@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import "components/Common/NotebookModal/NotebookModal.scss";
 import Title from "components/Common/Title/Title";
 
-import closebutton from "icons/close.png";
+import "./NotebookModal.scss";
 
 export default class NotebookModal extends Component {
   constructor() {
@@ -12,10 +11,19 @@ export default class NotebookModal extends Component {
       tags: ""
     };
 
-    this.submit = this.submit.bind(this);
+    this.titleInputRef = React.createRef();
+
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  submit() {
+  componentDidMount() {
+    this.titleInputRef.current.focus();
+  }
+
+  onSubmit(e) {
+    console.log("NotebookModal::submit()");
+    e.preventDefault();
+
     this.props.onSubmit({ title: this.state.title, tags: this.state.tags });
     this.setState({
       title: "",
@@ -25,38 +33,43 @@ export default class NotebookModal extends Component {
 
   render() {
     return (
-      <div className="backdrop">
-        <div className="modal modal-notebook">
+      <div className="modal-container">
+        <div className="modal modal-notebook form-container">
           <Title content="Add a new notebook" />
-          <div className="body">
+          <form onSubmit={this.onSubmit} className="body">
             <button className="close-btn" onClick={this.props.onClose}>
-              <img className="icon" src={closebutton} alt="close" />
+              <i className="fa fa-times icon" />
             </button>
-            <label>Title</label>
-            <input
-              className="new-notebook-title"
-              type="text"
-              value={this.state.title}
-              onChange={e => this.setState({ title: e.target.value })}
-            />
-            <label>Tags</label>
-            <input
-              className="new-notebook-tags"
-              type="text"
-              value={this.state.tags}
-              onChange={e => this.setState({ tags: e.target.value })}
-            />
-          </div>
-          <div className="footer">
-            <button
-              className="newnotebook-btn"
-              type="primary"
-              onClick={this.submit}
-              label="Submit"
-            >
-              Submit
-            </button>
-          </div>
+
+            <div className="input-group">
+              <input
+                ref={this.titleInputRef}
+                className="new-notebook-title"
+                value={this.state.title}
+                placeholder=" "
+                onChange={e => this.setState({ title: e.target.value })}
+              />
+              <span className="label"> Title</span>
+              <span className="border" />
+            </div>
+
+            <div className="input-group">
+              <input
+                className="new-notebook-tags"
+                value={this.state.tags}
+                placeholder=" "
+                onChange={e => this.setState({ tags: e.target.value })}
+              />
+              <span className="label"> Tags</span>
+              <span className="border" />
+            </div>
+
+            <div className="footer">
+              <button className="newnotebook-btn" type="submit">
+                Create
+              </button>
+            </div>
+          </form>
         </div>
         <div className="modal-overlay" />
       </div>

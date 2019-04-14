@@ -6,7 +6,8 @@ let NoteSchema = new Schema({
   title: String,
   titleLowercase: String,
   body: String,
-  notebookId: String
+  notebookId: String,
+  userId: String
 });
 
 module.exports = mongoose.model("Note", NoteSchema);
