@@ -84,8 +84,7 @@ export default class NotebookList extends Component {
           onClick={this.toggleNotebookModal}
           label="New Notebook"
         />
-
-        {this.displayNotebookList()}
+        <div className="inner-container">{this.displayNotebookList()}</div>
         {this.renderNotebookModal()}
       </div>
     );

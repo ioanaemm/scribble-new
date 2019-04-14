@@ -22,15 +22,14 @@
   }
 
   .notebook-item {
-    display: inline-block;
     border: 2px solid #f3f5f9;
     border-radius: 10px;
-    display: inline-block;
     padding: 10px 15px 10px;
     flex: auto;
     width: 100%;
     transition: all 400ms;
     cursor: pointer;
+    height: 100%;
 
     &:hover {
       background-color: rgba(#8895b3, 0.05);

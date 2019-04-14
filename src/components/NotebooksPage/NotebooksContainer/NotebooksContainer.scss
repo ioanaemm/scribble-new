@@ -17,21 +17,4 @@ $gray-light: #f3f5f9;
     margin-top: 16px;
     margin-bottom: 10px;
   }
-
-  .notebook-list {
-    padding: 0;
-    margin: 0;
-    padding-left: 10px;
-    padding-right: 10px;
-
-    .notebook-item {
-      a {
-        text-decoration: none;
-        text-transform: capitalize;
-      }
-      a:visited {
-        color: $purple;
-      }
-    }
-  }
 }

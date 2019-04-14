@@ -1,6 +1,10 @@
 @import "../../Variables";
 
 .search-list-container {
+  @media (min-width: 601px) {
+    padding-top: 60px;
+  }
+
   .title {
     font-size: 25px;
     color: #8895b3;
