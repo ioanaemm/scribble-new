@@ -62,16 +62,13 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   let targetNoteId = req.params.id;
-  for (let i = notes.length - 1; i >= 0; i--) {
-    if (notes[i].id === targetNoteId) {
-      notes.splice(i, 1);
-      break;
-    }
-  }
+  await Note.findByIdAndRemove(targetNoteId, (err, note) => {
+    if (err) return res.status(404).send(err);
+  });
 
-  res.send(notes);
+  res.send();
 });
 
 module.exports = router;

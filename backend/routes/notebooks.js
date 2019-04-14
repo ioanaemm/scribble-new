@@ -84,14 +84,11 @@ router.patch("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   let targetNotebookId = req.params.id;
-  const targetNotebook = await Notebook.findByIdAndRemove(
-    targetNotebookId,
-    (err, notebook) => {
-      if (err) return res.status(404).send(err);
-    }
-  );
+  await Notebook.findByIdAndRemove(targetNotebookId, (err, notebook) => {
+    if (err) return res.status(404).send(err);
+  });
 
-  res.send(targetNotebook);
+  res.send();
 });
 
 module.exports = router;

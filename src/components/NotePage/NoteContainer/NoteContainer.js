@@ -23,6 +23,7 @@ export class NoteContainer extends Component {
       body: "",
       notebook: null,
       isSaving: false,
+      isDeleting: false,
       isSaved: false,
       isNew: false,
       notebookList: null,
@@ -34,6 +35,7 @@ export class NoteContainer extends Component {
 
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.saveNoteDetails = this.saveNoteDetails.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
     this.retrieveNotebook = this.retrieveNotebook.bind(this);
     this.displayNotebookTitle = this.displayNotebookTitle.bind(this);
     this.displayNotesInNotebook = this.displayNotesInNotebook.bind(this);
@@ -222,6 +224,19 @@ export class NoteContainer extends Component {
     });
   }
 
+  deleteNote() {
+    this.setState({ isDeleting: true });
+    Api.deleteNote(this.props.match.params.id).then(
+      response => {
+        this.props.history.push("/");
+      },
+      error => {
+        this.setState({ isDeleting: false });
+        alert("Error deleting note, please try again later");
+      }
+    );
+  }
+
   saveNoteDetails() {
     this.setState({ isSaving: true });
 
@@ -320,6 +335,20 @@ export class NoteContainer extends Component {
             this.state.isSaving ? "is-saving" : "is-not-saving"
           }`}
           onClick={this.saveNoteDetails}
+        />
+        <Button
+          type="secondary"
+          label={
+            this.state.isDeleting ? (
+              <Preloader />
+            ) : (
+              <i className="fa fa-trash-alt" />
+            )
+          }
+          className={`delete-note desktop ${
+            this.state.isDeleting ? "is-deleting" : "is-not-deleting"
+          }`}
+          onClick={this.deleteNote}
         />
         <Button className="save-note mobile" onClick={this.saveNoteDetails}>
           {this.displaySaveIcon()}

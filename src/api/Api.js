@@ -82,6 +82,10 @@ export function deleteNotebook(notebookId) {
   return axios.delete(`${API_URL}/notebooks/${notebookId}`).catch(handleError);
 }
 
+export function deleteNote(noteId) {
+  return axios.delete(`${API_URL}/notes/${noteId}`).catch(handleError);
+}
+
 export function verifyAccount(chunk) {
   return axios.post(`${API_URL}/users/verify/${chunk}`);
 }

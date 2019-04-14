@@ -31,6 +31,30 @@
           margin-bottom: 5px;
         }
 
+        .delete-note {
+          margin: 0;
+          border-radius: 5px;
+          letter-spacing: 1px;
+          padding: 4px 35px;
+          font-size: 16px;
+          outline: 0;
+          position: relative;
+          top: -2px;
+
+          @media (max-width: 600px) {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            margin-bottom: 10px;
+            margin-top: 5px;
+
+            position: fixed;
+            top: 58px;
+            right: -20px;
+            border: 0;
+          }
+        }
+
         .save-note {
           margin: 0;
           border-radius: 5px;
@@ -40,7 +64,8 @@
           outline: 0;
 
           &.desktop {
-            display: block;
+            display: inline-block;
+            margin-right: 10px;
           }
           &.mobile {
             display: none;

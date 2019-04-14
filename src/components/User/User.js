@@ -20,7 +20,6 @@ export default class User extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log("onSubmit()");
     this.setState({ submitting: true });
     Api.signInUser({
       username: this.state.username,
