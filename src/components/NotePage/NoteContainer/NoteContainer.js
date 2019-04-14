@@ -66,12 +66,10 @@ export class NoteContainer extends Component {
     if (newProps !== this.props) {
       this.refreshData();
     }
-    console.log("componentWillReceiveProps()");
   }
 
   refreshData() {
     const id = this.props.match.params.id;
-    console.log("this.props.match.params.id:", this.props.match.params.id);
     if (id) {
       this.loadNoteData(id);
     } else {
@@ -98,7 +96,6 @@ export class NoteContainer extends Component {
 
   loadNotebookList() {
     Api.fetchNotebooks({}).then(response => {
-      console.log(response.data);
       const notebookOptions = response.data.map(notebook => {
         return {
           value: notebook._id,
@@ -115,10 +112,8 @@ export class NoteContainer extends Component {
   }
 
   loadNoteData(noteId) {
-    console.warn("loadNoteData()");
     Api.fetchNote(noteId).then(
       response => {
-        console.log("response.data.notebookId", response.data);
         this.retrieveNotebook(response.data.notebookId);
 
         const contentBlock = htmlToDraft(response.data.body || "");
@@ -135,7 +130,6 @@ export class NoteContainer extends Component {
         });
       },
       error => {
-        console.log(error.response.data);
         this.setState({ error: error.response.data, pending: false });
       }
     );
@@ -143,7 +137,6 @@ export class NoteContainer extends Component {
 
   retrieveNotebook(notebookId) {
     return Api.fetchNotebook(notebookId).then(response => {
-      console.log("response.data", response.data);
       this.setState({
         notebook: response.data
       });
