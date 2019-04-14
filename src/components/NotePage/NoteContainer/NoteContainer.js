@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
 import htmlToDraft from "html-to-draftjs";
 import draftToHtml from "draftjs-to-html";
@@ -51,9 +51,23 @@ export class NoteContainer extends Component {
     this.displaySidebarNotebookTitle = this.displaySidebarNotebookTitle.bind(
       this
     );
+    this.refreshData = this.refreshData.bind(this);
   }
 
   componentDidMount() {
+    this.refreshData();
+    window.addEventListener("click", this.removeIsInput);
+    window.addEventListener("touchend", this.removeIsInput);
+  }
+
+  componentDidUpdate(newProps) {
+    if (newProps !== this.props) {
+      this.refreshData();
+    }
+    console.log("componentWillReceiveProps()");
+  }
+
+  refreshData() {
     const id = this.props.match.params.id;
     console.log("this.props.match.params.id:", this.props.match.params.id);
     if (id) {
@@ -62,10 +76,6 @@ export class NoteContainer extends Component {
       this.loadNotebookList();
       this.setState({ pending: false, isNew: true });
     }
-    window.addEventListener("click", this.removeIsInput);
-    window.addEventListener("touchend", this.removeIsInput);
-
-    // console.log("this.state.notebookId", this.state.notebookId);
   }
 
   componentWillUnmount() {
@@ -103,6 +113,7 @@ export class NoteContainer extends Component {
   }
 
   loadNoteData(noteId) {
+    console.warn("loadNoteData()");
     Api.fetchNote(noteId).then(
       response => {
         console.log("response.data.notebookId", response.data);
@@ -187,13 +198,15 @@ export class NoteContainer extends Component {
       }
 
       return (
-        <div className="note-list-content" key={note._id}>
-          <h5 className="note-list-title">{note.title}</h5>
-          <p
-            className="note-list-body"
-            dangerouslySetInnerHTML={{ __html: note.body }}
-          />
-        </div>
+        <Link to={`/notes/${note._id}`} key={note._id}>
+          <div className="note-list-content">
+            <h5 className="note-list-title">{note.title}</h5>
+            <p
+              className="note-list-body"
+              dangerouslySetInnerHTML={{ __html: note.body }}
+            />
+          </div>
+        </Link>
       );
     });
     return notes;
