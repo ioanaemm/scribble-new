@@ -6,6 +6,7 @@ const Notebook = require("../models/notebook");
 
 router.get("/:searchTerm", async (req, res) => {
   let notebooks = await Notebook.find({
+    userId: req.session.user._id,
     $or: [
       {
         titleLowercase: {
@@ -22,6 +23,7 @@ router.get("/:searchTerm", async (req, res) => {
     ]
   });
   let notes = await Note.find({
+    userId: req.session.user._id,
     $or: [
       {
         titleLowercase: {
