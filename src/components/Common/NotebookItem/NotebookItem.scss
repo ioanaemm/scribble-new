@@ -34,6 +34,10 @@
     cursor: pointer;
     height: 100%;
 
+    @media (max-width: 600px) {
+      z-index: -1;
+    }
+
     &:hover {
       background-color: rgba(#8895b3, 0.05);
     }
