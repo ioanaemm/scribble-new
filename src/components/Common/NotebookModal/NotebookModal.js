@@ -72,7 +72,6 @@ export default class NotebookModal extends Component {
             </div>
           </form>
         </div>
-        <div className="modal-overlay" />
       </div>
     );
   }

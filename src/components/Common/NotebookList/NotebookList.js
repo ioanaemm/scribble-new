@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import NotebookModal from "components/Common/NotebookModal/NotebookModal";
+import { Link } from "react-router-dom";
 import Button from "components/Common/Button/Button";
 import NotebookItem from "components/Common/NotebookItem/NotebookItem";
 import "./NotebookList.scss";
@@ -9,15 +9,9 @@ export default class NotebookList extends Component {
   constructor() {
     super();
 
-    this.state = {
-      isNotebookModalOpen: false
-    };
-
     this._isMounted = false;
 
     this.displayNotebookList = this.displayNotebookList.bind(this);
-    this.toggleNotebookModal = this.toggleNotebookModal.bind(this);
-    this.onNotebookModalSubmit = this.onNotebookModalSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -49,41 +43,17 @@ export default class NotebookList extends Component {
     });
   }
 
-  onNotebookModalSubmit(notebookData) {
-    this.props.addNotebook(notebookData);
-    this.toggleNotebookModal();
-  }
-
-  renderNotebookModal() {
-    let notebookModal = null;
-    if (this.state.isNotebookModalOpen) {
-      notebookModal = (
-        <NotebookModal
-          onClose={this.toggleNotebookModal}
-          onSubmit={this.onNotebookModalSubmit}
-        />
-      );
-    }
-    return notebookModal;
-  }
-
-  toggleNotebookModal() {
-    if (this._isMounted) {
-      this.setState({ isNotebookModalOpen: !this.state.isNotebookModalOpen });
-    }
-  }
-
   render() {
     return (
       <div className="notebook-list">
-        <Button
-          className="add-notebook"
-          type="primary"
-          onClick={this.toggleNotebookModal}
-          label="New Notebook"
-        />
+        <Link to="/newnotebook" className="add-notebook-container">
+          <Button
+            className="add-notebook"
+            type="primary"
+            label="New Notebook"
+          />
+        </Link>
         <div className="inner-container">{this.displayNotebookList()}</div>
-        {this.renderNotebookModal()}
       </div>
     );
   }

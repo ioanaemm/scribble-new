@@ -10,7 +10,7 @@ import Select from "react-select";
 
 import Preloader from "components/Common/Preloader/Preloader";
 import Button from "components/Common/Button/Button";
-import "components/NotePage/NoteContainer/NoteContainer.scss";
+import "./NoteContainer.scss";
 
 export class NoteContainer extends Component {
   constructor() {
@@ -105,7 +105,16 @@ export class NoteContainer extends Component {
           label: notebook.title
         };
       });
-      const selectedNotebook = notebookOptions[0];
+      let selectedNotebook;
+      const desiredNotebook = this.props.match.params.notebookId;
+      if (desiredNotebook) {
+        selectedNotebook = notebookOptions.filter(
+          notebook => notebook._id === desiredNotebook
+        )[0];
+      }
+      if (!selectedNotebook) {
+        selectedNotebook = notebookOptions[0];
+      }
       this.setState({
         notebookList: response.data,
         notebookOptions,
@@ -266,7 +275,6 @@ export class NoteContainer extends Component {
           response => {
             this.setState(
               {
-                title: response.data.title,
                 isInput: false,
                 isSaving: false,
                 isSaved: true

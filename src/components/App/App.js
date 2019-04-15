@@ -81,10 +81,16 @@ export class App extends Component {
           <NotebooksContainer />
         </Route>
         <Route exact path="/notebooks/:id">
-          <NotebookContainer />
+          <NotebookContainer key="notebookDetails" />
+        </Route>
+        <Route exact path="/newnotebook">
+          <NotebookContainer key="newNotebook" />
         </Route>
         <Route exact path="/notes">
           <NotesContainer key="noteDetails" />
+        </Route>
+        <Route exact path="/newnote/:notebookId">
+          <NoteContainer key="newnoteForNotebook" />
         </Route>
         <Route exact path="/newnote">
           <NoteContainer key="newnote" />

@@ -79,7 +79,7 @@
     .plus-button-container {
       font-size: 1.4em;
       padding-top: 7px;
-      padding-right: 17px;
+      padding-right: 20px;
     }
 
     &.top {
@@ -99,6 +99,8 @@
       }
 
       .title {
+        position: relative;
+        left: -5px;
         a {
           color: white;
           text-decoration: none;
@@ -112,7 +114,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 1;
       padding-top: 12px;
       padding-bottom: 12px;
 

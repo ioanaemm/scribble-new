@@ -1,3 +1,5 @@
+@import "../../../Variables";
+
 .notebook-item-container {
   display: inline-block;
   text-decoration: none;
@@ -22,6 +24,7 @@
   }
 
   .notebook-item {
+    position: relative;
     border: 2px solid #f3f5f9;
     border-radius: 10px;
     padding: 10px 15px 10px;
@@ -73,12 +76,16 @@
 
   .delete {
     border: none;
-    float: right;
+    position: absolute;
     background-color: transparent;
     padding: 10px;
-    position: relative;
-    top: -8px;
-    left: 10px;
+    right: 0px;
+    top: 0px;
+    cursor: pointer;
+
+    &:hover {
+      color: $purple;
+    }
 
     color: #8894b3;
     font-size: 16px;

@@ -4,7 +4,6 @@
   .notebook-select {
     width: 150px;
     display: inline-block;
-    // z-index: 3;
   }
 
   .note-content {
@@ -39,7 +38,7 @@
           font-size: 16px;
           outline: 0;
           position: relative;
-          // top: -2px;
+          cursor: pointer;
 
           @media (max-width: 600px) {
             margin-left: auto;
@@ -62,6 +61,7 @@
           padding: 4px 30px;
           font-size: 16px;
           outline: 0;
+          cursor: pointer;
 
           &.desktop {
             display: inline-block;
@@ -92,7 +92,7 @@
             display: none;
             position: absolute;
             color: white;
-            top: 13px;
+            top: 18px;
             right: -20px;
             background-color: transparent;
             border: 0;
@@ -341,6 +341,11 @@
 
       .editor-inner-container {
         height: calc(var(--vh) * 100 - 330px);
+        background-color: rgba($purple, 0.03);
+        margin-left: -40px;
+        margin-right: -40px;
+        padding-left: 40px;
+        padding-right: 40px;
 
         @media (min-width: 701px) {
           height: calc(var(--vh) * 100 - 250px);

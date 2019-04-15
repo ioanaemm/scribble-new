@@ -14,10 +14,14 @@
     justify-content: center;
   }
 
-  .add-notebook {
-    margin: 0 auto;
-    margin-bottom: 20px;
-    display: block;
+  .add-notebook-container {
+    text-decoration: none;
+
+    .add-notebook {
+      margin: 0 auto;
+      margin-bottom: 20px;
+      display: block;
+    }
   }
 
   .message-no-results {
