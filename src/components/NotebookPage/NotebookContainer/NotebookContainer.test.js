@@ -18,7 +18,7 @@ describe("NotebookContainer component", () => {
   it("renders the preloader if the state is pending", () => {
     const wrapper = shallow(<NotebookContainer match={match} />);
 
-    expect(wrapper.find(".preloader").exists()).toBe(true);
+    expect(wrapper.find("Preloader").exists()).toBe(true);
   });
 
   it("renders the title if not in input mode", () => {
@@ -30,22 +30,11 @@ describe("NotebookContainer component", () => {
   it("renders the input if in input mode", () => {
     const wrapper = shallow(<NotebookContainer match={match} />);
     wrapper.setState({ pending: false });
-    wrapper.find(".notebook-title").simulate("click");
+    wrapper
+      .find(".notebook-title")
+      .simulate("click", { stopPropagation: jest.fn() });
 
     expect(wrapper.find(".title-input").exists()).toBe(true);
-  });
-
-  it("renders the note modal after clicking the new note button", () => {
-    const wrapper = shallow(<NotebookContainer match={match} />);
-    wrapper.setState({ pending: false });
-    wrapper.find(".newnote-modal").simulate("click");
-    expect(wrapper.find("NoteModal").exists()).toBe(true);
-  });
-
-  it("doesn't render the note modal if the new note button hasn't been clicked", () => {
-    const wrapper = shallow(<NotebookContainer match={match} />);
-    wrapper.setState({ pending: false });
-    expect(wrapper.find("NoteModal").exists()).toBe(false);
   });
 
   it("renders the error", () => {
@@ -57,7 +46,9 @@ describe("NotebookContainer component", () => {
   it("updates the title input when the user types something", () => {
     const wrapper = shallow(<NotebookContainer match={match} />);
     wrapper.setState({ pending: false });
-    wrapper.find(".notebook-title").simulate("click");
+    wrapper
+      .find(".notebook-title")
+      .simulate("click", { stopPropagation: jest.fn() });
     wrapper.find(".title-input").simulate("change", {
       target: { value: "React" }
     });

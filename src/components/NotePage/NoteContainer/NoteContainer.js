@@ -91,7 +91,9 @@ export class NoteContainer extends Component {
   makeIsInput(e) {
     e.stopPropagation();
     this.setState({ isInput: true }, () => {
-      this.titleInputRef.current.focus();
+      if (this.titleInputRef.current) {
+        this.titleInputRef.current.focus();
+      }
     });
   }
 

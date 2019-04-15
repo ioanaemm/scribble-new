@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
-// import axios from "axios";
 
 import "./App.scss";
 import "./Averta.css";
@@ -42,7 +41,11 @@ export class App extends Component {
     this.updateDocumentSize();
     window.addEventListener("resize", this.updateDocumentSize);
 
-    if (!window.location.href.includes("/verify/")) {
+    if (window.location.href.includes("/verify/")) {
+      this.setState({
+        pending: false
+      });
+    } else {
       Api.fetchUserDetails().then(
         response => {
           this.setState({ userData: response.data, pending: false });
@@ -51,10 +54,6 @@ export class App extends Component {
           this.setState({ pending: false });
         }
       );
-    } else {
-      this.setState({
-        pending: false
-      });
     }
   }
 

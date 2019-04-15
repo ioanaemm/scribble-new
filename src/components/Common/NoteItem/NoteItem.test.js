@@ -25,28 +25,22 @@ describe("NoteItem component", () => {
     const wrapper = shallow(
       <NoteItem note={{ _id: "5c801cb0be41203a155452d8" }} />
     );
-    const actualTimestamp = wrapper.find(".timestamp").text();
-    expect(actualTimestamp).toEqual("6th March 2019");
+    const actualTimestamp = wrapper.find(".date").text();
+    expect(actualTimestamp).toEqual("6th March 2019, 07:17 PM");
   });
 
-  it("includes a link to the note and renders the note title", () => {
+  it("renders the note title", () => {
     const wrapper = shallow(
-      <NoteItem
-        note={{ _id: "5c801cb0be41203a155452d8", title: "React post" }}
-      />
+      <NoteItem note={{ _id: "123", title: "React post" }} />
     );
-    const titleLinkProps = wrapper.find(".note-link-title").props();
-    expect(titleLinkProps.children).toEqual("React post");
-    expect(titleLinkProps.to).toEqual("/notes/5c801cb0be41203a155452d8");
+    expect(wrapper.find(".note-title").text()).toEqual("React post");
   });
 
-  it("renders the body content", () => {
+  it("includes a link to the note page", () => {
     const wrapper = shallow(
-      <NoteItem note={{ _id: "5c95ee6b40d300fae6c15d2e", body: "cucumber" }} />
+      <NoteItem note={{ _id: "123", title: "React post" }} />
     );
-
-    const bodyNote = wrapper.find(".note-content").props()
-      .dangerouslySetInnerHTML.__html;
-    expect(bodyNote).toEqual("cucumber");
+    const link = wrapper.find("Link");
+    expect(link.prop("to")).toEqual("/notes/123");
   });
 });

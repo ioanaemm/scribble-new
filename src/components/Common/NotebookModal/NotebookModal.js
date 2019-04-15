@@ -17,11 +17,12 @@ export default class NotebookModal extends Component {
   }
 
   componentDidMount() {
-    this.titleInputRef.current.focus();
+    if (this.titleInputRef.current) {
+      this.titleInputRef.current.focus();
+    }
   }
 
   onSubmit(e) {
-    console.log("NotebookModal::submit()");
     e.preventDefault();
 
     this.props.onSubmit({ title: this.state.title, tags: this.state.tags });

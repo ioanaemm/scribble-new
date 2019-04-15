@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import NotebookModal from "components/Common/NotebookModal/NotebookModal";
 import Button from "components/Common/Button/Button";
 import NotebookItem from "components/Common/NotebookItem/NotebookItem";
-import "components/Common/NotebookList/NotebookList.scss";
+import "./NotebookList.scss";
 
 export default class NotebookList extends Component {
   constructor() {
@@ -37,21 +37,19 @@ export default class NotebookList extends Component {
       return <p className="message-no-results">No notebooks found</p>;
     }
 
-    let notebooks = this.props.notebooks.map(notebook => {
+    return this.props.notebooks.map(notebook => {
       return (
         <NotebookItem
+          className="notebook-item"
           notebook={notebook}
           key={notebook._id}
           removeNotebook={this.props.removeNotebook}
         />
       );
     });
-
-    return <>{notebooks}</>;
   }
 
   onNotebookModalSubmit(notebookData) {
-    console.log(this.state);
     this.props.addNotebook(notebookData);
     this.toggleNotebookModal();
   }

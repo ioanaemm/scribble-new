@@ -36,7 +36,7 @@ describe("NotebookModal component", () => {
   it("submits the form", () => {
     const mockOnSubmit = jest.fn();
     const wrapper = shallow(<NotebookModal onSubmit={mockOnSubmit} />);
-    wrapper.find(".newnotebook-btn").simulate("click");
+    wrapper.find("form").simulate("submit", { preventDefault: jest.fn() });
     expect(mockOnSubmit).toBeCalled();
   });
 });

@@ -28,7 +28,9 @@ describe("NoteContainer component", () => {
   it("renders the input if in input mode", () => {
     const wrapper = shallow(<NoteContainer match={match} />);
     wrapper.setState({ pending: false });
-    wrapper.find(".note-title").simulate("click");
+    wrapper
+      .find(".note-title")
+      .simulate("click", { stopPropagation: jest.fn() });
     expect(wrapper.find(".input-title").exists()).toBe(true);
   });
 

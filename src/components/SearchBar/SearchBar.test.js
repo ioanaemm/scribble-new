@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import SearchBar from "components/SearchBar/SearchBar";
 import { shallow } from "enzyme";
 import { Link } from "react-router";
+
+import { SearchBar } from "./SearchBar";
 
 describe("SearchBar component", () => {
   it("renders without crashing", () => {
@@ -12,9 +13,11 @@ describe("SearchBar component", () => {
   it("the search input works", () => {
     const wrapper = shallow(<SearchBar />);
     wrapper
-      .find(".search-input")
+      .find(".desktop-searchbar .search-input")
       .simulate("change", { target: { value: "React" } });
-    expect(wrapper.find(".search-input").prop("value")).toEqual("React");
+    expect(
+      wrapper.find(".desktop-searchbar .search-input").prop("value")
+    ).toEqual("React");
   });
 
   it("submits the form and redirects to the link", async () => {
@@ -23,11 +26,14 @@ describe("SearchBar component", () => {
     });
     global.window = { ...window };
 
-    const wrapper = shallow(<SearchBar />);
+    const mockHistory = {
+      push: jest.fn()
+    };
+    const wrapper = shallow(<SearchBar history={mockHistory} />);
     wrapper.setState({ term: "react" });
     wrapper
       .find(".search-container")
       .simulate("submit", { preventDefault: () => {} });
-    expect(global.window.location.href).toEqual("/search/react");
+    expect(mockHistory.push).toBeCalledWith("/search/react");
   });
 });

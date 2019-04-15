@@ -18,7 +18,7 @@ export default class NoteItem extends Component {
         to={`/notes/${note._id}`}
         key={note._id}
       >
-        <li className="note-item">
+        <li className={`note-item note-item-${note._id}`}>
           <i className="arrow-icon fa fa-angle-right fa-lg" />
           <p className="note-title">{note.title}</p>
 

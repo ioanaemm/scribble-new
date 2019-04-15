@@ -10,6 +10,6 @@ describe("Title component", () => {
 
   it("renders the content", () => {
     const wrapper = shallow(<Title content="Notebook title" />);
-    expect(wrapper.text()).toEqual("Notebook title");
+    expect(wrapper.text()).toEqual("Notebook title ");
   });
 });

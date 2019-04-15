@@ -43,8 +43,7 @@ describe("SearchResultsPage component", () => {
 
     const wrapper = shallow(<SearchResultsPage match={match} />);
     await new Promise(resolve => resolve());
-    expect(wrapper.find(".notebook-list").exists()).toBe(true);
-    expect(wrapper.find(".notebook-item").length).toEqual(2);
+    expect(wrapper.find("NotebookList").exists()).toBe(true);
   });
 
   it("doesn't render the note list", () => {
@@ -73,7 +72,6 @@ describe("SearchResultsPage component", () => {
     );
     const wrapper = shallow(<SearchResultsPage match={match} />);
     await new Promise(resolve => resolve());
-    expect(wrapper.find(".note-list").exists()).toBe(true);
-    expect(wrapper.find(".note-item").length).toEqual(2);
+    expect(wrapper.find("NoteList").exists()).toBe(true);
   });
 });

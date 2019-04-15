@@ -51,7 +51,7 @@ export class SearchBar extends Component {
     return (
       <>
         <form
-          className={`search-container ${
+          className={`search-container desktop-searchbar ${
             this.state.expanded ? "expanded" : ""
           } `}
           onSubmit={this.onFormSubmit}

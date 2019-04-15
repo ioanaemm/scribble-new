@@ -28,19 +28,19 @@ export class SearchResultsPage extends Component {
     this.fetchResults();
   }
 
-  componentWillReceiveProps() {
-    setTimeout(this.fetchResults, 500);
+  componentDidUpdate(newProps) {
+    if (newProps !== this.props) {
+      this.fetchResults();
+    }
   }
 
   fetchResults() {
     this.setState({ pending: true });
-    setTimeout(() => {
-      Api.fetchSearchList(this.props.match.params.query).then(response => {
-        this.setState({
-          notebooks: response.data.notebooks,
-          notes: response.data.notes,
-          pending: false
-        });
+    Api.fetchSearchList(this.props.match.params.query).then(response => {
+      this.setState({
+        notebooks: response.data.notebooks,
+        notes: response.data.notes,
+        pending: false
       });
     });
   }
@@ -73,7 +73,6 @@ export class SearchResultsPage extends Component {
 
   removeNotebook(notebookId) {
     Api.deleteNotebook(notebookId).then(response => {
-      console.log(response.data);
       if (this.state.notebooks) {
         this.setState({
           notebooks: this.state.notebooks.filter(

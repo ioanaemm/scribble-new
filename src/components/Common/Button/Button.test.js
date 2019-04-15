@@ -22,6 +22,6 @@ describe("Button component", () => {
 
   it("renders the label", () => {
     const wrapper = shallow(<Button label="Save" />);
-    expect(wrapper.text()).toEqual("Save");
+    expect(wrapper.text()).toEqual("Save ");
   });
 });

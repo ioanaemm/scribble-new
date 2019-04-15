@@ -58,7 +58,7 @@ describe("User component", () => {
     );
     const mockOnLogin = jest.fn();
     const wrapper = shallow(<User onLogin={mockOnLogin} />);
-    wrapper.find(".login").simulate("keydown", { key: "Enter" });
+    wrapper.find(".login").simulate("submit", { preventDefault: jest.fn() });
     await new Promise(resolve => resolve());
     expect(mockOnLogin).toBeCalledWith({ foo: "test" });
   });

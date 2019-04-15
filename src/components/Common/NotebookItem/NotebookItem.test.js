@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import NotebookItem from "components/Common/NotebookItem/NotebookItem";
+import { NotebookItem } from "./NotebookItem";
 import { shallow } from "enzyme";
 import { Link } from "react-router";
 
@@ -22,7 +22,9 @@ describe("NotebookItem component", () => {
         notebook={{ _id: "1234" }}
       />
     );
-    wrapper.find("button.delete").simulate("click");
+    wrapper
+      .find("button.delete")
+      .simulate("click", { stopPropagation: jest.fn() });
     expect(mockRemoveItem).toBeCalledWith("1234");
   });
 
@@ -31,13 +33,18 @@ describe("NotebookItem component", () => {
     expect(wrapper.find(".notebook-count").text()).toEqual("12");
   });
 
-  it("includes a link to the notebook, which renders the notebook title", () => {
+  it("opens the notebook on click", () => {
+    const mockHistory = {
+      push: jest.fn()
+    };
     const wrapper = shallow(
-      <NotebookItem notebook={{ _id: "121", title: "React post" }} />
+      <NotebookItem
+        notebook={{ _id: "121", title: "React post" }}
+        history={mockHistory}
+      />
     );
-    const titleLinkProps = wrapper.find(".notebook-link-title").props();
-    expect(titleLinkProps.children).toEqual("React post");
-    expect(titleLinkProps.to).toEqual("/notebooks/121");
+    wrapper.find(".notebook-item-container").simulate("click");
+    expect(mockHistory.push).toBeCalled();
   });
 
   it("doesn't render tags if they are not present", () => {

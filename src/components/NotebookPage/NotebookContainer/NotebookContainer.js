@@ -66,7 +66,9 @@ export class NotebookContainer extends Component {
     e.stopPropagation();
 
     this.setState({ isInput: true }, () => {
-      this.inputRef.current.focus();
+      if (this.inputRef.current) {
+        this.inputRef.current.focus();
+      }
     });
   }
 
