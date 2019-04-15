@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import * as Api from "api/Api";
 import { Link } from "react-router-dom";
 
-import Button from "components/Common/Button/Button";
 import Preloader from "components/Common/Preloader/Preloader";
 import "./VerifyAccount.scss";
 
@@ -36,11 +35,11 @@ export class VerifyAccount extends Component {
     }
     return (
       <div className="verify-account">
-        <h3>Hi {this.props.match.params.username} !</h3>
-        <p>Your account has been activated</p>
-        <Button type="primary">
+        <h3 className="title">Hi {this.props.match.params.username}</h3>
+        <p className="content">Your account has been activated!</p>
+        <button className="verify">
           <Link to="/login">Log in </Link>
-        </Button>
+        </button>
       </div>
     );
   }

@@ -130,7 +130,7 @@ export class App extends Component {
           {this.displayPageContent()}
         </div>
         <Route
-          path={new RegExp("^(?!.*(/login|/register|/notes|/newnote)).*$")}
+          path={new RegExp("^(?!.*(/login|/register|/notes/|/newnote)).*$")}
           component={BottomSidebar}
         />
       </div>
