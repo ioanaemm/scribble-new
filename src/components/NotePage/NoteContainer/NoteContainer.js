@@ -50,6 +50,7 @@ export class NoteContainer extends Component {
     this.displayNoteList = this.displayNoteList.bind(this);
     this.displayNoteDetails = this.displayNoteDetails.bind(this);
     this.displaySaveIcon = this.displaySaveIcon.bind(this);
+    this.displayDeleteButton = this.displayDeleteButton.bind(this);
     this.displaySidebarNotebookTitle = this.displaySidebarNotebookTitle.bind(
       this
     );
@@ -108,9 +109,9 @@ export class NoteContainer extends Component {
       let selectedNotebook;
       const desiredNotebook = this.props.match.params.notebookId;
       if (desiredNotebook) {
-        selectedNotebook = notebookOptions.filter(
-          notebook => notebook._id === desiredNotebook
-        )[0];
+        selectedNotebook = notebookOptions.filter(notebook => {
+          return notebook.value === desiredNotebook;
+        })[0];
       }
       if (!selectedNotebook) {
         selectedNotebook = notebookOptions[0];
@@ -342,20 +343,7 @@ export class NoteContainer extends Component {
         <Button className="save-note desktop" onClick={this.saveNoteDetails}>
           {this.displaySaveIcon()}
         </Button>
-        <Button
-          type="secondary"
-          label={
-            this.state.isDeleting ? (
-              <Preloader />
-            ) : (
-              <i className="fa fa-trash-alt" />
-            )
-          }
-          className={`delete-note desktop ${
-            this.state.isDeleting ? "is-deleting" : "is-not-deleting"
-          }`}
-          onClick={this.deleteNote}
-        />
+        {this.displayDeleteButton()}
         <Button className="save-note mobile" onClick={this.saveNoteDetails}>
           {this.displaySaveIcon()}
         </Button>
@@ -363,6 +351,27 @@ export class NoteContainer extends Component {
     );
   }
 
+  displayDeleteButton() {
+    if (this.state.isNew) {
+      return null;
+    }
+    return (
+      <Button
+        type="secondary"
+        label={
+          this.state.isDeleting ? (
+            <Preloader />
+          ) : (
+            <i className="fa fa-trash-alt" />
+          )
+        }
+        className={`delete-note desktop ${
+          this.state.isDeleting ? "is-deleting" : "is-not-deleting"
+        }`}
+        onClick={this.deleteNote}
+      />
+    );
+  }
   displaySaveIcon() {
     if (this.state.isSaving) {
       return <Preloader />;
