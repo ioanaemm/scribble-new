@@ -49,8 +49,8 @@ router.post("/register", function(req, res) {
       });
     } else {
       const user = new User({
-        username: req.body.username,
-        email: req.body.email,
+        username: req.body.username.toLowerCase(),
+        email: req.body.email.toLowerCase(),
         password: hash,
         activated: false
       });
@@ -121,9 +121,9 @@ function sendConfirmationEmail(user) {
 }
 
 router.post("/signin", function(req, res) {
-  console.log("req.body: ", req.body);
+  const username = req.body.username.toLowerCase();
   User.findOne({
-    $or: [{ username: req.body.username }, { email: req.body.username }]
+    $or: [{ username: username }, { email: username }]
   })
     .exec()
     .then(function(user) {
