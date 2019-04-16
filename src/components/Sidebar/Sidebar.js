@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import UserPopup from "components/UserPopup/UserPopup";
-import "components/Sidebar/Sidebar.scss";
+import "./Sidebar.scss";
 
 export default class Sidebar extends Component {
   constructor(props) {
