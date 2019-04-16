@@ -73,10 +73,7 @@ export default class Sidebar extends Component {
           </div>
         </div>
         <div className="mobile-sidebar top">
-          <i
-            className="icon fa fa-user-circle fa-lg"
-            onClick={this.toggleUserPopup}
-          />
+          <Link to="/account" className="icon fa fa-user-circle fa-lg" />
           <h3 className="title">
             <Link to={`/`}>Scribble</Link>
           </h3>

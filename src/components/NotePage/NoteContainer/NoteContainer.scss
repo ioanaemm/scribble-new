@@ -92,11 +92,14 @@
             display: none;
             position: absolute;
             color: white;
-            top: 18px;
+            top: -28px;
             right: -20px;
             background-color: transparent;
             border: 0;
             z-index: 6;
+            transform: scale(1);
+            transform: translateZ(1px);
+            // -webkit-transform: translate3d(0, 0, 0);
 
             .fa-cloud-upload-alt {
               text-shadow: 0px 2px 4px #514fce;
