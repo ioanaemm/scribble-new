@@ -461,9 +461,9 @@ export class NoteContainer extends Component {
           <p className="message-no-results">
             Before creating a note, you need to create a notebook.
             <br />
-            <Link to="/notebooks" className="notebooks-page-container">
+            <Link to="/newnotebook" className="notebooks-page-container">
               <Button type="primary" className="notebooks-page">
-                Go to the notebooks page
+                Create one now
               </Button>
             </Link>
           </p>
