@@ -99,29 +99,37 @@ export class NoteContainer extends Component {
   }
 
   loadNotebookList() {
-    Api.fetchNotebooks({}).then(response => {
-      const notebookOptions = response.data.map(notebook => {
-        return {
-          value: notebook._id,
-          label: notebook.title
-        };
-      });
-      let selectedNotebook;
-      const desiredNotebook = this.props.match.params.notebookId;
-      if (desiredNotebook) {
-        selectedNotebook = notebookOptions.filter(notebook => {
-          return notebook.value === desiredNotebook;
-        })[0];
+    Api.fetchNotebooks({}).then(
+      response => {
+        const notebookOptions = response.data.map(notebook => {
+          return {
+            value: notebook._id,
+            label: notebook.title
+          };
+        });
+        let selectedNotebook;
+        if (notebookOptions.length > 0) {
+          const desiredNotebook = this.props.match.params.notebookId;
+          if (desiredNotebook) {
+            selectedNotebook = notebookOptions.filter(notebook => {
+              return notebook.value === desiredNotebook;
+            })[0];
+          }
+          if (!selectedNotebook) {
+            selectedNotebook = notebookOptions[0];
+          }
+        }
+
+        this.setState({
+          notebookList: response.data,
+          notebookOptions,
+          selectedNotebook
+        });
+      },
+      error => {
+        alert("Something went wrong, please try again later");
       }
-      if (!selectedNotebook) {
-        selectedNotebook = notebookOptions[0];
-      }
-      this.setState({
-        notebookList: response.data,
-        notebookOptions,
-        selectedNotebook
-      });
-    });
+    );
   }
 
   loadNoteData(noteId) {
@@ -149,11 +157,20 @@ export class NoteContainer extends Component {
   }
 
   retrieveNotebook(notebookId) {
-    return Api.fetchNotebook(notebookId).then(response => {
-      this.setState({
-        notebook: response.data
-      });
-    });
+    return Api.fetchNotebook(notebookId).then(
+      response => {
+        if (!response) {
+          alert("Something went wrong, please try again later");
+          return;
+        }
+        this.setState({
+          notebook: response.data
+        });
+      },
+      error => {
+        alert("Something went wrong, please try again later");
+      }
+    );
   }
 
   handleNotebookChange(selectedNotebook) {
@@ -196,6 +213,13 @@ export class NoteContainer extends Component {
   displayNotesInNotebook() {
     if (!this.state.notebook || !this.state.notebook.notes) {
       return null;
+    }
+    if (this.state.notebook.notes.length === 1) {
+      return (
+        <p className="message-no-other-notes">
+          There are no other notes in this notebook.
+        </p>
+      );
     }
 
     let crtNoteId = this.props.match.params.id;
@@ -252,6 +276,7 @@ export class NoteContainer extends Component {
         body: this.state.body,
         notebookId: this.state.selectedNotebook.value
       };
+
       setTimeout(() => {
         Api.addNote(noteData).then(response => {
           this.retrieveNotebook(response.data.notebookId).then(() => {
@@ -424,6 +449,26 @@ export class NoteContainer extends Component {
 
     if (this.state.error) {
       return <p>{this.state.error}</p>;
+    }
+
+    if (
+      this.state.isNew &&
+      this.state.notebookList &&
+      this.state.notebookList.length === 0
+    ) {
+      return (
+        <div className="note-container">
+          <p className="message-no-results">
+            Before creating a note, you need to create a notebook.
+            <br />
+            <Link to="/notebooks" className="notebooks-page-container">
+              <Button type="primary" className="notebooks-page">
+                Go to the notebooks page
+              </Button>
+            </Link>
+          </p>
+        </div>
+      );
     }
 
     return (

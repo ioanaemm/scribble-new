@@ -75,7 +75,7 @@ export class NotebookContainer extends Component {
         });
       },
       () => {
-        this.setState({ pending: false, error: true });
+        this.setState({ pending: false, error: true, isSaving: false });
       }
     );
   }
@@ -166,7 +166,8 @@ export class NotebookContainer extends Component {
           },
           error => {
             this.setState({
-              error: error.response.data
+              error: error.response.data,
+              isSaving: false
             });
           }
         );

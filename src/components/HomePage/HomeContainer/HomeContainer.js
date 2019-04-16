@@ -116,26 +116,11 @@ export default class HomeContainer extends Component {
   }
 
   removeNotebook(notebookId) {
-    Api.deleteNotebook(notebookId).then(response => {
-      console.log(response.data);
-      if (this.state.notebooks) {
-        this.setState({
-          notebooks: this.state.notebooks.filter(
-            notebook => notebook._id !== notebookId
-          )
-        });
-      }
-    });
+    Api.deleteNotebook(notebookId).then(this.refresh);
   }
 
   addNotebook(notebookData) {
-    Api.addNotebook(notebookData).then(response => {
-      if (this._isMounted) {
-        this.setState({
-          notebooks: [response.data, ...this.state.notebooks]
-        });
-      }
-    });
+    Api.addNotebook(notebookData).then(this.refresh);
   }
 
   onTouchEnd(e) {

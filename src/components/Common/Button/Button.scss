@@ -34,12 +34,12 @@ button.secondary {
 
 button.primary,
 button.secondary {
-  // transform: scale(1);
-  // transform-origin: 50% 50%;
-  // transition: all 400ms;
-  // outline: 0;
-  //
-  // &:hover {
-  //   transform: scale(0.9);
-  // }
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: all 400ms;
+  outline: 0;
+
+  &:hover {
+    transform: scale(0.95);
+  }
 }

@@ -84,9 +84,15 @@ router.patch("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   let targetNotebookId = req.params.id;
-  await Notebook.findByIdAndRemove(targetNotebookId, (err, notebook) => {
-    if (err) return res.status(404).send(err);
-  });
+  try {
+    await Note.deleteMany({ notebookId: targetNotebookId });
+    await Notebook.findByIdAndRemove(targetNotebookId, (err, notebook) => {
+      if (err) return res.status(404).send(err);
+    });
+  } catch (e) {
+    console.log("There has been an error when deleting notebooks: ", e);
+    res.status(500).send(e);
+  }
 
   res.send();
 });
