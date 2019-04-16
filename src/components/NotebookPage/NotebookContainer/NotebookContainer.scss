@@ -219,11 +219,13 @@
   }
 
   .title-input {
-    border: 1px dashed #ddd;
+    border: 1px dashed lighten($gray, 10);
     outline: 0;
-    // position: relative;
+    border-radius: 5px;
+    // display: none;
+    position: relative;
     letter-spacing: 3px;
-    top: -3px;
+    top: -2px;
     left: -1px;
 
     @media (max-width: 600px) {

@@ -57,7 +57,7 @@ export class NotebookContainer extends Component {
           if (this.inputRef.current) {
             this.inputRef.current.focus();
           }
-        }, 500);
+        }, 1000);
       }
     );
   }

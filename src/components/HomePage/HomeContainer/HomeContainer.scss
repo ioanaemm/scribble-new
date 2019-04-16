@@ -1,3 +1,5 @@
+@import "../../../Variables";
+
 .home-container {
   display: flex;
   flex-direction: column;
@@ -23,7 +25,7 @@
 
     .icon {
       position: absolute;
-      color: #ddd;
+      color: $gray;
       // transform: translate(-50%, -50%);
       top: calc(50% - 0px);
       left: 50%;
