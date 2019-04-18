@@ -145,7 +145,7 @@ router.post("/signin", function(req, res) {
         }
         if (result) {
           console.log("user = ", user);
-          if (!user.activated) {
+          if (/*!user.activated*/ false) {
             res.status(403).json({
               failed: "Your account has not been activated yet"
             });
