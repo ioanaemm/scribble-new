@@ -14,6 +14,7 @@ import "./NoteContainer.scss";
 
 export class NoteContainer extends Component {
   constructor() {
+    console.log("This version should be new");
     super();
     this.state = {
       pending: true,
