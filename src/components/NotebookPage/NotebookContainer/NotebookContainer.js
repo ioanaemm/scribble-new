@@ -95,7 +95,6 @@ export class NotebookContainer extends Component {
     if (e && e.target && e.target.classList.contains("notebook-title")) {
       return;
     }
-    console.log("makeNotInput()");
     this.setState({ isInput: false });
   }
 
@@ -208,7 +207,11 @@ export class NotebookContainer extends Component {
     } else if (this.state.isSaved) {
       return <i className="fa icon fa-check fa-lg" key="check" />;
     } else {
-      return <i className="fa icon fa-cloud-upload-alt fa-lg" key="cloud" />;
+      return (
+        <span className="icon" key="cloud">
+          Save
+        </span>
+      );
     }
   }
 

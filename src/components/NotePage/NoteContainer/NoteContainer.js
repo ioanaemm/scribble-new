@@ -404,7 +404,11 @@ export class NoteContainer extends Component {
     } else if (this.state.isSaved) {
       return <i className="fa icon fa-check fa-lg" key="check" />;
     } else {
-      return <i className="fa icon fa-cloud-upload-alt fa-lg" key="cloud" />;
+      return (
+        <span className="icon" key="cloud">
+          Save
+        </span>
+      );
     }
   }
 
