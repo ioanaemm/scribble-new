@@ -11,6 +11,7 @@ import User from "components/User/User";
 import Register from "components/Register/Register";
 import AccountDetails from "components/AccountDetails/AccountDetails";
 import VerifyAccount from "components/VerifyAccount/VerifyAccount";
+import RecoverPassword from "components/RecoverPassword/RecoverPassword";
 import SearchResultsPage from "components/SearchResultsPage/SearchResultsPage";
 import Sidebar from "components/Sidebar/Sidebar";
 import BottomSidebar from "components/Sidebar/BottomSidebar";
@@ -112,6 +113,9 @@ export class App extends Component {
         </Route>
         <Route exact path="/verify/:username/:chunk">
           <VerifyAccount />
+        </Route>
+        <Route exact path="/verify/:username/:chunk">
+          <RecoverPassword />
         </Route>
       </Switch>
     );

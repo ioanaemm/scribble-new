@@ -120,6 +120,40 @@ function sendConfirmationEmail(user) {
   );
 }
 
+function changePasswordEmail(userId) {
+  const sendmail = require("sendmail")();
+  const chunk = computeChunk(user._id);
+
+  const url = `https://www.scribblewebapp.com/changepassword/${
+    user.username
+  }/${chunk}`;
+
+  sendmail(
+    {
+      from: "noreply@scribblewebapp.com",
+      to: user.email,
+      subject: "Password change request",
+      html: `
+      <p>Hey ${
+        user.username
+      }, we have received a password change request from you!</p>
+      <p>You can use the following link to reset your password: </p>
+      <br/>
+      <a href="${url}">${url}</a>
+     `
+    },
+    function(err, reply) {
+      // console.log(err && err.stack);
+      // console.dir(reply);
+      if (err) {
+        console.log("Error sending email:", err);
+      } else {
+        console.log("Email sent successfully!");
+      }
+    }
+  );
+}
+
 router.post("/signin", function(req, res) {
   const username = req.body.username.toLowerCase();
   User.findOne({
@@ -186,6 +220,10 @@ router.post("/verify/:chunk", async (req, res) => {
     res.status(404).send();
   }
 });
+
+// router.post("/changepassword/:chunk", function(req, res) => {
+//
+// });
 
 router.post("/signout", (req, res) => {
   if (req.session && req.session.user) {

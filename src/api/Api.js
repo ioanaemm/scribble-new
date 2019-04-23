@@ -90,6 +90,10 @@ export function verifyAccount(chunk) {
   return axios.post(`${API_URL}/users/verify/${chunk}`);
 }
 
+export function changePassword(chunk) {
+  return axios.post(`${API_URL}/users/changepassword/${chunk}`);
+}
+
 function handleError(e) {
   if (e.response.status === 401) {
     window.location.href = "/login";

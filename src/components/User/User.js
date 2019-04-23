@@ -89,7 +89,9 @@ export default class User extends Component {
               <span className="label"> Password</span>
               <span className="border" />
             </div>
-            <span className="forgotten-password">Forgotten password?</span>
+            <span className="forgotten-password">
+              <Link to="/changepassword">Forgotten password?</Link>
+            </span>
 
             <button className="signin" type="submit">
               {this.state.submitting ? <Preloader /> : "Login"}
